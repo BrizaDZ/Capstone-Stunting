@@ -42,7 +42,7 @@
                             </div>
                             <button type="submit" class="py-3 border-0 btn btn-primary w-100 fs-6 rounded-3" href="../homepage/homepage.html">Sign In</button>
                         </form>
-                        <p class="mt-3 black">Don't have an account? <a href="../SignUp/signup.html" class="bs-primary text-decoration-none">Sign Up</a></p>
+                        <p class="mt-3 black">Don't have an account? <a href="/register" class="bs-primary text-decoration-none">Sign Up</a></p>
                     </div>
                 </div>
                 <div class="col-md-1"></div>
