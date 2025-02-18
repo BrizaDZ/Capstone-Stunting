@@ -71,7 +71,7 @@
 
                             <button type="submit" class="py-3 border-0 btn btn-primary w-100 fs-6 rounded-3">Sign Up</button>
                         </form>
-                        <p class="mt-3">Already have an account? <a href="../Login/login.html" class="text-primary">Login</a></p>
+                        <p class="mt-3">Already have an account? <a href="/login" class="text-primary">Login</a></p>
                     </div>
                 </div>
             </div>
