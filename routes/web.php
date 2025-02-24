@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Master\AdminController;
 use App\Http\Controllers\Master\LokasiPuskesmasController;
+use App\Http\Controllers\Data\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,10 +23,24 @@ Route::middleware(['isAdmin'])->group(function () {
             Route::post('/table', [LokasiPuskesmasController::class, 'Ajax']);
         });
     });
+    Route::prefix('/data')->group(function () {
+        Route::prefix('/user')->group(function () {
+            Route::get('/', [UserController::class, 'index']);
+            Route::get('/edit/{id}', [UserController::class, 'Edit']);
+            Route::get('/add', [UserController::class, 'Add']);
+            Route::post('/store', [UserController::class, 'store']);
+            Route::post('/delete/{id}', [UserController::class, 'delete']);
+            Route::post('/table', [UserController::class, 'Ajax']);
+        });
+    });
 });
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('web.home');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/janji-temu', function () {
+    return view('web.appointment');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/admin/dashboard', function () {

@@ -31,22 +31,18 @@ function loadTable() {
         filter: true,
         orderMulti: false,
         ajax: {
-            url: "/master/puskesmas/table",
+            url: "/data/user/table",
             type: "post",
             dataType: "json"
         },
         columns: [
-            { data: "nama", name: "nama", autoWidth: true },
-            { data: "alamat", name: "alamat", autoWidth: true },
-            { data: "Kabupaten", name: "Kabupaten", autoWidth: true },
-            { data: "Kecamatan", name: "Kecamatan", autoWidth: true },
-            { data: "Kelurahan", name: "Kelurahan", autoWidth: true },
-            { data: "longitude", name: "longitude", autoWidth: true },
-            { data: "latitude", name: "latitude", autoWidth: true },
+            { data: "name", name: "name", autoWidth: true },
+            { data: "email", name: "email", autoWidth: true },
+            { data: "role_id", name: "role_id", autoWidth: true },
 
             {
-                data: 'LokasiID',
-                render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-primary mr-2 showMe' style='width:100%;' data-href='/master/puskesmas/edit/" + row.PuskesmasID + "'> Edit</button>" }
+                data: 'id',
+                render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-primary mr-2 showMe' style='width:100%;' data-href='/data/user/edit/" + row.id + "'> Edit</button>" }
             }
         ],
         order: [[0, "desc"]]
