@@ -35,6 +35,37 @@ Route::middleware(['isAdmin'])->group(function () {
     });
 });
 
+Route::middleware(['isPuskesmas'])->group(function () {
+    // untuk route puskesmas taro sini
+    Route::get('/puskesmas/dashboard', [PuskesmasController::class, 'index']);
+    Route::prefix('/master')->group(function () {
+        Route::prefix('/operationaltime')->group(function () {
+            Route::get('/', [OperationalTimeController::class, 'index']);
+            Route::get('/edit/{id}', [OperationalTimeController::class, 'Edit']);
+            Route::get('/add', [OperationalTimeController::class, 'Add']);
+            Route::post('/store', [OperationalTimeController::class, 'store']);
+            Route::post('/delete/{id}', [OperationalTimeController::class, 'delete']);
+            Route::post('/table', [OperationalTimeController::class, 'Ajax']);
+        });
+        Route::prefix('/doctor')->group(function () {
+            Route::get('/', [DoctorController::class, 'index']);
+            Route::get('/edit/{id}', [DoctorController::class, 'Edit']);
+            Route::get('/add', [DoctorController::class, 'Add']);
+            Route::post('/store', [DoctorController::class, 'store']);
+            Route::post('/delete/{id}', [DoctorController::class, 'delete']);
+            Route::post('/table', [DoctorController::class, 'Ajax']);
+        });
+        Route::prefix('/doctoroperationaltime')->group(function () {
+            Route::get('/', [DoctorOperationalTimeController::class, 'index']);
+            Route::get('/edit/{id}', [DoctorOperationalTimeController::class, 'Edit']);
+            Route::get('/add', [DoctorOperationalTimeController::class, 'Add']);
+            Route::post('/store', [DoctorOperationalTimeController::class, 'store']);
+            Route::post('/delete/{id}', [DoctorOperationalTimeController::class, 'delete']);
+            Route::post('/table', [DoctorOperationalTimeController::class, 'Ajax']);
+        });
+    });
+});
+
 Route::get('/', function () {
     return view('web.home');
 })->middleware(['auth', 'verified'])->name('dashboard');

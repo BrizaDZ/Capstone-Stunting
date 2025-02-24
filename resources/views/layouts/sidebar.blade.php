@@ -74,6 +74,27 @@
                                   data-i18n="nav.datapuskesmas">Puskesmas</span>
                           </a>
                       </li>
+                      <li class=" {{ Request::is('master/operationaltime') ? 'active' : '' }}">
+                        <a href="/master/operationaltime" title="Data Operational Time"
+                            data-filter-tags="Data Operational Time">
+                            <span class="nav-link-text color-white"
+                                data-i18n="nav.dataoperationaltime">Operational Time</span>
+                        </a>
+                    </li>
+                    <li class=" {{ Request::is('master/doctor') ? 'active' : '' }}">
+                        <a href="/master/Doctor" title="Data Doctor Puskesmas"
+                            data-filter-tags="Data Doctor Puskesmas">
+                            <span class="nav-link-text color-white"
+                                data-i18n="nav.dataoperationaltime">Doctor</span>
+                        </a>
+                    </li>
+                    <li class=" {{ Request::is('master/doctoroperationaltime') ? 'active' : '' }}">
+                        <a href="/master/DoctorOperationalTime" title="Data Jadwal Dokter Puskesmas"
+                            data-filter-tags="Data Jadwal Dokter Puskesmas">
+                            <span class="nav-link-text color-white"
+                                data-i18n="nav.dataoperationaltime">Doctor Operational Time</span>
+                        </a>
+                    </li>
                   </ul>
               </li>
           </ul>
