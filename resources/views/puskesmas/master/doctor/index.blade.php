@@ -56,5 +56,5 @@
     <script src="/lib/select2/js/select2.full.min.js"></script>
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
     <script src="/js/modalForm.js"></script>
-    <script src="/pages/master/doctors.js"></script>
+    <script src="/pages/master/doctor.js"></script>
 @endpush

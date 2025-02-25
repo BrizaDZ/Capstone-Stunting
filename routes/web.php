@@ -4,6 +4,9 @@ use App\Http\Controllers\Master\AdminController;
 use App\Http\Controllers\Master\LokasiPuskesmasController;
 use App\Http\Controllers\Data\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OperationalTimeController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\DoctorOperationalTimeController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {

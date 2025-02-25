@@ -82,14 +82,14 @@
                         </a>
                     </li>
                     <li class=" {{ Request::is('master/doctor') ? 'active' : '' }}">
-                        <a href="/master/Doctor" title="Data Doctor Puskesmas"
+                        <a href="/master/doctor" title="Data Doctor Puskesmas"
                             data-filter-tags="Data Doctor Puskesmas">
                             <span class="nav-link-text color-white"
                                 data-i18n="nav.dataoperationaltime">Doctor</span>
                         </a>
                     </li>
                     <li class=" {{ Request::is('master/doctoroperationaltime') ? 'active' : '' }}">
-                        <a href="/master/DoctorOperationalTime" title="Data Jadwal Dokter Puskesmas"
+                        <a href="/master/doctoroperationaltime" title="Data Jadwal Dokter Puskesmas"
                             data-filter-tags="Data Jadwal Dokter Puskesmas">
                             <span class="nav-link-text color-white"
                                 data-i18n="nav.dataoperationaltime">Doctor Operational Time</span>
@@ -108,6 +108,5 @@
               <i class="ni ni-chevron-right"></i>
               <i class="ni ni-chevron-right"></i>
           </a>
-
       </div> <!-- END NAV FOOTER -->
   </aside>
