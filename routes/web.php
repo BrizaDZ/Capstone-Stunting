@@ -49,12 +49,14 @@ Route::middleware(['isPuskesmas'])->group(function () {
             Route::post('/store', [OperationalTimeController::class, 'store']);
             Route::post('/delete/{id}', [OperationalTimeController::class, 'delete']);
             Route::post('/table', [OperationalTimeController::class, 'Ajax']);
+            Route::get('/search', [OperationalTimeController::class, 'search']);
         });
         Route::prefix('/doctor')->group(function () {
             Route::get('/', [DoctorController::class, 'index']);
             Route::get('/edit/{id}', [DoctorController::class, 'Edit']);
             Route::get('/add', [DoctorController::class, 'Add']);
             Route::post('/store', [DoctorController::class, 'store']);
+            Route::get('/search', [DoctorController::class, 'search']);
             Route::post('/delete/{id}', [DoctorController::class, 'delete']);
             Route::post('/table', [DoctorController::class, 'Ajax']);
         });

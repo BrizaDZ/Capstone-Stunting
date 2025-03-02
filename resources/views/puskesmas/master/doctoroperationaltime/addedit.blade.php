@@ -12,12 +12,17 @@
 
     <div class="modal-body ">
         <input type="hidden" name="id" value="{{ $data->DoctorOperationalTimeID }}" />
-        <div class="mb-3 row">
+        <div class="row">
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Nama Dokter</label>
-                    <input type="text" name="name" class="form-control" required autocomplete="off"
-                        value="{{ $data->name }}" />
+                    <select class="form-control select2 sDoctor" name="DoctorID" required>
+                        @if ($data->DoctorID != null)
+                            <option value="{{ $data->DoctorID }}" selected="selected">{{ $data->name }}
+                            </option>
+                        @endif
+                    </select>
+
                 </div>
             </div>
             <div class="col-xl-6">
@@ -27,18 +32,18 @@
                         value="{{ $data->day }}" />
                 </div>
             </div>
-            <div class="col-xl-6">
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
                 <div class="form-group">
-                    <label>Jam Kerja</label>
-                    <input type="time" name="time_start" class="form-control" required autocomplete="off"
-                        value="{{ $data->time_start }}" />
-                </div>
-            </div>
-            <div class="col-xl-6">
-                <div class="form-group">
-                    <label>Jam Selesai</label>
-                    <input type="time" name="time_end" class="form-control" required autocomplete="off"
-                        value="{{ $data->time_end }}" />
+                    <label>Jam Operasional</label>
+                    <select class="form-control select2 sSchedule" name="OperationalTimeID" required>
+                        @if ($data->OperationalTimeID != null)
+                            <option value="{{ $data->OperationalTimeID }}" selected="selected">{{ $data->name }}
+                            </option>
+                        @endif
+                    </select>
+
                 </div>
             </div>
         </div>

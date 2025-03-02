@@ -71,13 +71,13 @@ function showExitsMessage() {
     });
 }
 
-function PopulateBarang() {
-    $('.sBarang').select2({
-        placeholder: 'Pilih Barang...',
+function PopulateDoctor() {
+    $('.sDoctor').select2({
+        placeholder: 'Pilih Dokter...',
         dropdownParent: $("#myModal"),
         allowClear: true,
         ajax: {
-            url: `/master/barang/search`,
+            url: `/master/doctor/search`,
             contentType: "application/json; charset=utf-8",
             data: function (params) {
                 var query = {
@@ -100,31 +100,3 @@ function PopulateBarang() {
     });
 }
 
-function PopulateJenisBarang() {
-    $('.sJenisBarang').select2({
-        placeholder: 'Pilih Jenis Barang...',
-        dropdownParent: $("#myModal"),
-        allowClear: true,
-        ajax: {
-            url: `/master/jenisbarang/search`,
-            contentType: "application/json; charset=utf-8",
-            data: function (params) {
-                var query = {
-                    term: params.term,
-                };
-                return query;
-            },
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
-                        return {
-                            text: item.namajenisbarang,
-                            id: item.jenisbarangID,
-                        }
-                    })
-                }
-            },
-            cache: true
-        }
-    });
-}

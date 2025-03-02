@@ -15,9 +15,7 @@ class OperationalTimeController extends Controller
 {
     public function index()
     {
-        $operationalTimes = OperationalTime::where('user_id', auth()->id())->get();
-
-        return view('puskesmas.master.operationaltime.index', compact('operationalTimes'));
+        return view('puskesmas.master.operationaltime.index');
     }
 
     public function Add()

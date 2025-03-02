@@ -15,10 +15,8 @@ class DoctorController extends Controller
 {
     public function index()
     {
-        $doctorsCibatu = Doctor::where('user_id', 4)->with('operationalTimes')->get();
-        $doctorsCikarang = Doctor::where('user_id', 5)->with('operationalTimes')->get();
 
-        return view('puskesmas.master.doctor.index', compact('doctorsCibatu', 'doctorsCikarang'));
+        return view('puskesmas.master.doctor.index');
     }
 
     public function Add()

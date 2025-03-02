@@ -6,7 +6,14 @@
     <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />
     <link rel="stylesheet" href="/lib/select2/css/select2.min.css" />
     <link rel="stylesheet" href="/css/datagrid/datatables/datatables.bundle.css" />
-    {{-- <link rel="stylesheet" href="/css/addon.css" /> --}}
+    <link rel="stylesheet" href="/css/addon.css" />
+
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+
 @endpush
 
 @section('content')
@@ -39,9 +46,8 @@
                                 <thead class="text-white bg-primary-200">
                                     <tr>
                                         <th>Nama Dokter</th>
+                                        <th>Jadwal</th>
                                         <th>Hari</th>
-                                        <th>Jam Mulai</th>
-                                        <th>Jam Selesai</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -58,6 +64,6 @@
     <script src="/lib/sweetalert/sweetalert2.all.min.js"></script>
     <script src="/lib/select2/js/select2.full.min.js"></script>
     <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
-    <script src="/js/modalForm.js"></script>
     <script src="/pages/master/doctoroperationaltime.js"></script>
+    <script src="/js/modalForm.js"></script>
 @endpush

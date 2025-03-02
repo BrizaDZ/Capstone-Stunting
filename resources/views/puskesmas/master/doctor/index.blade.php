@@ -6,7 +6,13 @@
     <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />
     <link rel="stylesheet" href="/lib/select2/css/select2.min.css" />
     <link rel="stylesheet" href="/css/datagrid/datatables/datatables.bundle.css" />
-    {{-- <link rel="stylesheet" href="/css/addon.css" /> --}}
+    <link rel="stylesheet" href="/css/addon.css" />
+
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -28,7 +34,7 @@
                         Tabel List Dokter Puskesmas <span class="fw-300"><i>E-Waste</i></span>
                     </h2>
                     <div class="panel-toolbar">
-                        <button class="btn btn-primary showMe" data-href="/master/operationaltime/add">Tambah Dokter</button>
+                        <button class="btn btn-primary showMe" data-href="/master/doctor/add">Tambah Dokter</button>
                     </div>
                 </div>
 

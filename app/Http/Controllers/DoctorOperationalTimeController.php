@@ -16,15 +16,7 @@ class DoctorOperationalTimeController extends Controller
 {
     public function index()
     {
-        $dataCibatu = DoctorOperationalTime::whereHas('doctor', function ($query) {
-            $query->where('user_id', 4);
-        })->with(['doctor'])->get();
-
-        $dataCikarang = DoctorOperationalTime::whereHas('doctor', function ($query) {
-            $query->where('user_id', 5);
-        })->with(['doctor'])->get();
-
-        return view('puskesmas.master.doctoroperationaltime.index', compact('dataCibatu', 'dataCikarang'));
+        return view('puskesmas.master.doctoroperationaltime.index');
     }
 
     public function Add()
@@ -50,8 +42,8 @@ class DoctorOperationalTimeController extends Controller
             $data = DoctorOperationalTime::where('user_id', auth()->id())->findOrFail($v->id);
         }
 
-        $data->doctor_id = $v->doctor_id;
-        $data->operationaltime_id = $v->operationaltime_id;
+        $data->DoctorID = $v->DoctorID;
+        $data->OperationalTimeID = $v->OperationalTimeID;
 
         $data->save();
 
@@ -65,8 +57,8 @@ class DoctorOperationalTimeController extends Controller
         $data = DoctorOperationalTime::where('user_id', auth()->id())
         ->select([
             'DoctorOPerationalTimeID',
-            'doctor_id',
-            'operationaltime_id',
+            'DoctorID',
+            'OperationalTimeID',
             'day'
         ]);
 
