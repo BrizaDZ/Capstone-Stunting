@@ -60,7 +60,8 @@ class LokasiPuskesmasController extends Controller
             'Kecamatan',
             'Kelurahan',
             'longitude',
-            'latitude'
+            'latitude',
+            'PuskesmasID',
 
         ]);
         $datatables = Datatables::of($data);
@@ -72,13 +73,17 @@ class LokasiPuskesmasController extends Controller
     public function search(Request $v)
     {
         if (empty($v->q)) {
-            $data = Lokasi::select(['PuskesmasID', 'nama'])->orderBy('nama', 'asc')->get();
+            $data = Lokasi::select(['PuskesmasID', 'nama', 'user_id'])->orderBy('nama', 'asc')->get();
         } else {
-            $data = Lokasi::where('nama', 'like', '%' . $v->q . '%')->orderBy('nama', 'asc')->get();
+            $data = Lokasi::select(['PuskesmasID', 'nama', 'user_id'])
+                        ->where('nama', 'like', '%' . $v->q . '%')
+                        ->orderBy('nama', 'asc')
+                        ->get();
         }
 
         return response()->json($data);
     }
+
 
     public function delete($id)
     {

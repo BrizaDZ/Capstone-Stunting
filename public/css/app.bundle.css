@@ -376,11 +376,7 @@ RESULT:
         from(rgba(21, 47, 9, 0.18)),
         to(transparent)
     );
-    background-image: linear-gradient(
-        270deg,
-        rgba(21, 47, 9, 0.18),
-        transparent
-    );
+    background-image: linear-gradient( 270deg, rgba(1, 20, 41, 0.18), transparent );
     background-color: #2AA7FF;
 }
 
@@ -3460,7 +3456,7 @@ html body {
 }
 
 .page-content-wrapper {
-    background-color: #faf8fb;
+    background-color: #f8fcff;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

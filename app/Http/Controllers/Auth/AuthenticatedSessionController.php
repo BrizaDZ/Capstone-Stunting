@@ -32,7 +32,10 @@ class AuthenticatedSessionController extends Controller
     if ($user->role_id == 1) {
         return redirect('/admin/dashboard');
     } elseif ($user->role_id == 2) {
-        return redirect('/');   
+        return redirect('/');
+    }
+    elseif ($user->role_id == 3) {
+        return redirect('/puskesmas/dashboard');
     }
 
     return redirect('/home');

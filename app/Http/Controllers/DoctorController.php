@@ -65,20 +65,23 @@ class DoctorController extends Controller
 
     public function search(Request $v)
     {
-        if (empty($v->q)) {
-            $data = Doctor::where('user_id', auth()->id())
-                ->select(['DoctorID', 'name'])
-                ->orderBy('name', 'asc')
-                ->get();
-        } else {
-            $data = Doctor::where('user_id', auth()->id())
-                ->where('name', 'like', '%' . $v->q . '%')
-                ->orderBy('name', 'asc')
-                ->get();
+        $query = Doctor::select(['DoctorID', 'name', 'user_id'])
+                    ->orderBy('name', 'asc');
+
+        if (!empty($v->term)) {
+            $query->where('name', 'like', '%' . $v->term . '%');
         }
+
+        if (!empty($v->user_id)) {
+            $query->where('user_id', $v->user_id);
+        }
+
+        $data = $query->get();
 
         return response()->json($data);
     }
+
+
 
     public function delete($id)
     {

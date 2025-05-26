@@ -1,4 +1,4 @@
-<form action="/master/puskesmas/store" method="post">
+<form action="/data/puskesmas/store" method="post">
     <div class="modal-header">
         <h4 class="modal-title">
             @if ($data->PuskesmasID != 0)

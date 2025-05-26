@@ -70,18 +70,22 @@ class DoctorOperationalTimeController extends Controller
 
     public function search(Request $v)
     {
-        $query = DoctorOperationalTime::with('doctor');
+        $query = DoctorOperationalTime::select(['DoctorOperationalTimeID', 'day', 'DoctorID'])
+                    ->orderBy('day', 'asc');
 
-        if (!empty($v->q)) {
-            $query->whereHas('doctor', function ($query) use ($v) {
-                $query->where('name', 'like', '%' . $v->q . '%');
-            });
+        if (!empty($v->term)) {
+            $query->where('day', 'like', '%' . $v->term . '%');
         }
 
-        $data = $query->orderBy('day', 'asc')->get();
+        if (!empty($v->DoctorID)) {
+            $query->where('DoctorID', $v->DoctorID);
+        }
+
+        $data = $query->get();
 
         return response()->json($data);
     }
+
 
     public function delete($id)
     {

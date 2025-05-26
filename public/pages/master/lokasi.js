@@ -31,7 +31,7 @@ function loadTable() {
         filter: true,
         orderMulti: false,
         ajax: {
-            url: "/master/puskesmas/table",
+            url: "/data/puskesmas/table",
             type: "post",
             dataType: "json"
         },
@@ -45,8 +45,8 @@ function loadTable() {
             { data: "latitude", name: "latitude", autoWidth: true },
 
             {
-                data: 'LokasiID',
-                render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-primary mr-2 showMe' style='width:100%;' data-href='/master/puskesmas/edit/" + row.PuskesmasID + "'> Edit</button>" }
+                data: 'PuskesmasID',
+                render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-primary mr-2 showMe' style='width:100%;' data-href='/data/puskesmas/edit/" + row.PuskesmasID + "'> Edit</button>" }
             }
         ],
         order: [[0, "desc"]]
