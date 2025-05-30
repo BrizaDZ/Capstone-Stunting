@@ -20,26 +20,6 @@ class AppointmentController extends Controller
         return view('web.appointment', ['data' => new Appointment]);
     }
 
-    // public function Edit($id)
-    // {
-    //     return view('admin.master.Appointment.addedit', ['data' => Appointment::findOrFail($id)]);
-    // }
-    public function printCard($id)
-    {
-        $appointment = Appointment::with(['doctorOperationalTime', 'puskesmas'])->findOrFail($id);
-
-        $queue_number = Appointment::where('DoctorOperationalTimeID', $appointment->DoctorOperationalTimeID)
-        ->where('appointment_date', $appointment->appointment_date)
-        ->where('AppointmentID', '<=', $appointment->AppointmentID)
-        ->count();
-
-
-        return Pdf::loadView('web.queue_card', [
-            'appointment' => $appointment,
-            'queue_number' => $queue_number
-        ])->download('kartu-antrean.pdf');
-    }
-
     public function store(Request $v)
     {
         $doctorOperationalTimeID = $v->DoctorOperationalTimeID;
@@ -72,7 +52,6 @@ class AppointmentController extends Controller
 
         $data->save();
 
-        // Hitung queue_number TANPA menyimpannya
         $queue_number = $currentAppointmentCount + 1;
 
         return response()->json([
@@ -80,6 +59,22 @@ class AppointmentController extends Controller
             'appointment_id' => $data->id,
             'queue_number' => $queue_number,
         ]);
+    }
+
+     public function printCard($id)
+    {
+        $appointment = Appointment::with(['doctorOperationalTime', 'puskesmas'])->findOrFail($id);
+
+        $queue_number = Appointment::where('DoctorOperationalTimeID', $appointment->DoctorOperationalTimeID)
+        ->where('appointment_date', $appointment->appointment_date)
+        ->where('AppointmentID', '<=', $appointment->AppointmentID)
+        ->count();
+
+
+        return Pdf::loadView('web.queue_card', [
+            'appointment' => $appointment,
+            'queue_number' => $queue_number
+        ])->download('kartu-antrean.pdf');
     }
 
 
@@ -112,7 +107,7 @@ class AppointmentController extends Controller
 
     public function search(Request $v)
     {
-        $userId = auth()->id(); // Get the authenticated user's ID
+        $userId = auth()->id();
 
         if (empty($v->q)) {
             $data = Patient::where('user_id', $userId)

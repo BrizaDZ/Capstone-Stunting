@@ -48,7 +48,7 @@
                     <h2>
                         Tabel Pemeriksaan Stunting <span class="fw-300"><i></i></span>
                     </h2>
-                    <a data-href="/data/janji-temu/add" class="btn btn-primary showMe">Tambah</a>
+                    <a data-href="/data/janji-temu/add" class="btn btn-primary showMe text-light mr-3">Tambah</a>
                 </div>
 
                 <div class="panel-container show">

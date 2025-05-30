@@ -2,9 +2,9 @@
     <div class="modal-header">
         <h4 class="modal-title">
             @if ($data->PuskesmasID != 0)
-                Edit Lokasi Penjemputan
+                Edit Lokasi Puskesmas
             @else
-                Tambah Lokasi Penjemputan Baru
+                Tambah Lokasi Puskesmas Baru
             @endif
         </h4>
         <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
@@ -129,6 +129,6 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-success">Simpan</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
     </div>
 </form>

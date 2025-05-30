@@ -29,10 +29,8 @@ class StuntingController extends Controller
             'stunting.*',
             'appointment.patient_name',
             'appointment.appointment_date',
-
-
         ])
-        ->get(); // Ambil semua data yang sesuai
+        ->get();
 
     return view('puskesmas.data.stunting.detail', compact('data'));
 }
@@ -74,7 +72,7 @@ class StuntingController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $data = [];
 
-        foreach ($sheet->getRowIterator(2) as $row) { // Mulai dari baris ke-2
+        foreach ($sheet->getRowIterator(2) as $row) {
             $cellIterator = $row->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(false);
 
@@ -83,11 +81,10 @@ class StuntingController extends Controller
                 $rowData[] = $cell->getValue();
             }
 
-            $tinggi = round((float) $rowData[0], 1); // Panjang Badan (cm)
+            $tinggi = round((float) $rowData[0], 1);
             $median = (float) $rowData[4];
             $plus1sd = (float) $rowData[5];
 
-            // Hitung SD secara kasar dari selisih antara +1SD dan Median
             $sd = $plus1sd - $median;
 
             $data[$tinggi] = [

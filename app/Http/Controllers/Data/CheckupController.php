@@ -24,7 +24,6 @@ class CheckupController extends Controller
 
     public function Add()
     {
-
         return view('puskesmas.data.appointment.addedit', [
             'data' => new Appointment,
             'data2' => new Stunting,
@@ -39,20 +38,13 @@ class CheckupController extends Controller
         ->select('appointment.*', 'patient.name', 'patient.gender')
         ->first();
 
-
         return view('puskesmas.data.appointment.addedit', [
             'data' => Appointment::findOrFail($id),
             'data2' => $data2
         ]);
     }
 
-    public function downloadPdf($StuntingID)
-    {
-        $data = Appointment::join('patient', 'appointment.PatientID', '=', 'patient.PatientID')
-        ->leftJoin('stunting', 'appointment.AppointmentID', '=', 'stunting.AppointmentID')->where('StuntingID', $StuntingID)->firstOrFail();
-        $pdf = Pdf::loadView('puskesmas.data.appointment.rujukan', compact('data'));
-        return $pdf->download('surat_rujukan_'.$data->StuntingID.'.pdf');
-    }
+
 
 
     private function loadBBUExcel($path)
@@ -424,6 +416,14 @@ class CheckupController extends Controller
                 'weightheight' => $data->weightheight ?? 'N/A',
             ]
         ]);
+    }
+
+    public function downloadPdf($StuntingID)
+    {
+        $data = Appointment::join('patient', 'appointment.PatientID', '=', 'patient.PatientID')
+        ->leftJoin('stunting', 'appointment.AppointmentID', '=', 'stunting.AppointmentID')->where('StuntingID', $StuntingID)->firstOrFail();
+        $pdf = Pdf::loadView('puskesmas.data.appointment.rujukan', compact('data'));
+        return $pdf->download('surat_rujukan_'.$data->StuntingID.'.pdf');
     }
 
 

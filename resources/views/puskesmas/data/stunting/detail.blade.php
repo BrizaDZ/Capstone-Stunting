@@ -64,7 +64,7 @@
     <div class="card mt-3">
         <div class="card-body">
             <div class="mt-4">
-                <h5 class="text-center font-weight-bold">Diagram Z-Score TB/U</h5>
+                <h5 class="text-center font-weight-bold">Diagram Z-Score BB/TB</h5>
                 <canvas id="chartWeightHeight"></canvas>
             </div>
         </div>

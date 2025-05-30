@@ -21,7 +21,7 @@ class PredictController extends Controller
             'Olahraga', 'Merokok', 'TB'
         ]);
 
-        $response = Http::post('http://127.0.0.1:5000/predict', $data);
+        $response = Http::post('http://127.0.0.1:5001/stunting/predict', $data);
         $prediction = null;
 
         if ($response->successful()) {

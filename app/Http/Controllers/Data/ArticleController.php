@@ -43,7 +43,6 @@ class ArticleController extends Controller
 
 
         if ($file = $v->file('photo')) {
-            \File::delete('images/article/' . $v->hidden_file2);
             $filename = time() . "_article." . $file->getClientOriginalExtension();
             $file->move(public_path('images/article/'), $filename);
             $data->photo = $filename;

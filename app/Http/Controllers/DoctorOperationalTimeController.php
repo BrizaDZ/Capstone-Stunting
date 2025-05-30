@@ -54,12 +54,11 @@ class DoctorOperationalTimeController extends Controller
 
     public function Ajax(Request $request)
     {
-        $data = DoctorOperationalTime::where('user_id', auth()->id())
+        $data = DoctorOperationalTime::join('doctor', 'doctoroperationaltime.DoctorID', '=', 'doctor.DoctorID')->where('user_id', auth()->id())
         ->select([
-            'DoctorOPerationalTimeID',
-            'DoctorID',
-            'OperationalTimeID',
-            'day'
+            'doctoroperationaltime.*',
+            'doctoroperationaltime.DoctorID',
+            'doctor.name',
         ]);
 
         $datatables = Datatables::of($data);

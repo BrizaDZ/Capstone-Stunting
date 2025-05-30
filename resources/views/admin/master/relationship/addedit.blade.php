@@ -2,9 +2,9 @@
     <div class="modal-header">
         <h4 class="modal-title">
             @if ($data->RelationshipID != 0)
-                Edit Lokasi Penjemputan
+                Edit Relationship
             @else
-                Tambah Lokasi Penjemputan Baru
+                Tambah Relationship Baru
             @endif
         </h4>
         <button type="button" class="close text-red" data-dismiss="modal">&times;</button>

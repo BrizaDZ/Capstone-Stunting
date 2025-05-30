@@ -28,7 +28,7 @@
                         Tabel Puskesmas <span class="fw-300"><i>E-Waste</i></span>
                     </h2>
                     <div class="panel-toolbar">
-                        <button class="btn btn-primary showMe" data-href="/master/puskesmas/add">Tambah Lokasi
+                        <button class="btn btn-primary showMe" data-href="/data/puskesmas/add">Tambah Lokasi
                             Puskesmas</button>
                     </div>
                 </div>

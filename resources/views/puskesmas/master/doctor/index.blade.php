@@ -44,7 +44,7 @@
                             <table class="table m-0 table-bordered" id="tblData">
                                 <thead class="text-white bg-primary-200">
                                     <tr>
-                                        <th>Nama (Sesi)</th>
+                                        <th>Nama</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
