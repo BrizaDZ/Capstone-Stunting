@@ -25,7 +25,7 @@
             <div id="panel-8" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Tabel Puskesmas <span class="fw-300"><i>E-Waste</i></span>
+                        Tabel Puskesmas <span class="fw-300"></span>
                     </h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-primary showMe" data-href="/data/puskesmas/add">Tambah Lokasi

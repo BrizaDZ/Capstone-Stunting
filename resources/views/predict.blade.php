@@ -50,7 +50,7 @@
       'image/QA/imunisasi.svg',
       'image/QA/nafsumakan.svg',
       'image/QA/asieksklusif.svg',
-      'image/QA/timbanganbayi.svg',
+      'image/QA/timbangbayi.svg',
       'image/QA/air.svg',
       'image/QA/washhand.svg',
       'image/QA/clean.svg',

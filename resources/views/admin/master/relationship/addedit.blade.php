@@ -13,9 +13,9 @@
     <div class="modal-body ">
         <input type="hidden" name="id" value="{{ $data->RelationshipID }}" />
         <div class="mb-3 row">
-            <div class="col-xl-6">
+            <div class="col-xl-12">
                 <div class="form-group">
-                    <label>Relationship Name</label>
+                    <label>Relationship</label>
                     <input type="text" name="name" class="form-control" required autocomplete="off"
                         value="{{ $data->name }}" />
                 </div>
