@@ -33,6 +33,7 @@ Route::post('/chat', [ChatbotController::class, 'ask']);
 
 Route::get('/mpasi', [MpasiController::class, 'form']);
 Route::post('/predict-mpasi', [MpasiController::class, 'predict']);
+Route::post('/recommend-mpasi-by-age', [MpasiController::class, 'recommendByAge']);
 
 Route::get('/predict-stunting', [PredictController::class, 'index']);
 Route::post('/api/predict-stunting', [PredictController::class, 'predict']);
