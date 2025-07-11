@@ -1,18 +1,22 @@
 <form action="/profile/patient/store" method="post">
     @csrf
-    <div class="modal-header">
+    <div class="modal-header bg-primary text-white">
         <h4 class="modal-title">
                 Tambah Pasien
         </h4>
-        <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn btn-light text-red ms-auto" data-dismiss="modal">&times;</button>
     </div>
 
-    <div class="modal-body ">
+    <div class="modal-body bg-primary-200">
         <input type="hidden" name="id" value="{{ $data->id }}" />
+        <input type="hidden" name="kabupaten" id="NamaKab">
+        <input type="hidden" name="kecamatan" id="NamaKec">
+        <input type="hidden" name="kelurahan" id="NamaKel">
+
         <div class="row mb-3">
             <div class="col-lg-6">
                 <label class="form-label">NIK</label>
-                <input type="text" class="form-control" name="nik">
+                <input type="text" class="form-control" name="nik" maxlength="16" required>
             </div>
             <div class="col-lg-6">
                 <label class="form-label">Nama</label>
@@ -44,18 +48,24 @@
         </div>
         <div class="row mb-3">
             <div class="col-lg-6">
-                <label class="form-label">Kabupaten</label>
-                <input type="text" class="form-control" name="kabupaten">
+                <label class="form-label">Provinsi</label>
+                <select type="text" class="form-control select2 sProvince">
+                </select>
             </div>
             <div class="col-lg-6">
-                <label class="form-label">Kelurahan</label>
-                <input type="text" class="form-control" name="kelurahan">
+                <label class="form-label">Kabupaten</label>
+                <select type="text" class="form-control select2 sRegency">
+                </select>
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-lg-6">
+            <div class="col-lg-3">
                 <label class="form-label">Kecamatan</label>
-                <input type="text" class="form-control" name="kecamatan">
+                <select type="text" class="form-control select2 sDistrict"></select>
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label">Kelurahan</label>
+                <select type="text" class="form-control select2 sVillage"></select>
             </div>
             <div class="col-lg-3">
                 <label class="form-label">RT</label>
@@ -69,12 +79,12 @@
         <div class="row mb-3">
             <div class="col-lg-12">
                 <label class="form-label">Alamat</label>
-                <textarea class="form-control" name="alamat" id="" cols="30" rows="1"></textarea>
+                <textarea class="form-control" name="alamat" id="" cols="30" rows="2"></textarea>
             </div>
         </div>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer bg-primary-200">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-success">Simpan</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
     </div>
 </form>

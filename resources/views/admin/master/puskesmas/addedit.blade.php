@@ -11,8 +11,13 @@
     </div>
 
     <div class="modal-body ">
+        {{-- <input type="hidden" name="id" value="{{ $data->LokasiPuskesmasID }}" /> --}}
         <input type="hidden" name="id" value="{{ $data->PuskesmasID }}" />
-        <div class="mb-3 row">
+
+        <input type="hidden" name="kabupaten" id="NamaKab">
+        <input type="hidden" name="kecamatan" id="NamaKec">
+        <input type="hidden" name="kelurahan" id="NamaKel">
+        <div class="row">
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Nama Puskesmas</label>
@@ -28,36 +33,26 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3 row">
-            <div class="col-xl-4">
-                <div class="form-group">
-                    <label>Kabupaten</label>
-                    <input type="text" name="kabupaten" class="form-control select2 sKabupaten">
-                        {{-- @if ($data->KabupatenID != null)
-                            <option value="{{ $data->KabupatenID }}" selected="selected">{{ $data->NamaKabupaten }}
-                            </option>
-                        @endif --}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-xl-6">
+                <label class="form-label">Provinsi</label>
+                <select type="text" class="form-control select2 sProvince">
+                </select>
             </div>
-            <div class="col-xl-4">
-                <div class="form-group">
-                    <label>Kecamatan</label>
-                    <input type="text" name="kecamatan" class="form-control select2 sKecamatan">
-                        {{-- @if ($data->KecamatanID != null)
-                            <option value="{{ $data->KecamatanID }}" selected="selected">{{ $data->NamaKecamatan }}
-                            </option>
-                        @endif --}}
-                </div>
+            <div class="col-xl-6">
+                <label class="form-label">Kabupaten</label>
+                <select type="text" class="form-control select2 sRegency">
+                </select>
             </div>
-            <div class="col-xl-4">
-                <div class="form-group">
-                    <label>Kelurahan</label>
-                    <input type="text" name="kelurahan" class="form-control select2 sKelurahan">
-                        {{-- @if ($data->KelurahanID != 0)
-                            <option value="{{ $data->KelurahanID }}" selected="selected">{{ $data->NamaKelurahan }}
-                            </option>
-                        @endif --}}
-                </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-xl-6">
+                <label class="form-label">Kecamatan</label>
+                <select type="text" class="form-control select2 sDistrict"></select>
+            </div>
+            <div class="col-xl-6">
+                <label class="form-label">Kelurahan</label>
+                <select type="text" class="form-control select2 sVillage"></select>
             </div>
         </div>
         {{-- <div class="mb-3 row">

@@ -1,4 +1,4 @@
-<form action="/master/doctor/store" method="post">
+<form id="formdoctor" action="/master/doctor/store" method="post">
     <div class="modal-header">
         <h4 class="modal-title">
             @if ($data->DoctorID != 0)
@@ -13,17 +13,23 @@
     <div class="modal-body ">
         <input type="hidden" name="id" value="{{ $data->DoctorID }}" />
         <div class="mb-3 row">
-            <div class="col-xl-12">
+            <div class="col-xl-6">
                 <div class="form-group">
                     <label>Nama Dokter</label>
                     <input type="text" name="name" class="form-control" required autocomplete="off"
                         value="{{ $data->name }}" />
                 </div>
             </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Photo</label>
+                    <input type="file" class="form-control" name="photo" required>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-success">Simpan</button>
+        <button type="submit" class="btn btn-primary" id="btn-photo">Simpan</button>
     </div>
 </form>

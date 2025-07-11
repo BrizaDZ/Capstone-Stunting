@@ -22,9 +22,19 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
 {
-    $request->authenticate();
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
+
+    if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->withInput();
+    }
+
     $request->session()->regenerate();
 
     $user = Auth::user();
@@ -33,13 +43,13 @@ class AuthenticatedSessionController extends Controller
         return redirect('/admin/dashboard');
     } elseif ($user->role_id == 2) {
         return redirect('/');
-    }
-    elseif ($user->role_id == 3) {
+    } elseif ($user->role_id == 3) {
         return redirect('/puskesmas/dashboard');
     }
 
     return redirect('/home');
 }
+
 
 
     /**

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Services\DataTable;
 use App\Models\LokasiPuskesmas as Lokasi;
+use App\Models\User;
 use DataTables;
 use DB;
 use Auth;
@@ -25,7 +26,13 @@ class LokasiPuskesmasController extends Controller
 
     public function Edit($id)
     {
-        return view('admin.master.puskesmas.addedit', ['data' => Lokasi::findOrFail($id)]);
+        $data = DB::table('lokasipuskesmas')
+            ->join('users', 'lokasipuskesmas.PuskesmasID', '=', 'users.id')
+            ->where('users.id', $id)
+            ->select('lokasipuskesmas.*', 'users.name as user_name')
+            ->first();
+
+        return view('admin.master.puskesmas.addedit', ['data' => $data]);
     }
 
     public function store(Request $v)
@@ -43,6 +50,7 @@ class LokasiPuskesmasController extends Controller
         $data->kelurahan = $v->kelurahan;
         $data->longitude = $v->longitude;
         $data->latitude = $v->latitude;
+        $data->PuskesmasID = $v->id;
 
         $data->save();
 
@@ -53,15 +61,15 @@ class LokasiPuskesmasController extends Controller
 
     public function Ajax(Request $request)
     {
-        $data = Lokasi::select([
-            'nama',
-            'alamat',
-            'Kabupaten',
-            'Kecamatan',
-            'Kelurahan',
-            'longitude',
-            'latitude',
-            'PuskesmasID',
+        $data = User::join('lokasipuskesmas', 'users.id', '=', 'lokasipuskesmas.PuskesmasID')->select([
+            'users.name',
+            'users.id',
+            'lokasipuskesmas.alamat',
+            'lokasipuskesmas.Kabupaten',
+            'lokasipuskesmas.Kecamatan',
+            'lokasipuskesmas.Kelurahan',
+            'lokasipuskesmas.longitude',
+            'lokasipuskesmas.latitude',
 
         ]);
         $datatables = Datatables::of($data);
@@ -73,9 +81,9 @@ class LokasiPuskesmasController extends Controller
     public function search(Request $v)
     {
         if (empty($v->q)) {
-            $data = Lokasi::select(['PuskesmasID', 'nama', 'user_id'])->orderBy('nama', 'asc')->get();
+            $data = Lokasi::select(['LokasiPuskesmasID', 'nama', 'PuskesmasID'])->orderBy('nama', 'asc')->get();
         } else {
-            $data = Lokasi::select(['PuskesmasID', 'nama', 'user_id'])
+            $data = Lokasi::select(['LokasiPuskesmasID', 'nama', 'PuskesmasID'])
                         ->where('nama', 'like', '%' . $v->q . '%')
                         ->orderBy('nama', 'asc')
                         ->get();

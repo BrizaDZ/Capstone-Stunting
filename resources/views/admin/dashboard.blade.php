@@ -14,9 +14,11 @@
         }
     </style>
 
+
 @endpush
 
 @section('content')
+
 <div class="row">
     <div class="col-md-3">
         <div class="card border-0 shadow bg-secondary text-secondary">
@@ -71,7 +73,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row mb-5">
     <div class="col-md-6">
         <div class="card bg-secondary mt-4 h-100">
             <div class="card-header bg-primary text-center">
@@ -111,6 +113,41 @@
         </div>
     </div>
 </div>
+<div class="row mt-4">
+    <!-- User List -->
+    <div class="col-md-4">
+        <div class="card h-100 shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Daftar Pengguna</h5>
+            </div>
+            <div class="list-group list-group-flush" style="max-height: 500px; overflow-y: auto;" id="user-list">
+                <!-- Akan digenerate dari JS -->
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Chat Window -->
+    <div class="col-md-8">
+        <div class="card h-100 shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between">
+                <h5 class="mb-0" id="chat-username">Pesan</h5>
+            </div>
+            <div class="card-body" id="chat-box" style="height: 400px; overflow-y: auto;">
+                <p class="text-muted text-center">Pilih pengguna untuk mulai chat.</p>
+            </div>
+            <div class="card-footer">
+                <form onsubmit="sendMessage(event)">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Ketik pesan..." id="chat-input" disabled>
+                        <button class="btn btn-primary" type="submit" disabled id="chat-send">Kirim</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @endsection
 
@@ -122,9 +159,10 @@
     <script src="/lib/leaflet/leaflet.js"></script>
 
     <script>
+        let selectedUserId = null;
         const puskesmasLocations = @json($puskesmasLocations);
 
-        const map = L.map('map').setView([-6.200000, 106.816666], 10); // Set to Jakarta's coordinates
+        const map = L.map('map').setView([-6.200000, 106.816666], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
         }).addTo(map);
@@ -137,5 +175,84 @@
                 Total Non-Stunting: ${location.total_non_stunting}
             `);
         });
-    </script>
+
+function openChat(userId, userName) {
+    selectedUserId = userId;
+    document.getElementById('chat-username').textContent = 'Chat dengan ' + userName;
+    document.getElementById('chat-input').disabled = false;
+    document.getElementById('chat-send').disabled = false;
+
+    const chatBox = document.getElementById('chat-box');
+    chatBox.innerHTML = '<p class="text-muted text-center">Memuat chat...</p>';
+
+    fetch(`/chat/${userId}`)
+        .then(res => res.json())
+        .then(chats => {
+            chatBox.innerHTML = '';
+
+            chats.forEach(chat => {
+                const bubble = document.createElement('div');
+                bubble.className = 'mb-2 ' + (chat.chatby === 'admin' ? 'text-right' : 'text-left');
+
+                const color = chat.chatby === 'admin' ? 'bg-primary text-white' : 'bg-secondary';
+                bubble.innerHTML = `<span class="badge p-3 ${color}">${chat.chat}</span>`;
+                chatBox.appendChild(bubble);
+            });
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    }
+    fetch('/chat-users')
+        .then(res => res.json())
+        .then(users => {
+            const userList = document.getElementById('user-list');
+            userList.innerHTML = '';
+
+            users.forEach(user => {
+                const item = document.createElement('a');
+                item.href = '#';
+                item.className = 'list-group-item list-group-item-action';
+                item.textContent = user.name;
+                item.onclick = () => openChat(user.id, user.name);
+                userList.appendChild(item);
+            });
+        });
+
+        function sendMessage(event) {
+            event.preventDefault();
+
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+
+            if (message === '' || selectedUserId === null) return;
+
+            fetch('/chat-store', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    chat: message,
+                    user_id: selectedUserId
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                const chatBox = document.getElementById('chat-box');
+                const messageBubble = document.createElement('div');
+                messageBubble.className = 'mb-2 text-left';
+                messageBubble.innerHTML = `<span class="badge p-3 bg-primary text-right">${data.chat}</span>`;
+                chatBox.appendChild(messageBubble);
+
+                input.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight;
+            })
+            .catch(error => {
+                console.error('Gagal mengirim pesan:', error);
+                alert('Gagal mengirim pesan.');
+            });
+        }
+
+</script>
 @endpush

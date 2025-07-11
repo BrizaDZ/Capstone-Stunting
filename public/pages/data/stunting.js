@@ -37,7 +37,7 @@ function loadTable() {
         },
         columns: [
             { data: "created_date", name: "created_date", autoWidth: true },
-            { data: "patient_name", name: "patient_name", autoWidth: true },
+            { data: "name", name: "name", autoWidth: true },
             { data: "age", name: "age", autoWidth: true },
             { data: "gender", name: "gender", autoWidth: true },
             { data: "weight", name: "weight", autoWidth: true },

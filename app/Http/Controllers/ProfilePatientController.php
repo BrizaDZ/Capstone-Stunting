@@ -18,14 +18,11 @@ class ProfilePatientController extends Controller
     public function index()
     {
         $data = User::where('id', auth()->id())->first();
-        $data2 = Stunting::join('appointment', 'stunting.AppointmentID', '=', 'appointment.AppointmentID')
-        ->where('appointment.user_id', auth()->id())
+        $data2 = Stunting::join('patient', 'stunting.PatientID', '=', 'patient.PatientID')
+        ->where('patient.user_id', auth()->id())
         ->select([
             'stunting.*',
-            'appointment.patient_name',
-            'appointment.appointment_date',
-
-
+            'patient.name',
         ])
         ->get();
         return view('web.profile.index', compact('data', 'data2'));
@@ -111,9 +108,9 @@ class ProfilePatientController extends Controller
 
     public function Ajax2(Request $request)
     {
-        $data = Stunting::join('appointment', 'stunting.AppointmentID', '=', 'appointment.AppointmentID')->where('user_id', auth()->id())
+        $data = Stunting::join('patient', 'stunting.PatientID', '=', 'patient.PatientID')->where('user_id', auth()->id())
             ->select([
-                'appointment.patient_name',
+                'patient.name',
                 'stunting.age',
                 'stunting.gender',
                 'stunting.weight',

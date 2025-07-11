@@ -8,12 +8,11 @@
     <div class="container">
         <div class="card bg-white">
             <div class="card-body p-5">
-                <h1 class="text-primary text-center mb-5 fw-bold    ">Form Janji Temu (Stunting)</h1>
-                <form action="/janji-temu/store" method="post">
+                <h1 class="text-primary text-center mb-5 fw-bold">Form Janji Temu (Stunting)</h1>
+                <form action="/janji-temu/store" method="post" id="appointmentForm">
                     @csrf
                     <input type="hidden" name="doctor_name" id="txtnamadoctor">
                     <input type="hidden" name="patient_name" id="txtnamapatient">
-
                     <div class="row mb-3">
                         <div class="col-lg-2">
                             <label class="form-label fw-bold">Nama Pasien</label>
@@ -86,7 +85,5 @@
 
 <script src="/lib/sweetalert/sweetalert2.all.min.js"></script>
 <script src="/lib/select2/js/select2.full.min.js"></script>
-{{-- <script src="/js/datagrid/datatables/datatables.bundle.js"></script> --}}
-<script src="/js/modalForm.js"></script>
 <script src="/pages/appointment.js"></script>
 @endpush

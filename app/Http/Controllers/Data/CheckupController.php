@@ -9,6 +9,7 @@ use Yajra\DataTables\Services\DataTable;
 use App\Models\Appointment;
 use App\Models\Stunting;
 use App\Models\LokasiPuskesmas;
+use App\Models\Patient;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Barryvdh\DomPDF\Facade\Pdf;
 use DataTables;
@@ -30,10 +31,8 @@ class CheckupController extends Controller
         ]);
     }
 
-    public function Edit($id)
-    {
+    public function Edit($id){
         $data2 = Appointment::join('patient', 'appointment.PatientID', '=', 'patient.PatientID')
-        ->leftJoin('stunting', 'appointment.AppointmentID', '=', 'stunting.AppointmentID')
         ->where('appointment.AppointmentID', $id)
         ->select('appointment.*', 'patient.name', 'patient.gender')
         ->first();
@@ -108,31 +107,23 @@ class CheckupController extends Controller
 
     public function store(Request $v)
     {
-    //     $existingStunting = Stunting::join('appointment', 'stunting.AppointmentID', '=', 'appointment.AppointmentID')
-    //     ->where('appointment.PatientID', $v->PatientID)
-    //     ->select('stunting.*')
-    //     ->first();
 
-    // if ($existingStunting) {
-    //     $data = $existingStunting; // update data lama
-
-    // } else {
-    //     $data = new Stunting; // buat data baru
-    // }
-
-        if ($v->StuntingID == 0) {
+        if ($v->AppointmentID == 0) {
             $data = new Stunting;
         } else {
-            $data = Stunting::findOrFail($v->StuntingID);
-        }
+            $data = new Stunting;
 
-        $data->AppointmentID = $v->AppointmentID;
+            $data2 = Appointment::findOrFail($v->AppointmentID);
+            $data2->status = 'Selesai';
+            $data2->save();
+        }
+        $data->PatientID = $v->PatientID;
+        $data->PuskesmasID = auth()->id();
         $data->measuretype = $v->measuretype;
         $data->weight = $v->weight;
         $data->height = $v->height;
         $data->age = $v->age;
         $data->status = 'Selesai';
-        $data->date = $v->date;
         $data->gender = $v->gender;
 
         if ($v->gender == 'Perempuan') {
@@ -162,7 +153,7 @@ class CheckupController extends Controller
             }
         }
 
-        if ($v->gender == 'Perempuan' && $v->measuretype == 'Telentang') {
+        if ($v->gender == 'Perempuan' && $v->age <= 24) {
             $TBU = $this->loadBBUExcel(storage_path('/pb_perempuan_24.xlsx'));
 
             $usia = (int)$v->age;
@@ -213,7 +204,7 @@ class CheckupController extends Controller
 
         }
 
-        if ($v->gender == 'Perempuan' && $v->measuretype == 'Berdiri') {
+        if ($v->gender == 'Perempuan' && $v->age >= 24) {
             $TBU = $this->loadBBUExcel(storage_path('/tb_perempuan_60.xlsx'));
 
             $usia = (int)$v->age;
@@ -265,7 +256,7 @@ class CheckupController extends Controller
         }
 
 
-        if ($v->gender == 'Laki-laki') {
+        if ($v->gender == 'Laki-Laki') {
             $whoBBU = $this->loadBBUExcel(storage_path('/bb_laki_60.xlsx'));
 
             $usia = (int)$v->age;
@@ -292,7 +283,7 @@ class CheckupController extends Controller
             }
         }
 
-        if ($v->gender == 'Laki-laki' && $v->measuretype == 'Telentang') {
+        if ($v->gender == 'Laki-Laki' && $v->age <= 24) {
             $TBU = $this->loadBBUExcel(storage_path('/pb_laki_24.xlsx'));
 
             $usia = (int)$v->age;
@@ -343,7 +334,7 @@ class CheckupController extends Controller
             }
         }
 
-        if ($v->gender == 'Laki-laki' && $v->measuretype == 'Berdiri') {
+        if ($v->gender == 'Laki-Laki' && $v->age >= 24) {
             $TBU = $this->loadBBUExcel(storage_path('/tb_laki_60.xlsx'));
 
             $usia = (int)$v->age;
@@ -397,9 +388,6 @@ class CheckupController extends Controller
 
 
         $data->save();
-        $data2 = Appointment::findOrFail($v->AppointmentID);
-        $data2->status = 'Selesai';
-        $data2->save();
 
 
         return response()->json([
@@ -420,8 +408,7 @@ class CheckupController extends Controller
 
     public function downloadPdf($StuntingID)
     {
-        $data = Appointment::join('patient', 'appointment.PatientID', '=', 'patient.PatientID')
-        ->leftJoin('stunting', 'appointment.AppointmentID', '=', 'stunting.AppointmentID')->where('StuntingID', $StuntingID)->firstOrFail();
+        $data = Stunting::join('patient', 'stunting.PatientID', '=', 'patient.PatientID')->where('StuntingID', $StuntingID)->firstOrFail();
         $pdf = Pdf::loadView('puskesmas.data.appointment.rujukan', compact('data'));
         return $pdf->download('surat_rujukan_'.$data->StuntingID.'.pdf');
     }
@@ -429,7 +416,7 @@ class CheckupController extends Controller
 
     public function Ajax(Request $request)
     {
-        $puskesmasId = LokasiPuskesmas::where('user_id', auth()->id())->value('PuskesmasID');
+        $puskesmasId = LokasiPuskesmas::where('PuskesmasID', auth()->id())->value('PuskesmasID');
         $data = Appointment::with(['puskesmas', 'doctorOperationalTime'])
             ->where('PuskesmasID', $puskesmasId)
             ->where(function($query) {

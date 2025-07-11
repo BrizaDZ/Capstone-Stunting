@@ -9,7 +9,6 @@
     <div class="modal-body ">
         <input type="hidden" name="AppointmentID" value="{{ $data->AppointmentID }}" />
         {{-- <input type="hidden" name="StuntingID" value="{{ $data2->StuntingID }}" /> --}}
-        <input type="hidden" name="PatientID" id="PatientID" value="{{ $data2->PatientID }}" />
 
 
         @if ($data->AppointmentID != null)
@@ -23,7 +22,7 @@
             <label>ID Pasien</label>
             <div class="row">
                 <div class="col-10">
-                    <input type="text" name="PatientID" id="PatientIDSearch" class="form-control"/>
+                    <input type="text" name="PatientID" id="PatientIDSearch" class="form-control" value="{{ $data2->PatientID }}"/>
                 </div>
                 <div class="col-2">
                     <button class="btn btn-primary" id="searchPatient">Cari</button>
@@ -40,7 +39,7 @@
         <div class="form-group">
             <label>Jenis Kelamin</label>
             <input type="text" name="gender" id="PatientGender" class="form-control"
-                value="{{ $data2->gender }}" />
+                value="{{ $data2->gender }}" readonly/>
         </div>
         <div class="form-group">
             <label>Berat</label>
@@ -68,7 +67,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-success">Simpan</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
     </div>
 </form>
 

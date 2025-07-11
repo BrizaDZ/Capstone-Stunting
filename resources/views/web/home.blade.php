@@ -1,6 +1,9 @@
 @extends('layouts.web.layout')
 @push('style')
 <style>
+.bg-primary-200 {
+    background-color: #eaf2ff !important;
+}
 @media (max-width: 791px) {
     .card-group{
         display: block;
@@ -30,21 +33,46 @@
 @endpush
 
 @section('content')
-<!-- Chatbot Bubble -->
-<div id="chatbot-widget" class="position-fixed bottom-0 end-0 m-4 z-3" style="width: 350px;">
-    <div class="card shadow-lg" id="chatbox" style="display: none;">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-            <span>Chatbot StuntAIDS</span>
-            <button class="btn btn-sm btn-light" onclick="toggleChat()">−</button>
+<!-- Chatbot Sidebar Messenger -->
+<div id="chatbot-widget" class="position-fixed end-0 bottom-0 m-4 z-3" style="width: 350px; max-width: 95vw;">
+    <div class="card shadow-lg" id="chatbox" style="display: none; height: 500px; border-radius: 1rem 1rem 0 0;">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" style="border-radius: 1rem 1rem 0 0;">
+            <div class="d-flex gap-2 align-items-center">
+                <img src="/image/icon/chat.png" width="32" height="32" class="rounded-circle bg-white p-1">
+                <span id="chat-title">Chatbot StuntAIDS</span>
+            </div>
+            <button class="btn btn-sm btn-light" onclick="toggleChat()">×</button>
         </div>
-        <div class="card-body" style="height: 300px; overflow-y: auto;" id="chat-messages">
-            <div class="text-muted text-center">Tanyakan apa saja tentang stunting!</div>
+        <div class="d-flex border-bottom">
+            <button class="flex-fill btn btn-light border-0 rounded-0" id="tab-chatbot" onclick="switchChat('chatbot')">
+                <i class="bi bi-robot"></i> Chatbot
+            </button>
+            <button class="flex-fill btn btn-light border-0 rounded-0" id="tab-admin" onclick="switchChat('admin')">
+                <i class="bi bi-person-circle"></i> Admin
+            </button>
         </div>
-        <div class="card-footer">
-            <form onsubmit="sendMessage(event)">
+        <div class="card-body p-0" style="height: 340px; overflow-y: auto; background: #f8f9fa;">
+            <div id="chat-messages-chatbot" class="p-3" style="height: 100%; overflow-y: auto;">
+                <div class="text-muted text-center">Tanyakan apa saja tentang stunting!</div>
+            </div>
+            <div id="chat-messages-admin" class="p-3" style="height: 100%; overflow-y: auto; display: none;">
+                <div class="text-muted text-center">Chat dengan admin akan tampil di sini.</div>
+            </div>
+        </div>
+        <div class="card-footer bg-white">
+            <form onsubmit="sendMessage(event)" id="chatbot-form">
                 <div class="input-group">
                     <input type="text" id="user-input" class="form-control" placeholder="Ketik pesan..." required>
-                    <button class="btn btn-primary">Kirim</button>
+                    <button class="btn btn-primary" type="submit">Kirim</button>
+                    <button class="btn btn-light" type="button" id="voice-btn" title="Voice Input">
+                        <span id="mic-icon">🎤</span>
+                    </button>
+                </div>
+            </form>
+            <form onsubmit="sendAdminMessage(event)" id="admin-form" style="display: none;">
+                <div class="input-group">
+                    <input type="text" id="admin-input" class="form-control" placeholder="Ketik pesan ke admin..." required>
+                    <button class="btn btn-primary" type="submit">Kirim</button>
                 </div>
             </form>
         </div>
@@ -272,6 +300,7 @@
 
 @push('script')
 <script>
+    let selectedAdminUserId = null;
     const toggleChat = () => {
         const chatbox = document.getElementById('chatbox');
         const button = document.getElementById('open-chat');
@@ -284,14 +313,95 @@
         }
     }
 
+    // Tab switcher
+    function switchChat(mode) {
+        document.getElementById('chat-messages-chatbot').style.display = mode === 'chatbot' ? 'block' : 'none';
+        document.getElementById('chat-messages-admin').style.display = mode === 'admin' ? 'block' : 'none';
+
+        document.getElementById('chatbot-form').style.display = mode === 'chatbot' ? 'block' : 'none';
+        document.getElementById('admin-form').style.display = mode === 'admin' ? 'block' : 'none';
+        document.getElementById('tab-chatbot').classList.toggle('bg-primary', mode === 'chatbot');
+        document.getElementById('tab-chatbot').classList.toggle('text-white', mode === 'chatbot');
+        document.getElementById('tab-admin').classList.toggle('bg-primary', mode === 'admin');
+        document.getElementById('tab-admin').classList.toggle('text-white', mode === 'admin');
+        document.getElementById('chat-title').textContent = mode === 'chatbot' ? 'Chatbot StuntAIDS' : 'Admin StuntAIDS';
+        if (mode === 'admin') {
+        loadAdminMessages();
+    }
+    }
+    const userId = @json(auth()->id());
+    function loadAdminMessages() {
+    fetch(`/chat/${userId}`)
+        .then(res => res.json())
+        .then(chats => {
+            const container = document.getElementById('chat-messages-admin');
+            container.innerHTML = '';
+
+            if (chats.length === 0) {
+                container.innerHTML = '<div class="text-muted text-center">Belum ada percakapan.</div>';
+                return;
+            }
+
+            chats.forEach(chat => {
+                const bubble = document.createElement('div');
+                bubble.className = 'mb-2 ' + (chat.chatby === 'user' ? 'text-end' : 'text-start');
+
+                const color = chat.chatby === 'user' ? 'bg-primary' : 'bg-primary-200 text-dark';
+                bubble.innerHTML = `<span class="badge p-3 ${color}">${chat.chat}</span>`;
+                container.appendChild(bubble);
+            });
+
+            container.scrollTop = container.scrollHeight;
+        })
+        .catch(err => {
+            console.error('Gagal memuat chat admin:', err);
+        });
+}
+
+function sendAdminMessage(event) {
+    event.preventDefault();
+    const input = document.getElementById('admin-input');
+    const message = input.value.trim();
+    if (message === '') return;
+
+    fetch('/chat-store', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+            chat: message,
+            user_id: 'admin' // atau ID admin statis jika tersedia
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const container = document.getElementById('chat-messages-admin');
+        const bubble = document.createElement('div');
+        bubble.className = 'mb-2 text-end';
+        bubble.innerHTML = `<span class="badge p-3 bg-primary text-white">${data.chat}</span>`;
+        container.appendChild(bubble);
+
+        input.value = '';
+        container.scrollTop = container.scrollHeight;
+    })
+    .catch(err => {
+        console.error('Gagal mengirim pesan ke admin:', err);
+        alert('Gagal mengirim pesan.');
+    });
+}
+    // Default tab
+    switchChat('chatbot');
+
     async function sendMessage(e) {
         e.preventDefault();
         const input = document.getElementById('user-input');
         const message = input.value.trim();
         if (!message) return;
 
-        const chatMessages = document.getElementById('chat-messages');
-
+        const chatMessages = document.getElementById('chat-messages-chatbot');
+        const userId = {{ auth()->id() }};
         // Tambahkan pesan pengguna
         chatMessages.innerHTML += `
             <div class="text-end">
@@ -316,20 +426,65 @@
             const res = await fetch("http://127.0.0.1:5001/chatbot/ask", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ question: message })
+                body: JSON.stringify({ question: message, user_id: userId })
             });
 
             const data = await res.json();
             document.getElementById('loading').remove();
 
-            // Tambahkan jawaban dari chatbot
+            const escapedAnswer = data.jawaban
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\\n|\n/g, "<br>")
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+            const plainAnswer = data.jawaban
+    .replace(/<[^>]+>/g, '')      // Hilangkan HTML tag
+    .replace(/\*\*/g, '')         // Hilangkan tanda **
+    .replace(/\*/g, '')           // Hilangkan tanda *
+    .replace(/\\n/g, ' ')         // Hilangkan \n (escaped)
+    .replace(/\n/g, ' ')          // Hilangkan newline asli
+    .replace(/\s+/g, ' ')         // Gabungkan spasi berlebih
+    .trim();                      // Hilangkan spasi depan belakang
+
+            // Auto bacakan jawaban
+            speakText(plainAnswer);
+
             chatMessages.innerHTML += `
-                <div class="text-start">
-                    <div class="badge bg-light p-2 my-1 text-dark text-justify text-wrap" style="white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inherit; text-align: justify; font-size: 0.85em; line-height: 1.5em;">
-                        ${data.jawaban}
+                <div class="text-start d-flex align-items-start gap-2">
+                    <div class="badge bg-primary-200 p-2 my-1 text-dark text-justify text-wrap" style="white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inherit; text-align: justify; font-size: 0.85em; line-height: 1.5em;">
+                        ${escapedAnswer}
                     </div>
+                    <button class="btn btn-sm btn-light speak-btn" title="Bacakan jawaban" data-answer="${encodeURIComponent(plainAnswer)}">
+                        🔊
+                    </button>
                 </div>
             `;
+
+            if (data.status === "belum terjawab") {
+                switchChat('admin');
+                const adminChat = document.getElementById('chat-messages-admin');
+                adminChat.innerHTML += `
+                    <div class="text-end">
+                        <div class="badge bg-primary my-1 text-wrap text-white p-2 text-justify" style="white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inherit; text-align: justify; font-size: 0.85em; line-height: 1.5em;">
+                         Pertanyaan dari pengguna: ${message}
+                         Chatbot belum dapat menjawab. Mohon ditindaklanjuti.
+                        </div>
+                    </div>
+                `;
+                adminChat.scrollTop = adminChat.scrollHeight;
+            }
+
+            // Tambahkan event listener untuk tombol speaker
+            setTimeout(() => {
+                document.querySelectorAll('.speak-btn').forEach(btn => {
+                    btn.onclick = function() {
+                        const text = decodeURIComponent(this.getAttribute('data-answer'));
+                        speakText(text);
+                    };
+                });
+            }, 100);
         } catch (err) {
             document.getElementById('loading').remove();
             chatMessages.innerHTML += `
@@ -343,5 +498,59 @@
 
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
+
+    // Voice input feature
+    let recognizing = false;
+    let recognition;
+    const voiceBtn = document.getElementById('voice-btn');
+    const userInput = document.getElementById('user-input');
+    const micIcon = document.getElementById('mic-icon');
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.lang = 'id-ID'; // Ganti ke 'en-US' jika ingin bahasa Inggris
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        recognition.onstart = function() {
+            recognizing = true;
+            micIcon.textContent = "🔴";
+        };
+        recognition.onend = function() {
+            recognizing = false;
+            micIcon.textContent = "🎤";
+        };
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            userInput.value = transcript;
+            userInput.focus();
+        };
+
+        voiceBtn.addEventListener('click', function() {
+            if (recognizing) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        });
+    } else {
+        voiceBtn.disabled = true;
+        micIcon.textContent = "🚫";
+        voiceBtn.title = "Voice input tidak didukung di browser ini";
+    }
+
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'id-ID'; // Ganti ke 'en-US' jika ingin bahasa Inggris
+            window.speechSynthesis.cancel(); // Stop speech jika sedang berbicara
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert('Fitur text-to-speech tidak didukung di browser ini.');
+        }
+    }
+
+
 </script>
 @endpush

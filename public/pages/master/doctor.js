@@ -12,12 +12,28 @@ function loadContent() {
 }
 
 $(document).on('shown.bs.modal', '#myModal', function () {
-    // var kota = $('.sKabupaten').val();
-
-    // PopulateKabupaten();
-    // PopulateKecamatan(kota);
-    // var kec = $('.sKecamatan option:selected').val();
-    // PopulateKelurahan(kec);
+    $(document).ready(function () {
+        $("#btn-photo").click(function () {
+            var postData = new FormData($("#formdoctor")[0]);
+            $.ajax({
+                type: "POST",
+                url: "/master/doctor/store",
+                processData: false,
+                contentType: false,
+                data: postData,
+                success: function (result) {
+                    if (result.success) {
+                        $("#myModal").modal("hide");
+                        showSuccessMessage();
+                    } else if (result.invalid) {
+                        showInvalidMessage();
+                    }else {
+                        printErrorMsg(result.error);
+                    }
+                },
+            });
+        });
+    });
 });
 
 function loadTable() {

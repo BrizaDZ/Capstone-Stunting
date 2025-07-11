@@ -13,13 +13,13 @@ class StuntingDataExport implements FromCollection, WithHeadings
     public function collection()
     {
         // Ambil PuskesmasID berdasarkan user yang login
-        $puskesmasId = LokasiPuskesmas::where('user_id', Auth::id())->value('PuskesmasID');
+        $puskesmasId = LokasiPuskesmas::where('PuskesmasID', Auth::id())->value('PuskesmasID');
 
         // Query data stunting yang sesuai dengan PuskesmasID
-        return Stunting::join('appointment', 'stunting.AppointmentID', '=', 'appointment.AppointmentID')
-            ->where('appointment.PuskesmasID', $puskesmasId)
+        return Stunting::join('patient', 'stunting.PatientID', '=', 'patient.PatientID')
+            ->where('stunting.PuskesmasID', $puskesmasId)
             ->select([
-                'appointment.patient_name',
+                'patient.name',
                 'stunting.age',
                 'stunting.gender',
                 'stunting.weight',

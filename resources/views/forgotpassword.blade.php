@@ -27,42 +27,20 @@
             <div class="row align-items-center vh-100">
                 <div class="col-md-5">
                     <div class="p-4 w-100 ms-3">
-                        <h2 class="mb-4 text-center fw-bold text-primary">Login</h2>
+                        <h2 class="mb-4 text-center fw-bold text-primary">Reset Password</h2>
                         @if (session('status'))
                             <div class="alert alert-success mt-3">
                                 {{ session('status') }}
                             </div>
                         @endif
-                        @if (session('error'))
-                            <div class="alert alert-danger mt-3">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-
-                        @if ($errors->any())
-                            <div class="alert alert-danger mt-3">
-                                @foreach ($errors->all() as $error)
-                                    <p class="mb-0">{{ $error }}</p>
-                                @endforeach
-                            </div>
-                        @endif
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{route('password.email')}}">
                             @csrf
                             <div class="input-container">
                                 <input type="email" id="email" placeholder=" " name="email" required>
                                 <label for="email">Email Address</label>
-                                <span :messages="$errors->get('email')" class="mt-2"></span>
+                                <span :messages="$errors->get('email')" class="mt-2"> </span>
                             </div>
-                            <div class="input-container">
-                                <input type="password" id="password" placeholder=" " name="password" required>
-                                <label for="password">Password</label>
-                                <span :messages="$errors->get('password')" class="mt-2"> </span>
-                            </div>
-                            <button type="submit" class="py-3 border-0 btn btn-primary w-100 fs-6 rounded-3" href="../homepage/homepage.html">Sign In</button>
-                            <div class="text-center mt-3">
-                            <a class="text-center text-decoration-none mt-2" href="/forgot-password">Lupa Password?</a>
-
-                            </div>
+                            <button type="submit" class="py-3 border-0 btn btn-primary w-100 fs-6 rounded-3">Reset</button>
                         </form>
                         <p class="mt-3 black">Don't have an account? <a href="/register" class="bs-primary text-decoration-none">Sign Up</a></p>
                     </div>

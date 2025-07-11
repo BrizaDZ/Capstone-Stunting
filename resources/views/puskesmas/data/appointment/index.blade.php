@@ -29,13 +29,12 @@
                     </button>
                 </div>
                 <div class="modal-body" id="resultModalContent">
-                    <!-- Hasil akan ditampilkan di sini -->
                 </div>
                 <div class="modal-footer">
-                    <a href="/surat-rujukan/download/{{$data->StuntingID}}" class="btn btn-primary" target="_blank">
-                        Download PDF
+                    <a  class="btn btn-primary" target="_blank">
+                        Download Surat Rujukan
                     </a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>

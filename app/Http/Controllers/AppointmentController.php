@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Services\DataTable;
 use App\Models\Appointment;
+use App\Models\Patient;
 use App\Models\DoctorOperationalTime;
 use Barryvdh\DomPDF\Facade\Pdf;
 use DataTables;
@@ -15,8 +16,13 @@ use Auth;
 
 class AppointmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if (!Patient::where('user_id', auth()->id())->exists()) {
+            if ($request->ajax()) {
+                return response()->json(['success' => false]);
+            }
+        }
         return view('web.appointment', ['data' => new Appointment]);
     }
 
@@ -49,14 +55,14 @@ class AppointmentController extends Controller
         $data->PuskesmasID = $v->PuskesmasID;
         $data->doctor_name = $v->doctor_name;
         $data->patient_name = $v->patient_name;
-
+        $data->status = 'Sedang Berlangsung';
         $data->save();
 
         $queue_number = $currentAppointmentCount + 1;
 
         return response()->json([
             'success' => true,
-            'appointment_id' => $data->id,
+            'appointment_id' => $data->AppointmentID,
             'queue_number' => $queue_number,
         ]);
     }

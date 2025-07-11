@@ -1,4 +1,4 @@
-<form action="/data/pasien/store" method="post">
+<form id="formPasien" action="/data/pasien/store" method="post">
     @csrf
     <div class="modal-header">
         <h4 class="modal-title">
@@ -9,10 +9,15 @@
 
     <div class="modal-body ">
         <input type="hidden" name="id" value="{{ $data->PatientID }}" />
+        <input type="hidden" name="kabupaten" id="NamaKab">
+        <input type="hidden" name="kecamatan" id="NamaKec">
+        <input type="hidden" name="kelurahan" id="NamaKel">
+
         <div class="row mb-3">
             <div class="col-lg-6">
                 <label class="form-label">NIK</label>
-                <input type="text" class="form-control" name="nik" value="{{ $data->nik }}">
+                <input type="text" class="form-control" name="nik" value="{{ $data->nik }}" maxlength="16">
+
             </div>
             <div class="col-lg-6">
                 <label class="form-label">Nama</label>
@@ -44,37 +49,46 @@
         </div>
         <div class="row mb-3">
             <div class="col-lg-6">
-                <label class="form-label">Kabupaten</label>
-                <input type="text" class="form-control" name="kabupaten" value="{{ $data->kabupaten }}">
+                <label class="form-label">Provinsi</label>
+                <select type="text" class="form-control select2 sProvince">
+                </select>
             </div>
             <div class="col-lg-6">
-                <label class="form-label">Kelurahan</label>
-                <input type="text" class="form-control" name="kelurahan" value="{{ $data->kelurahan }}">
+                <label class="form-label">Kabupaten</label>
+                <select type="text" class="form-control select2 sRegency">
+                </select>
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-lg-6">
+            <div class="col-lg-3">
                 <label class="form-label">Kecamatan</label>
-                <input type="text" class="form-control" name="kecamatan" value="{{ $data->kecamatan }}">
+                <select type="text" class="form-control select2 sDistrict"></select>
+            </div>
+            <div class="col-lg-3">
+                <label class="form-label">Kelurahan</label>
+                <select type="text" class="form-control select2 sVillage"></select>
             </div>
             <div class="col-lg-3">
                 <label class="form-label">RT</label>
-                <input type="number" class="form-control" name="rt" value="{{ $data->rt }}">
+                <input type="number" class="form-control" name="rt">
             </div>
             <div class="col-lg-3">
                 <label class="form-label">RW</label>
-                <input type="number" class="form-control" name="rw" value="{{ $data->rw }}">
+                <input type="number" class="form-control" name="rw">
             </div>
         </div>
         <div class="row mb-3">
             <div class="col-lg-12">
                 <label class="form-label">Alamat</label>
-                <textarea class="form-control" name="alamat" id="" cols="30" rows="1" >{{$data->alamat}}</textarea>
+                <textarea class="form-control" name="alamat" id="" cols="30" rows="2" >{{$data->alamat}}</textarea>
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-success">Simpan</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
     </div>
 </form>
+
+
+

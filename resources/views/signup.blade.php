@@ -36,6 +36,11 @@
                 <div class="col-md-5 ">
                     <div class="p-4">
                         <h2 class="mb-4 text-center fw-bold text-primary">Register</h2>
+                        @if (session('status'))
+                            <div class="alert alert-success mt-3">
+                                {{ session('status') }}
+                            </div>
+                        @endif
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="input-container">

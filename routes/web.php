@@ -20,7 +20,7 @@ use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\MpasiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PredictController;
-
+use App\Http\Controllers\ApiExternalController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -30,6 +30,10 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::get('/chat', [ChatbotController::class, 'index']);
 Route::post('/chat', [ChatbotController::class, 'ask']);
+Route::get('/chat/{userId}', [DashboardController::class, 'getChatByUser']);
+Route::get('/chat-users', [DashboardController::class, 'getUsersWithChat']);
+Route::post('/chat-store', [DashboardController::class, 'storeChat']);
+
 
 Route::get('/mpasi', [MpasiController::class, 'form']);
 Route::post('/predict-mpasi', [MpasiController::class, 'predict']);
@@ -39,6 +43,12 @@ Route::post('/api/predict-stunting', [PredictController::class, 'predict']);
 
 
 Route::get('/export-stunting', [StuntingExportController::class, 'export'])->name('export.stunting');
+
+//api external
+Route::get('/api/provinces', [ApiExternalController::class, 'getProvinces']);
+Route::get('/api/regencies/{id}', [ApiExternalController::class, 'getRegencies']);
+Route::get('/api/districts/{id}', [ApiExternalController::class, 'getDistricts']);
+Route::get('/api/village/{id}', [ApiExternalController::class, 'getVillage']);
 
 Route::get('/master/doctor/search', [DoctorController::class, 'search']);
 Route::get('/master/puskesmas/search', [LokasiPuskesmasController::class, 'search']);

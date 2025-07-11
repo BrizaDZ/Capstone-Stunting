@@ -1,4 +1,22 @@
 $(document).ready(function () {
+    $.ajax({
+        url: '/janji-temu',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if (response.success === false) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Data Pasien Belum Lengkap',
+                    text: 'Harap isi data pasien terlebih dahulu di menu profil sebelum membuat janji temu.',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = '/profile/patient';
+                });
+            }
+        }
+    });
+
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -67,9 +85,9 @@ function PopulatePuskesmas() {
                 return {
                     results: $.map(result, function (item) {
                         return {
-                            id: item.PuskesmasID,
+                            id: item.LokasiPuskesmasID,
                             text: item.nama,
-                            user_id: item.user_id // <- tambahkan user_id di result
+                            puskesmasid: item.PuskesmasID
                         };
                     })
                 };
@@ -80,11 +98,9 @@ function PopulatePuskesmas() {
         var selectedData = e.params.data;
         var userId = selectedData.user_id;
 
-        // Reset dokter dulu
         $('.sDoctor').val(null).trigger('change');
         $('.sDoctor').select2('destroy');
 
-        // Populate dokter berdasarkan user_id
         PopulateDoctor(userId);
     });
 }
@@ -118,11 +134,9 @@ function PopulateDoctor(userId) {
     }).on('select2:select', function (e) {
         var doctorId = e.params.data.DoctorID;
 
-        // Reset schedule dropdown
         $('.sSchedule').val(null).trigger('change');
         $('.sSchedule').select2('destroy');
 
-        // Populate jadwal dokter berdasarkan DoctorID
         PopulateSchedule(doctorId);
     }).on('change', function () {
         var doctorName = $('.sDoctor option:selected').text();
@@ -158,4 +172,55 @@ function PopulateSchedule(doctorId) {
         }
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("appointmentForm");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Janji Temu Berhasil!',
+                    html: `
+                        Nomor Antrian Anda: <strong>${data.queue_number}</strong><br><br>
+                        <a href="/appointment/print/${data.appointment_id}" target="_blank" class="btn btn-success mt-3 btn-lg">
+                            Download Kartu Antrean
+                        </a>
+                    `,
+                    showConfirmButton: true,
+                    confirmButtonText: 'Tutup'
+                });
+
+                form.reset();
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: data.message || 'Terjadi kesalahan saat menyimpan data.',
+                });
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Terjadi kesalahan pada server.',
+            });
+        });
+    });
+});
 

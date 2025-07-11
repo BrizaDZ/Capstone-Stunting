@@ -53,6 +53,8 @@ function showResultModal(data) {
     `;
     $('#resultModalContent').html(content);
 
+    $('#resultModal .btn-primary').attr('href', `/surat-rujukan/download/${data.StuntingID}`);
+
     // Tampilkan modal
     $('#resultModal').modal('show');
 }

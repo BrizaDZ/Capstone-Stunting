@@ -36,6 +36,7 @@
                             <table class="table table-light m-0  w-100" id="tblData">
                                 <thead class="text-white bg-primary-200">
                                     <tr>
+                                        <th>ID Pasien</th>
                                         <th>Nama Pasien</th>
                                         <th>Umur</th>
                                         <th>Jenis Kelamin</th>

@@ -1,213 +1,210 @@
 @extends('layouts.web.layout')
 
 @push('style')
-    <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />
-    <link rel="stylesheet" href="/lib/select2/css/select2.min.css" />
-    <link rel="stylesheet" href="/css/datagrid/datatables/datatables.bundle.css" />
-    <link rel="stylesheet" href="/lib/leaflet/leaflet.css" />
-    {{-- <link rel="stylesheet" href="/css/addon.css" /> --}}
-    <script src="/lib/leaflet/leaflet.js"></script>
+<link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />
+<link rel="stylesheet" href="/lib/select2/css/select2.min.css" />
+<link rel="stylesheet" href="/css/datagrid/datatables/datatables.bundle.css" />
+<link rel="stylesheet" href="/lib/leaflet/leaflet.css" />
+<script src="/lib/leaflet/leaflet.js"></script>
+<style>
+    #checkupTabs .nav-link {
+        cursor: pointer;
+    }
+
+    .list-group-item{
+        cursor: pointer;
+    }
+
+    .list-group-item:hover{
+        background-color: #7bc9ff;
+    }
+</style>
 @endpush
+
 @section('content')
-    <!--Modal Window-->
-<section class="m-0 p-0 vh-100 d-flex align-items-center justify-content-center">
-    <div id='myModal' class='modal fade' data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-        aria-hidden="true">
+<section class="pt-5 p-3 vh-100 d-flex align-items-start my-5 justify-content-center bg-primary-200">
+    <div class="modal fade" id="myModal" data-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div id='myModalContent'></div>
             </div>
         </div>
     </div>
-    <div class="bg-white p-4 rounded shadow w-25">
-        <h4 class="mb-3">Pengaturan</h4>
-        <ul class="list-group">
-            <li class="list-group-item active d-flex align-items-center" onclick="showForm('form-akun', this)">
-                <img src="/image/icons8-user-icon-48.png" alt="User" class="me-2" width="24">
-                Akun Saya
-            </li>
-            <li class="list-group-item d-flex align-items-center" onclick="showForm('form-anak', this)">
-                <img src="/image/icons8-user-groups-64.png" alt="User" class="me-2" width="24">
-                Profil Anak
-            </li>
-            <li class="list-group-item d-flex align-items-center" onclick="showForm('change-password', this)">
-                <img src="/image/icons8-password-key-48.png" alt="User" class="me-2" width="24">
-                Ganti Password
-            </li>
-            <li class="list-group-item d-flex align-items-center" onclick="showForm('checkup', this)">
-                <img src="/image/icons8-order-history-48.png" alt="User" class="me-2" width="24">
-                History Checkup
-            </li>
-            <li class="list-group-item text-danger d-flex align-items-center">
-                <img src="/image/icons8-logout-48.png" alt="User" class="me-2" width="24">
-                Logout
-            </li>
-        </ul>
-    </div>
-    <div class="position-relative bg-white p-4 rounded shadow w-50 ms-4">
-        <div id="form-akun" class="form-container">
-            <h2 class="mb-4">About You</h2>
-            <form action="/profile/patient/storedetail" method="post">
-                @csrf
-                <div class="mb-3">
-                    <label for="nama" class="form-label">Full Name</label>
-                    <input type="text" name="name" class="form-control" value="{{ $data->name }}">
-                </div>
-                <div class="row">
-                    <!-- Form Section (kiri) -->
-                    <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="address-input">Alamat Lengkap</label>
-                                <input type="text" name="alamat" id="address-input" class="form-control" placeholder="Masukkan alamat" value="{{ $data->alamat }}">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="latitude">Latitude</label>
-                                <input type="text" name="latitude" id="latitude" class="form-control" value="{{ $data->latitude }}">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="longitude">Longitude</label>
-                                <input type="text" name="longitude" id="longitude" class="form-control" value="{{ $data->longitude }}">
-                            </div>
-                    </div>
 
-                    <!-- Map Section (kanan) -->
-                    <div class="col-md-6">
-                        <div id="map" style="height: 300px; width: 100%; border-radius: 8px;"></div>
-                    </div>
+    <div class="container-xl container-fluid">
+        <div class="row g-4">
+            <!-- Sidebar Menu -->
+            <div class="col-12 col-md-4">
+                <div class="bg-white p-4 rounded shadow w-100">
+                    <h4 class="mb-3">Pengaturan</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item active d-flex align-items-center" onclick="showForm('form-akun', this)">
+                            <img src="/image/icons8-user-icon-48.png" class="me-2" width="24"> Akun Saya
+                        </li>
+                        <li class="list-group-item d-flex align-items-center" onclick="showForm('form-pasien', this)">
+                            <img src="/image/icons8-user-groups-64.png" class="me-2" width="24"> Data Pasien
+                        </li>
+                        {{-- <li class="list-group-item d-flex align-items-center" onclick="showForm('change-password', this)">
+                            <img src="/image/icons8-password-key-48.png" class="me-2" width="24"> Ganti Password
+                        </li> --}}
+                        <li class="list-group-item d-flex align-items-center" onclick="showForm('checkup', this)">
+                            <img src="/image/icons8-order-history-48.png" class="me-2" width="24"> History Checkup
+                        </li>
+                        <li class="list-group-item text-danger d-flex align-items-center">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="text-decoration-none" href="route('logout')"
+                                        onclick="event.preventDefault();
+                                        this.closest('form').submit();"><img src="/image/icons8-logout-48.png" class="me-2" width="24"> Logout</a>
+                            </form>
+
+                        </li>
+                    </ul>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 mt-3">Save Changes</button>
-            </form>
-        </div>
-        <div id="form-anak" class="form-container" style="display: none;">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="mb-0">Profil Anak</h2>
-                <button type="button" class="btn btn-primary showMe" data-href="/profile/patient/add">
-                    Tambah Anak
-                </button>
             </div>
-            <div class="table-responsive-lg">
-                <table class="table table-light m-0  w-100" id="tblData">
-                    <thead class="text-white bg-primary-200">
-                        <tr>
-                            <th>Nama Pasien</th>
-                            <th>Umur</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Kabupaten</th>
-                            <th>Kecamatan</th>
-                            <th>Kelurahan</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-        <div id="change-password" class="form-container" style="display: none;">
-            <h2 class="mb-4">Change Password</h2>
-            <form id="changePasswordForm">
-                <div class="mb-3">
-                    <label for="current-password" class="form-label">Current Password</label>
-                    <input type="password" class="form-control" id="current-password" placeholder="Enter current password" required>
-                </div>
-                <div class="mb-3">
-                    <label for="new-password" class="form-label">New Password</label>
-                    <input type="password" class="form-control" id="new-password" placeholder="Enter new password" required>
-                </div>
-                <div class="mb-3">
-                    <label for="confirm-password" class="form-label">Confirm New Password</label>
-                    <input type="password" class="form-control" id="confirm-password" placeholder="Confirm new password" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Update Password</button>
-                <p id="password-error" class="text-danger mt-2" style="display: none;">Passwords do not match!</p>
-            </form>
-        </div>
-        <div id="checkup" class="form-container" style="display: none;">
-            <h2 class="text-center">History Medical Checkup</h2>
-            <ul class="nav nav-tabs mt-4" id="checkupTabs">
-                <li class="nav-item">
-                    <a class="nav-link active" id="scheduled-tab" href="#scheduled" onclick="showTab(event, 'scheduled')">Scheduled</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="onprocess-tab" href="#onprocess" onclick="showTab(event, 'onprocess')">Checkup Results</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="chart-tab" href="#chart" onclick="showTab(event, 'chart')">Grafik BB/U</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="chart2-tab" href="#chart2" onclick="showTab(event, 'chart2')">Grafik TB/U</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="chart3-tab" href="#chart3" onclick="showTab(event, 'chart3')">Grafik BB/TB</a>
-                </li>
-            </ul>
 
-            <div class="tab-content mt-3">
-                <div id="scheduled" class="tab-pane fade show active">
-                    <h3>Scheduled Appointments</h3>
-                    <div class="table-responsive-lg">
-                        <table class="table table-light m-0  w-100" id="tblSchedule">
-                            <thead class="text-white bg-primary-200">
-                                <tr>
-                                    <th>Nama Pasien</th>
-                                    <th>Puskesmas</th>
-                                    <th>Dokter</th>
-                                    <th>Jadwal</th>
-                                    <th>Status</th>
-                                    <th>Kartu Antrean</th>
-                                </tr>
-                            </thead>
-                        </table>
+            <!-- Content Form Area -->
+            <div class="col-12 col-md-8">
+                <div class="bg-white p-4 rounded shadow w-100">
+                    <!-- Akun -->
+                    <div id="form-akun" class="form-container">
+                        <h2 class="mb-4">About You</h2>
+                        <form action="/profile/patient/storedetail" method="post">
+                            @csrf
+
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3">
+                                        <label for="nama" class="form-label">Full Name</label>
+                                        <input type="text" name="name" class="form-control" value="{{ $data->name }}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address-input">Alamat Lengkap</label>
+                                        <input type="text" name="alamat" class="form-control" id="address-input" value="{{ $data->alamat }}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="latitude">Latitude</label>
+                                        <input type="text" name="latitude" class="form-control" id="latitude" value="{{ $data->latitude }}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="longitude">Longitude</label>
+                                        <input type="text" name="longitude" class="form-control" id="longitude" value="{{ $data->longitude }}">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <div id="map" style="height: 300px; width: 100%; border-radius: 8px;"></div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                        </form>
                     </div>
-                </div>
 
-                <div id="onprocess" class="tab-pane fade">
-                    <h3>Checkup Results</h3>
-                    <div class="table-responsive-lg">
-                        <table class="table table-light m-0  w-100" id="tblResult">
-                            <thead class="text-white bg-primary-200">
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Umur</th>
-                                    <th>Jenis Kelamin</th>
-                                    <th>Tinggi/Panjang</th>
-                                    <th>Berat</th>
-                                    <th>TB/U</th>
-                                    <th>BB/U</th>
-                                    <th>BB/TB</th>
-                                    <th>Status Stunting</th>
-                                </tr>
-                            </thead>
-                        </table>
+                    <!-- Pasien -->
+                    <div id="form-pasien" class="form-container" style="display: none;">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                            <h2 class="mb-2">Data Pasien</h2>
+                            <button type="button" class="btn btn-primary showMe" data-href="/profile/patient/add">Tambah Pasien</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-light w-100" id="tblData">
+                                <thead class="bg-primary-200 text-white">
+                                    <tr>
+                                        <th>Nama Pasien</th>
+                                        <th>Umur</th>
+                                        <th>Jenis Kelamin</th>
+                                        <th>Kabupaten</th>
+                                        <th>Kecamatan</th>
+                                        <th>Kelurahan</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <div id="chart" class="tab-pane fade">
-                    <div class="mt-4">
 
-                        <canvas id="chartWeightAge"></canvas>
+                    <!-- Ganti Password -->
+                    {{-- <div id="change-password" class="form-container" style="display: none;">
+                        <h2 class="mb-4">Change Password</h2>
+                        <form id="changePasswordForm">
+                            <div class="mb-3">
+                                <label class="form-label">Current Password</label>
+                                <input type="password" class="form-control" id="current-password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="new-password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" id="confirm-password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Update Password</button>
+                            <p id="password-error" class="text-danger mt-2" style="display: none;">Passwords do not match!</p>
+                        </form>
+                    </div> --}}
 
-                    </div>
-                </div>
-                <div id="chart2" class="tab-pane fade">
-                    <div class="mt-4">
-
-                        <canvas id="chartHeightAge"></canvas>
-
-                    </div>
-                </div>
-                <div id="chart3" class="tab-pane fade">
-                    <div class="mt-4">
-
-                        <canvas id="chartWeightHeight"></canvas>
-
+                    <!-- Checkup History -->
+                    <div id="checkup" class="form-container" style="display: none;">
+                        <h2 class="text-center">History Medical Checkup</h2>
+                        <ul class="nav nav-tabs mt-3" id="checkupTabs">
+                            <li class="nav-item"><a class="nav-link active" onclick="showTab(event, 'scheduled')">Scheduled</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showTab(event, 'onprocess')">Checkup Results</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showTab(event, 'chart')">Grafik BB/U</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showTab(event, 'chart2')">Grafik TB/U</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showTab(event, 'chart3')">Grafik BB/TB</a></li>
+                        </ul>
+                        <div class="tab-content mt-3">
+                            <div id="scheduled" class="tab-pane fade show active">
+                                <div class="table-responsive">
+                                    <table class="table table-light w-100" id="tblSchedule">
+                                        <thead class="bg-primary-200 text-white">
+                                            <tr>
+                                                <th>Nama Pasien</th>
+                                                <th>Puskesmas</th>
+                                                <th>Dokter</th>
+                                                <th>Jadwal</th>
+                                                <th>Status</th>
+                                                <th>Kartu Antrean</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="onprocess" class="tab-pane fade">
+                                <div class="table-responsive">
+                                    <table class="table table-light w-100" id="tblResult">
+                                        <thead class="bg-primary-200 text-white">
+                                            <tr>
+                                                <th>Nama</th>
+                                                <th>Umur</th>
+                                                <th>Jenis Kelamin</th>
+                                                <th>Tinggi/Panjang</th>
+                                                <th>Berat</th>
+                                                <th>TB/U</th>
+                                                <th>BB/U</th>
+                                                <th>BB/TB</th>
+                                                <th>Status Stunting</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="chart" class="tab-pane fade"><canvas id="chartWeightAge"></canvas></div>
+                            <div id="chart2" class="tab-pane fade"><canvas id="chartHeightAge"></canvas></div>
+                            <div id="chart3" class="tab-pane fade"><canvas id="chartWeightHeight"></canvas></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </section>
 @endsection
 
 @push('script')
 <script src="/lib/sweetalert/sweetalert2.all.min.js"></script>
+
 <script src="/lib/select2/js/select2.full.min.js"></script>
 <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
 <script src="/js/modalForm.js"></script>
@@ -291,7 +288,10 @@
 <script>
     const chartData = @json($data2);
 
-    const labels = chartData.map(item => item.appointment_date);
+    const labels = chartData.map(item => {
+            const date = new Date(item.created_at);
+            return date.toISOString().slice(0, 10);
+        });
     const zWeightAge = chartData.map(item => parseFloat(item.zscoreweightage));
     const zHeightAge = chartData.map(item => parseFloat(item.zscoreheightage));
     const zWeightHeight = chartData.map(item => parseFloat(item.zscoreweightheight));

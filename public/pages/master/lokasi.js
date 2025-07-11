@@ -14,7 +14,10 @@ function loadContent() {
 
 $(document).on('shown.bs.modal', '#myModal', function () {
     var kota = $('.sKabupaten').val();
-
+    PopulateProvince();
+    PopulateRegency();
+    PopulateDistrict();
+    PopulateVillage();
     // PopulateKabupaten();
     // PopulateKecamatan(kota);
     // var kec = $('.sKecamatan option:selected').val();
@@ -36,20 +39,135 @@ function loadTable() {
             dataType: "json"
         },
         columns: [
-            { data: "nama", name: "nama", autoWidth: true },
-            { data: "alamat", name: "alamat", autoWidth: true },
-            { data: "Kabupaten", name: "Kabupaten", autoWidth: true },
-            { data: "Kecamatan", name: "Kecamatan", autoWidth: true },
-            { data: "Kelurahan", name: "Kelurahan", autoWidth: true },
-            { data: "longitude", name: "longitude", autoWidth: true },
-            { data: "latitude", name: "latitude", autoWidth: true },
+            { data: "name", name: "users.name", autoWidth: true },
+            { data: "alamat", name: "lokasipuskesmas.alamat", autoWidth: true },
+            { data: "Kabupaten", name: "lokasipuskesmas.Kabupaten", autoWidth: true },
+            { data: "Kecamatan", name: "lokasipuskesmas.Kecamatan", autoWidth: true },
+            { data: "Kelurahan", name: "lokasipuskesmas.Kelurahan", autoWidth: true },
+            { data: "longitude", name: "lokasipuskesmas.longitude", autoWidth: true },
+            { data: "latitude", name: "lokasipuskesmas.latitude", autoWidth: true },
 
             {
                 data: 'PuskesmasID',
-                render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-primary mr-2 showMe' style='width:100%;' data-href='/data/puskesmas/edit/" + row.PuskesmasID + "'> Edit</button>" }
+                render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-primary mr-2 showMe' style='width:100%;' data-href='/data/puskesmas/edit/" + row.id + "'> Edit</button>" }
             }
         ],
         order: [[0, "desc"]]
     })
 }
 
+function PopulateProvince() {
+    $('.sProvince').select2({
+        placeholder: 'Pilih Provinsi...',
+        allowClear: true,
+        dropdownParent: $("#myModal"),
+        ajax: {
+            url: "/api/provinces",
+            contentType: "application/json; charset=utf-8",
+            data: function (params) {
+                var query = {
+                    term: params.term,
+                };
+                return query;
+            },
+            processResults: function (result) {
+                return {
+                    results: $.map(result, function (item) {
+                        return {
+                            id: item.id,
+                            text: item.name,
+                        };
+                    })
+                };
+            },
+            cache: true
+        }
+    })
+}
+
+function PopulateRegency() {
+$('.sRegency').select2({
+    placeholder: 'Pilih Kabupaten...',
+    allowClear: true,
+    dropdownParent: $("#myModal"),
+    ajax: {
+        url: function () {
+            return '/api/regencies/' + $('.sProvince').val();
+        },
+        dataType: 'json',
+        processResults: function (result) {
+            return {
+                results: $.map(result, function (item) {
+                    return {
+                        id: item.id,
+                        text: item.name,
+                    };
+                })
+            };
+        },
+        cache: true
+    }
+}).on('change', function () {
+        var kabName = $('.sRegency option:selected').text();
+
+        $('#NamaKab').val(kabName);
+    });
+}
+
+function PopulateDistrict() {
+$('.sDistrict').select2({
+    placeholder: 'Pilih Kecamatan...',
+    allowClear: true,
+    dropdownParent: $("#myModal"),
+    ajax: {
+        url: function () {
+            return '/api/districts/' + $('.sRegency').val();
+        },
+        dataType: 'json',
+        processResults: function (result) {
+            return {
+                results: $.map(result, function (item) {
+                    return {
+                        id: item.id,
+                        text: item.name,
+                    };
+                })
+            };
+        },
+        cache: true
+    }
+}).on('change', function () {
+        var kecName = $('.sDistrict option:selected').text();
+
+        $('#NamaKec').val(kecName);
+    });
+}
+
+function PopulateVillage() {
+$('.sVillage').select2({
+    placeholder: 'Pilih Kelurahan...',
+    allowClear: true,
+    dropdownParent: $("#myModal"),
+    ajax: {
+        url: function () {
+            return '/api/village/' + $('.sDistrict').val();
+        },
+        dataType: 'json',
+        processResults: function (result) {
+            return {
+                results: $.map(result, function (item) {
+                    return {
+                        id: item.id,
+                        text: item.name,
+                    };
+                })
+            };
+        },
+        cache: true
+    }
+}).on('change', function () {
+        var kelName = $('.sVillage option:selected').text();
+
+        $('#NamaKel').val(kelName);
+    });
+}

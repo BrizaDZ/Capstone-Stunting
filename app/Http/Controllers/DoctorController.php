@@ -41,7 +41,11 @@ class DoctorController extends Controller
         }
 
         $data->name = $v->name;
-
+        if ($file = $v->file('photo')) {
+            $filename = time() . "_doctor." . $file->getClientOriginalExtension();
+            $file->move(public_path('images/doctor/'), $filename);
+            $data->photo = $filename;
+        }
         $data->save();
 
         return ['success' => true];

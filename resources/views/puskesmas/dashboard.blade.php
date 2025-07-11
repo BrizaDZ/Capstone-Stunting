@@ -43,7 +43,7 @@
                 <select name="puskesmas_id" class="form-select form-control select2 mr-3" onchange="document.getElementById('filterForm').submit()">
                     <option value="">Semua Puskesmas</option>
                     @foreach ($puskesmasList as $puskesmas)
-                        <option value="{{ $puskesmas->user_id }}" {{ request('puskesmas_id', auth()->user()->id) == $puskesmas->user_id ? 'selected' : '' }}>
+                        <option value="{{ $puskesmas->PuskesmasID }}" {{ request('puskesmas_id', auth()->user()->id) == $puskesmas->PuskesmasID ? 'selected' : '' }}>
                             {{ $puskesmas->nama }}
                         </option>
                     @endforeach

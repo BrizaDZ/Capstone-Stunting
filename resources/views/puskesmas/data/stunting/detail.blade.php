@@ -12,8 +12,8 @@
     <div class="card">
         <div class="card-body">
             <h4 class="text-center font-weight-bold mb-5">Detail Data Stunting</h4>
-                <p class="badge badge-secondary">Nama: {{ $data->first()->patient_name }}</p>
-                <h4 class="badge badge-secondary">Jenis Kelamin: {{ $data->first()->gender }}</h4>
+                <p class="badge badge-primary">Nama: {{ $data->first()->name }}</p>
+                <h4 class="badge badge-primary">Jenis Kelamin: {{ $data->first()->gender }}</h4>
 
             <table class="table table-bordered">
                 <thead>
@@ -30,7 +30,7 @@
                 <tbody>
                     @foreach ($data as $item)
                         <tr>
-                            <td>{{ $item->appointment_date }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->created_at)->format('Y-m-d') }}</td>
                             <td>{{ $item->age }}</td>
                             <td>{{ $item->weight }}</td>
                             <td>{{ $item->height }}</td>
@@ -76,7 +76,10 @@
     <script>
         const chartData = @json($data);
 
-        const labels = chartData.map(item => item.appointment_date);
+        const labels = chartData.map(item => {
+            const date = new Date(item.created_at);
+            return date.toISOString().slice(0, 10);
+        });
         const zWeightAge = chartData.map(item => parseFloat(item.zscoreweightage));
         const zHeightAge = chartData.map(item => parseFloat(item.zscoreheightage));
         const zWeightHeight = chartData.map(item => parseFloat(item.zscoreweightheight));
