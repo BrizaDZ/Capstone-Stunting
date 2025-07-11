@@ -22,7 +22,19 @@ class MpasiController extends Controller
             'protein_gr' => $request->protein_gr,
             'lemak_gr' => $request->lemak_gr,
             'tekstur' => $request->tekstur,
-            'jumlah_bahan' => $request->jumlah_bahan,
+            'jumlah_bahan' => $request->jumlah_bahan ?? 0,
+        ]);
+
+        return view('mpasi', [
+            'hasil' => $response->json(),
+            'input' => $request->all()
+        ]);
+    }
+
+    public function recommendByAge(Request $request)
+    {
+        $response = Http::post('http://127.0.0.1:5001/mpasi/recommend-by-age/', [
+            'kategori_umur' => $request->kategori_umur
         ]);
 
         return view('mpasi', [
