@@ -30,9 +30,9 @@ function loadTable() {
             dataType: "json"
         },
         columns: [
-            { data: "doctor", name: "doctor.name", autoWidth: true },
-            // { data: "OperationalTimeID", name: "OperationalTimeID", autoWidth: true },
-            { data: "day", name: "doctoroperationaltime.day", autoWidth: true },
+            { data: "doctor_name", name: "doctor_name", autoWidth: true },
+            { data: "operational_time_name", name: "operational_time_name", autoWidth: true },
+            { data: "date", name: "doctoroperationaltime.date", autoWidth: true },
 
             {
                 data: 'DoctorOperationalTimeID',

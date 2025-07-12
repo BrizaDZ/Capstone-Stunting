@@ -21,29 +21,38 @@ class DoctorOperationalTimeController extends Controller
 
     public function Add()
     {
-        $doctors = Doctor::where('user_id', auth()->id())->get();
-        return view('puskesmas.master.doctoroperationaltime.addedit', ['data' => new DoctorOperationalTime, 'doctors' => $doctors]);
+        return view('puskesmas.master.doctoroperationaltime.addedit', ['data' => new DoctorOperationalTime]);
     }
 
     public function Edit($id)
     {
-        $data = DoctorOperationalTime::findOrFail($id);
-        $doctors = Doctor::where('user_id', auth()->id())->get();
+        $data = DB::table('doctoroperationaltime')
+        ->join('doctor', 'doctoroperationaltime.DoctorID', '=', 'doctor.DoctorID')
+        ->join('operationaltime', 'doctoroperationaltime.OperationalTimeID', '=', 'operationaltime.OperationalTimeID')
+        ->select(
+            'doctoroperationaltime.*',
+            'doctor.name as doctor_name',
+            'operationaltime.name as operational_time_name'
+        )
+        ->where('doctoroperationaltime.DoctorOperationalTimeID', $id)
+        ->first();
 
-        return view('puskesmas.master.doctoroperationaltime.addedit', ['data' => $data, 'doctors' => $doctors]);
+        return view('puskesmas.master.doctoroperationaltime.addedit', ['data' => $data]);
     }
 
     public function store(Request $v)
     {
         if ($v->id == 0) {
             $data = new DoctorOperationalTime;
-            $data->user_id = auth()->id(); // Ensure the logged-in user owns the data
+            $data->user_id = auth()->id();
         } else {
             $data = DoctorOperationalTime::where('user_id', auth()->id())->findOrFail($v->id);
         }
 
         $data->DoctorID = $v->DoctorID;
         $data->OperationalTimeID = $v->OperationalTimeID;
+        $data->quota = $v->quota;
+        $data->date = $v->date;
 
         $data->save();
 
@@ -54,12 +63,15 @@ class DoctorOperationalTimeController extends Controller
 
     public function Ajax(Request $request)
     {
-        $data = DoctorOperationalTime::join('doctor', 'doctoroperationaltime.DoctorID', '=', 'doctor.DoctorID')->where('user_id', auth()->id())
-        ->select([
-            'doctoroperationaltime.*',
-            'doctoroperationaltime.DoctorID',
-            'doctor.name',
-        ]);
+        $data = DoctorOperationalTime::join('doctor', 'doctoroperationaltime.DoctorID', '=', 'doctor.DoctorID')
+            ->join('operationaltime', 'doctoroperationaltime.OperationalTimeID', '=', 'operationaltime.OperationalTimeID')
+            ->where('doctoroperationaltime.user_id', auth()->id())
+            ->select([
+                'doctoroperationaltime.*',
+                'doctoroperationaltime.DoctorID',
+                'doctor.name as doctor_name',
+                'operationaltime.name as operational_time_name',
+            ]);
 
         $datatables = Datatables::of($data);
 
@@ -69,21 +81,32 @@ class DoctorOperationalTimeController extends Controller
 
     public function search(Request $v)
     {
-        $query = DoctorOperationalTime::select(['DoctorOperationalTimeID', 'day', 'DoctorID'])
-                    ->orderBy('day', 'asc');
+        $query = DoctorOperationalTime::join('operationaltime', 'doctoroperationaltime.OperationalTimeID', '=', 'operationaltime.OperationalTimeID')
+            ->select([
+                'doctoroperationaltime.DoctorOperationalTimeID',
+                'doctoroperationaltime.date',
+                'doctoroperationaltime.DoctorID',
+                'operationaltime.name'
+            ])
+            ->orderBy('doctoroperationaltime.date', 'asc');
 
         if (!empty($v->term)) {
-            $query->where('day', 'like', '%' . $v->term . '%');
+            $query->where('doctoroperationaltime.date', 'like', '%' . $v->term . '%');
         }
 
         if (!empty($v->DoctorID)) {
-            $query->where('DoctorID', $v->DoctorID);
+            $query->where('doctoroperationaltime.DoctorID', $v->DoctorID);
+        }
+
+        if (!empty($v->appointment_date)) {
+            $query->whereDate('doctoroperationaltime.date', '=', $v->appointment_date);
         }
 
         $data = $query->get();
 
         return response()->json($data);
     }
+
 
 
     public function delete($id)

@@ -6,7 +6,7 @@ $(document).ready(function () {
         success: function(response) {
             if (response.success === false) {
                 Swal.fire({
-                    icon: 'warning',
+                    type: 'warning',
                     title: 'Data Pasien Belum Lengkap',
                     text: 'Harap isi data pasien terlebih dahulu di menu profil sebelum membuat janji temu.',
                     confirmButtonText: 'OK'
@@ -16,6 +16,8 @@ $(document).ready(function () {
             }
         }
     });
+
+
 
     $.ajaxSetup({
         headers: {
@@ -96,7 +98,7 @@ function PopulatePuskesmas() {
         }
     }).on('select2:select', function (e) {
         var selectedData = e.params.data;
-        var userId = selectedData.user_id;
+        var userId = selectedData.puskesmasid;
 
         $('.sDoctor').val(null).trigger('change');
         $('.sDoctor').select2('destroy');
@@ -132,19 +134,55 @@ function PopulateDoctor(userId) {
             cache: true
         }
     }).on('select2:select', function (e) {
-        var doctorId = e.params.data.DoctorID;
+        var doctorId = e.params.data.id;
 
         $('.sSchedule').val(null).trigger('change');
         $('.sSchedule').select2('destroy');
 
         PopulateSchedule(doctorId);
+        $('#doctorScheduleTitle').text('Jadwal Dokter: ' + e.params.data.text);
+        renderDoctorCalendar(doctorId);
     }).on('change', function () {
         var doctorName = $('.sDoctor option:selected').text();
         console.log(doctorName);
         $('#txtnamadoctor').val(doctorName);
     });
 }
+function renderDoctorCalendar(doctorId) {
+    $('#doctorScheduleCard').removeClass('d-none');
 
+    $('#doctorCalendar').html('');
+
+    fetch(`/master/doctoroperationaltime/search?DoctorID=${doctorId}`)
+        .then(response => response.json())
+        .then(data => {
+            const calendarEl = document.getElementById('doctorCalendar');
+
+            const events = data.map(item => ({
+                title: item.name,
+                start: item.date,
+                allDay: true
+            }));
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'id',
+                initialView: 'dayGridMonth',
+                height: 500,
+                events: events
+            });
+
+            calendar.render();
+        });
+}
+
+$('#appointment_date').on('change', function () {
+    const doctorId = $('.sDoctor').val();
+    if (doctorId) {
+        $('.sSchedule').val(null).trigger('change');
+        $('.sSchedule').select2('destroy');
+        PopulateSchedule(doctorId);
+    }
+});
 function PopulateSchedule(doctorId) {
     $('.sSchedule').select2({
         placeholder: 'Pilih Jadwal...',
@@ -155,7 +193,8 @@ function PopulateSchedule(doctorId) {
             data: function (params) {
                 return {
                     term: params.term,
-                    DoctorID: doctorId // kirim DoctorID ke backend
+                    DoctorID: doctorId,
+                    appointment_date: $('#appointment_date').val()
                 };
             },
             processResults: function (result) {
@@ -163,7 +202,7 @@ function PopulateSchedule(doctorId) {
                     results: $.map(result, function (item) {
                         return {
                             id: item.DoctorOperationalTimeID,
-                            text: item.day // misalnya: "Senin, 08:00 - 12:00"
+                            text: item.date
                         };
                     })
                 };
@@ -172,6 +211,7 @@ function PopulateSchedule(doctorId) {
         }
     });
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("appointmentForm");
@@ -192,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             if (data.success) {
                 Swal.fire({
-                    icon: 'success',
+                    type: 'success',
                     title: 'Janji Temu Berhasil!',
                     html: `
                         Nomor Antrian Anda: <strong>${data.queue_number}</strong><br><br>
@@ -202,21 +242,25 @@ document.addEventListener("DOMContentLoaded", function () {
                     `,
                     showConfirmButton: true,
                     confirmButtonText: 'Tutup'
+                }).then(() => {
+                    window.location.reload();
                 });
 
                 form.reset();
             } else {
                 Swal.fire({
-                    icon: 'error',
+                    type: 'error',
                     title: 'Gagal!',
                     text: data.message || 'Terjadi kesalahan saat menyimpan data.',
+                }).then(() => {
+                    window.location.reload();
                 });
             }
         })
         .catch(error => {
             console.error(error);
             Swal.fire({
-                icon: 'error',
+                type: 'error',
                 title: 'Error',
                 text: 'Terjadi kesalahan pada server.',
             });

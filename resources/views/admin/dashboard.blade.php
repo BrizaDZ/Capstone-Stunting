@@ -234,7 +234,8 @@ function openChat(userId, userName) {
                 },
                 body: JSON.stringify({
                     chat: message,
-                    user_id: selectedUserId
+                    user_id: selectedUserId,
+                    chatby: 'admin'
                 })
             })
             .then(res => res.json())

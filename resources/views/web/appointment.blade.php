@@ -2,6 +2,10 @@
 @push('style')
 <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />
     <link rel="stylesheet" href="/lib/select2/css/select2.min.css" />
+    <script src="/lib/fullcalendar/packages/core/index.global.min.js"></script>
+    <script src="/lib/fullcalendar/packages/core/locales/id.global.min.js"></script>
+    <script src="/lib/fullcalendar/packages/daygrid/index.global.min.js"></script>
+
 @endpush
 @section('content')
 <section>
@@ -18,7 +22,7 @@
                             <label class="form-label fw-bold">Nama Pasien</label>
                         </div>
                         <div class="col-lg-10">
-                            <select class="form-control select2 sPatient w-100" name="PatientID">
+                            <select class="form-control select2 sPatient w-100" name="PatientID" required>
                                 @if ($data->PatientID != null)
                                     <option value="{{ $data->PatientID }}" selected="selected">{{ $data->name }}
                                     </option>
@@ -31,7 +35,7 @@
                             <label class="form-label fw-bold">Puskesmas</label>
                         </div>
                         <div class="col-lg-10">
-                            <select class="form-control select2 sPuskesmas" name="PuskesmasID">
+                            <select class="form-control select2 sPuskesmas" name="PuskesmasID" required>
                                 @if ($data->PuskesmasID != null)
                                     <option value="{{ $data->user_id }}" selected="selected">{{ $data->nama }}
                                     </option>
@@ -44,7 +48,7 @@
                             <label class="form-label fw-bold">Nama Dokter</label>
                         </div>
                         <div class="col-lg-10">
-                            <select class="form-control select2 sDoctor" name="DoctorID">
+                            <select class="form-control select2 sDoctor" name="DoctorID" required>
                                 @if ($data->DoctorID != null)
                                 <option value="{{ $data->DoctorID }}" selected="selected">{{ $data->nama }}
                                 </option>
@@ -57,7 +61,7 @@
                             <label class="form-label fw-bold">Tanggal</label>
                         </div>
                         <div class="col-lg-10">
-                            <input type="date" name="appointment_date" class="form-control" required>
+                            <input type="date" name="appointment_date" class="form-control" required id="appointment_date" required>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -65,9 +69,9 @@
                             <label class="form-label fw-bold">Pilih Jadwal</label>
                         </div>
                         <div class="col-lg-10">
-                            <select class="form-control select2 sSchedule" name="DoctorOperationalTimeID">
+                            <select class="form-control select2 sSchedule" name="DoctorOperationalTimeID" required>
                                 @if ($data->DoctorOperationalTimeID != null)
-                                <option value="{{ $data->DoctorOperationalTimeID }}" selected="selected">{{ $data->day }}
+                                <option value="{{ $data->DoctorOperationalTimeID }}" selected="selected">{{ $data->name }}
                                 </option>
                                 @endif
                             </select>
@@ -77,6 +81,13 @@
                 </form>
             </div>
         </div>
+        <div id="doctorScheduleCard" class="card mt-4 d-none">
+            <div class="card-body p-5">
+                <h5 id="doctorScheduleTitle" class="fw-bold mb-3 text-center">Jadwal Dokter:</h5>
+                <div id="doctorCalendar"></div>
+            </div>
+        </div>
+
     </div>
 </section>
 @endsection
@@ -85,5 +96,6 @@
 
 <script src="/lib/sweetalert/sweetalert2.all.min.js"></script>
 <script src="/lib/select2/js/select2.full.min.js"></script>
+
 <script src="/pages/appointment.js"></script>
 @endpush

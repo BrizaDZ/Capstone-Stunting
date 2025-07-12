@@ -173,8 +173,8 @@ Route::middleware(['isPuskesmas'])->group(function () {
 // })->middleware(['auth', 'verified'])->name('appointment');
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/', [HomeController::class, 'index']);
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('dashboard');;
 
     Route::prefix('/profile')->group(function () {
         Route::get('/patient', [ProfilePatientController::class, 'index']);

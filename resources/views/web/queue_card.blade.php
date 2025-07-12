@@ -14,7 +14,7 @@
         <p><strong>Nama Pasien:</strong> {{ $appointment->patient_name }}</p>
         <p><strong>Dokter:</strong> {{ $appointment->doctor_name }}</p>
         <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d M Y') }}</p>
-        <p><strong>Jadwal:</strong> {{ $appointment->doctorOperationalTime->day ?? '-' }}</p>
+        <p><strong>Jadwal:</strong> {{ $appointment->doctorOperationalTime->date ?? '-' }}</p>
         <p><strong>Puskesmas:</strong> {{ $appointment->puskesmas->nama ?? '-' }}</p>
         <p><strong>No. Antrean:</strong> {{ $queue_number }}</p>
 

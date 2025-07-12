@@ -25,7 +25,7 @@
             <div id="panel-8" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Tabel Jam Operasional Puskesmas <span class="fw-300"><i>E-Waste</i></span>
+                        Tabel Jam Operasional Puskesmas <span class="fw-300"></span>
                     </h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-primary showMe" data-href="/master/operationaltime/add">Tambah Jam Operasional Puskesmas</button>

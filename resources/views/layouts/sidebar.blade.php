@@ -18,11 +18,10 @@
               </div>
           </div>
           <div class="info-card">
-              {{-- <img src="/img/logo_dlhsm.png" class="profile-image rounded-circle" alt="Dr. Codex Lantern"> --}}
               <div class="info-card-text">
                   <a href="#" class="text-white d-flex align-items-center">
                       <span class="text-truncate text-truncate-sm d-inline-block">
-                          Admin StuntAIDS
+                            {{ Auth::user()->name }}
                       </span>
                   </a>
               </div>
@@ -33,6 +32,7 @@
               </a>
           </div>
           <ul id="js-nav-menu" class="nav-menu">
+            @if (Auth::user()->role_id == '1')
               <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}">
                   <a href="/admin/dashboard" title="Admin Dashboard"
                       data-filter-tags="application intel analytics dashboard">
@@ -40,27 +40,16 @@
                           data-i18n="nav.application_intel_analytics_dashboard">Dashboard</span>
                   </a>
               </li>
-              {{-- <li class="{{ Request::is('transaksi*') ? 'active open' : '' }}">
-                  <a href="#" title="Application Intel" data-filter-tags="application intel">
-                      <i class="fal fa-info-circle" style="color: white"> </i>
-                      <span class="nav-link-text color-white" data-i18n="nav.application_intel">Transaksi</span>
+            @endif
+            @if (Auth::user()->role_id == '3')
+              <li class="{{ Request::is('puskesmas/dashboard') ? 'active' : '' }}">
+                  <a href="/puskesmas/dashboard" title="Admin Dashboard"
+                      data-filter-tags="application intel analytics dashboard">
+                      <span class="nav-link-text color-white"
+                          data-i18n="nav.application_intel_analytics_dashboard">Dashboard</span>
                   </a>
-                  <ul>
-                      <li class="{{ Request::is('transaksi/permohonan/pribadi') ? 'active' : '' }}">
-                          <a href="/transaksi/permohonan/pribadi" title="Marketing Dashboard">
-                              <span class="nav-link-text color-white"
-                                  data-i18n="nav.application_intel_marketing_dashboard">Permohonan Pribadi</span>
-                          </a>
-                      </li>
-                      <li class="{{ Request::is('transaksi/permohonan/droppoint') ? 'active' : '' }}">
-                          <a href="/transaksi/permohonan/droppoint" title="Marketing Dashboard">
-                              <span class="nav-link-text color-white"
-                                  data-i18n="nav.application_intel_marketing_dashboard">Permohonan
-                                  Drop Point</span>
-                          </a>
-                      </li>
-                  </ul>
-              </li> --}}
+              </li>
+            @endif
               <li class="{{ Request::is('data*') ? 'active open' : '' }}">
                 <a href="#" title="Application Intel" data-filter-tags="application intel">
                     <i class="fal fa-info-circle" style="color: white;"></i>

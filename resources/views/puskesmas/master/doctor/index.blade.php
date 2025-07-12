@@ -31,10 +31,10 @@
             <div id="panel-8" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Tabel List Dokter Puskesmas <span class="fw-300"><i>E-Waste</i></span>
+                        Tabel List Dokter Puskesmas <span class="fw-300"></span>
                     </h2>
                     <div class="panel-toolbar">
-                        <button class="btn btn-primary showMe" data-href="/master/doctor/add">Tambah Dokter</button>
+                        <button class="btn btn-primary showMe" data-href="/master/doctor/add">Tambah</button>
                     </div>
                 </div>
 

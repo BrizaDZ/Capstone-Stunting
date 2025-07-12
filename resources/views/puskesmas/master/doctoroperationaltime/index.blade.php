@@ -32,10 +32,10 @@
             <div id="panel-8" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Tabel Jadwal Dokter Puskesmas <span class="fw-300"><i>E-Waste</i></span>
+                        Tabel Jadwal Dokter Puskesmas <span class="fw-300"></span>
                     </h2>
                     <div class="panel-toolbar">
-                        <button class="btn btn-primary showMe" data-href="/master/doctoroperationaltime/add">Tambah Jadwal Dokter Puskesmas</button>
+                        <button class="btn btn-primary showMe" data-href="/master/doctoroperationaltime/add">Tambah</button>
                     </div>
                 </div>
 
@@ -46,8 +46,8 @@
                                 <thead class="text-white bg-primary-200">
                                     <tr>
                                         <th>Nama Dokter</th>
-                                        <th>Jadwal</th>
-                                        <th>Hari</th>
+                                        <th>Sesi (Jam)</th>
+                                        <th>Tanggal</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

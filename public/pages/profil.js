@@ -64,21 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-document.getElementById("changePasswordForm").addEventListener("submit", function(event) {
-event.preventDefault();
-let newPassword = document.getElementById("new-password").value;
-let confirmPassword = document.getElementById("confirm-password").value;
-let errorMessage = document.getElementById("password-error");
-
-if (newPassword !== confirmPassword) {
-    errorMessage.style.display = "block";
-} else {
-    errorMessage.style.display = "none";
-    alert("Password changed successfully!"); // Simulasi update password
-    this.reset();
-}
-});
-
 function showTab(event, tabId) {
 event.preventDefault();
 document.querySelectorAll('.tab-pane').forEach(tab => {
@@ -285,8 +270,9 @@ function loadTableAppointment() {
         },
         columns: [
             { data: 'patient_name', name: 'patient_name' },
-            { data: 'doctor_name', name: 'doctor_name' },
             { data: 'puskesmas', name: 'puskesmas' },
+            { data: 'doctor_name', name: 'doctor_name' },
+
             { data: 'jadwal', name: 'jadwal' },
             { data: 'status', name: 'status' },
 

@@ -28,13 +28,19 @@ class AppointmentController extends Controller
 
     public function store(Request $v)
     {
-        $doctorOperationalTimeID = $v->DoctorOperationalTimeID;
-        $appointmentDate = $v->appointment_date;
 
-        $operationalTime = DoctorOperationalTime::findOrFail($doctorOperationalTimeID);
+        $existingAppointment = Appointment::where('user_id', auth()->id())
+        ->where('DoctorOperationalTimeID', $v->DoctorOperationalTimeID)
+        ->first();
+        if ($existingAppointment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda sudah pernah membuat janji temu pada waktu ini.'
+            ]);
+        }
+        $operationalTime = DoctorOperationalTime::findOrFail($v->DoctorOperationalTimeID);
 
-        $currentAppointmentCount = Appointment::where('DoctorOperationalTimeID', $doctorOperationalTimeID)
-            ->where('appointment_date', $appointmentDate)
+        $currentAppointmentCount = Appointment::where('DoctorOperationalTimeID', $v->DoctorOperationalTimeID)
             ->count();
 
         if ($currentAppointmentCount >= $operationalTime->quota) {
@@ -48,8 +54,8 @@ class AppointmentController extends Controller
             $data = Appointment::where('user_id', auth()->id())->findOrFail($v->id);
         }
 
-        $data->DoctorOperationalTimeID = $doctorOperationalTimeID;
-        $data->appointment_date = $appointmentDate;
+        $data->DoctorOperationalTimeID = $v->DoctorOperationalTimeID;
+        $data->appointment_date = $v->appointment_date;
         $data->DoctorID = $v->DoctorID;
         $data->PatientID = $v->PatientID;
         $data->PuskesmasID = $v->PuskesmasID;
@@ -105,7 +111,7 @@ class AppointmentController extends Controller
                 return $row->puskesmas ? $row->puskesmas->nama : '-';
             })
             ->addColumn('jadwal', function ($row) {
-                return $row->doctorOperationalTime ? $row->doctorOperationalTime->day : '-';
+                return $row->doctorOperationalTime ? $row->doctorOperationalTime->date : '-';
             })
             ->make(true);
     }

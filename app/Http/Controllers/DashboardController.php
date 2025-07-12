@@ -113,7 +113,7 @@ class DashboardController extends Controller
         $data = new Chat;
 
         $data->chat = $v->chat;
-        $data->chatby = 'admin';
+        $data->chatby = $v->chatby;
         $data->user_id = $v->user_id;
 
         $data->save();

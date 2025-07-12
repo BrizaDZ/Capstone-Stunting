@@ -10,5 +10,5 @@ class LokasiPuskesmas extends Model
     use HasFactory;
     protected $table = 'LokasiPuskesmas';
 
-    protected $primaryKey = 'PuskesmasID';
+    protected $primaryKey = 'LokasiPuskesmasID';
 }

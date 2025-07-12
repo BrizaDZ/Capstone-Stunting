@@ -10,7 +10,7 @@
                 <a class="nav-link active font-shadow fs-6 text-secondary" aria-current="page" href="/">Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link font-shadow fs-6 text-secondary" href="#">Puskesmas</a>
+                <a class="nav-link font-shadow fs-6 text-secondary" href="/#puskesmas">Puskesmas</a>
             </li>
 
             <li class="nav-item">

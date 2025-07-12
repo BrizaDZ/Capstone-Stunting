@@ -12,13 +12,14 @@
 
     <div class="modal-body ">
         <input type="hidden" name="id" value="{{ $data->DoctorOperationalTimeID }}" />
+
         <div class="row">
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Nama Dokter</label>
                     <select class="form-control select2 sDoctor" name="DoctorID" required>
                         @if ($data->DoctorID != null)
-                            <option value="{{ $data->DoctorID }}" selected="selected">{{ $data->name }}
+                            <option value="{{ $data->DoctorID }}" selected="selected">{{ $data->doctor_name }}
                             </option>
                         @endif
                     </select>
@@ -27,22 +28,30 @@
             </div>
             <div class="col-xl-6">
                 <div class="form-group">
-                    <label>Hari</label>
-                    <input type="text" name="day" class="form-control" required autocomplete="off"
-                        value="{{ $data->day }}" />
+                    <label>Tanggal</label>
+                    <input type="date" name="date" class="form-control" required autocomplete="off"
+                        value="{{ $data->date }}" />
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-xl-12">
+            <div class="col-xl-6">
                 <div class="form-group">
                     <label>Jam Operasional</label>
                     <select class="form-control select2 sSchedule" name="OperationalTimeID" required>
                         @if ($data->OperationalTimeID != null)
-                            <option value="{{ $data->OperationalTimeID }}" selected="selected">{{ $data->name }}
+                            <option value="{{ $data->OperationalTimeID }}" selected="selected">{{ $data->operational_time_name }}
                             </option>
                         @endif
                     </select>
+
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="form-group">
+                    <label>Quota</label>
+                    <input type="number" name="quota" required class="form-control"
+                        value="{{ $data->quota }}" />
 
                 </div>
             </div>
