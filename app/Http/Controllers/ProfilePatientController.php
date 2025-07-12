@@ -33,10 +33,10 @@ class ProfilePatientController extends Controller
         return view('web.profile.addedit', ['data' => new Patient]);
     }
 
-    // public function Edit($id)
-    // {
-    //     return view('admin.master.Patient.addedit', ['data' => Patient::findOrFail($id)]);
-    // }
+    public function Edit($id)
+    {
+        return view('web.profile.addedit', ['data' => Patient::join('patientrelationship', 'patient.RelationshipID', '=', 'patientrelationship.RelationshipID')->where('patient.PatientID',$id)->select('patient.*','patientrelationship.name as relationshipName')->first()]);
+    }
 
     public function storedetail(Request $v)
     {
@@ -55,30 +55,38 @@ class ProfilePatientController extends Controller
 
     public function store(Request $v)
     {
-        if ($v->id == 0) {
+        if ($v->PatientID == 0) {
             $data = new Patient;
             $data->user_id = auth()->id();
+            $data->PatientID = $v->PatientID;
+            $data->nik = $v->nik;
+
+            $data->name = $v->name;
+            $data->age = $v->age;
+
+            $data->gender = $v->gender;
+            $data->kabupaten = $v->kabupaten;
+
+            $data->kelurahan = $v->kelurahan;
+            $data->kecamatan = $v->kecamatan;
+
+            $data->rt = $v->rt;
+            $data->rw = $v->rw;
+
+            $data->alamat = $v->alamat;
+            $data->RelationshipID = $v->RelationshipID;
         } else {
-            $data = Patient::where('user_id', auth()->id())->findOrFail($v->id);
+            $data = Patient::where('user_id', auth()->id())->findOrFail($v->PatientID);
+            $data->PatientID = $v->PatientID;
+            $data->nik = $v->nik;
+
+            $data->name = $v->name;
+            $data->age = $v->age;
+
+            $data->gender = $v->gender;
+            $data->alamat = $v->alamat;
+            $data->RelationshipID = $v->RelationshipID;
         }
-
-        $data->PatientID = $v->PatientID;
-        $data->nik = $v->nik;
-
-        $data->name = $v->name;
-        $data->age = $v->age;
-
-        $data->gender = $v->gender;
-        $data->kabupaten = $v->kabupaten;
-
-        $data->kelurahan = $v->kelurahan;
-        $data->kecamatan = $v->kecamatan;
-
-        $data->rt = $v->rt;
-        $data->rw = $v->rw;
-
-        $data->alamat = $v->alamat;
-        $data->RelationshipID = $v->RelationshipID;
 
         $data->save();
 

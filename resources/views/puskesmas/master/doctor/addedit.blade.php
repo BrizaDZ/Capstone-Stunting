@@ -1,4 +1,4 @@
-<form id="formdoctor" action="/master/doctor/store" method="post">
+<form id="formdoctor" method="post">
     <div class="modal-header">
         <h4 class="modal-title">
             @if ($data->DoctorID != 0)

@@ -7,14 +7,14 @@
         <div class="py-3w collapse navbar-collapse" style="justify-content: right" id="navbarNavDropdown">
             <ul class="navbar-nav" style="gap: 3em">
             <li class="nav-item">
-                <a class="nav-link active font-shadow fs-6 text-secondary" aria-current="page" href="/">Dashboard</a>
+                <a class="nav-link active font-shadow fs-6 text-secondary" aria-current="page" href="/">Beranda</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link font-shadow fs-6 text-secondary" href="/#puskesmas">Puskesmas</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link font-shadow fs-6 text-secondary" href="/janji-temu">Doctor Appointment</a>
+                <a class="nav-link font-shadow fs-6 text-secondary" href="/janji-temu">Janji Temu</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link font-shadow fs-6 text-secondary" href="/profile/patient">Profile</a>

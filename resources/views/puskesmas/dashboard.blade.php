@@ -71,7 +71,7 @@
         <div class="card border-0 shadow bg-primary text-white">
             <div class="card-body d-flex justify-content-between align-items-start">
                 <div>
-                    <h6 class="text-muted">Total Pasien Keselurahan</h6>
+                    <h6 class="text-muted">Total Pasien Keseluruhan</h6>
                     <h1 class="fw-bold">{{ $patients->count() }}</h1>
                 </div>
                 <div class="bg-light rounded p-2">

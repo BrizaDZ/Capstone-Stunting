@@ -104,10 +104,10 @@
                 <h4 class="mt-4 mb-3 text-center text-secondary fw-bold">Anda mungkin mencari</h4>
                 <div class="row justify-content-center mb-3">
                     <div class="col-3">
-                        <button href="#dokter" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center">
+                        <a href="/#doctor" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center">
                             <img class="img-fluid stunticon mb-3" src="/image/icon/Doctor.png" width="70" height="70">
                             <span class="card-title fs-5 text-muted">Dokter</span>
-                        </button>
+                        </a>
                     </div>
                     <div class="col-3">
                         <a onclick="toggleChat()" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center">
@@ -212,18 +212,29 @@
 </div>
 
 
-<!-- Our Medical Specialist Section -->
-<div class="container-xl py-5 text-center">
+<div id="doctor" class="container-xl py-5 text-center">
     <h3 class="fw-bold">Spesialis Medis Kami</h3>
 
+    @php
+        $chunks = $doctors->chunk(3);
+        $totalSlides = $chunks->count();
+    @endphp
+
     <div id="specialistCarousel" class="mt-4 carousel slide" data-bs-ride="carousel" data-bs-wrap="true">
+        @if ($totalSlides > 1)
         <div class="mb-0 carousel-indicators">
-            <button type="button" data-bs-target="#specialistCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" style="background-color: #333;"></button>
-            <button type="button" data-bs-target="#specialistCarousel" data-bs-slide-to="1" aria-label="Slide 2" style="background-color: #333;"></button>
+            @foreach($chunks as $index => $chunk)
+                <button type="button" data-bs-target="#specialistCarousel" data-bs-slide-to="{{ $index }}"
+                    class="{{ $index == 0 ? 'active' : '' }}"
+                    aria-label="Slide {{ $index + 1 }}"
+                    style="background-color: #333;"></button>
+            @endforeach
         </div>
+        @endif
+
         <!-- Carousel Wrapper -->
         <div class="carousel-inner">
-            @foreach($doctors->chunk(3) as $chunkIndex => $doctorChunk)
+            @foreach($chunks as $chunkIndex => $doctorChunk)
             <div class="carousel-item @if($chunkIndex == 0) active @endif">
                 <div class="row justify-content-center">
                     @foreach($doctorChunk as $doctor)
@@ -252,29 +263,20 @@
         </div>
 
         <!-- Carousel Controls -->
+        @if ($totalSlides > 1)
         <button class="carousel-control-prev" type="button" data-bs-target="#specialistCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon bg-dark rounded-circle"></span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#specialistCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon bg-dark rounded-circle"></span>
         </button>
+        @endif
     </div>
 </div>
 
-<!-- JavaScript for Auto-scroll -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let carousel = document.querySelector("#specialistCarousel");
-        new bootstrap.Carousel(carousel, {
-            interval: 2000, // Auto-slide every 2 seconds
-            wrap: true // Infinite loop
-        });
-    });
-</script>
-
 
 <!-- Nearest Puskesmas Section -->
-<div class="container-fluid" style="background-color: #E8F1FF;">
+<div id="puskesmas" class="container-fluid" style="background-color: #E8F1FF;">
     <div class="container py-5 text-center">
         <h3 class="fw-bold">Puskesmas Terdekat</h3>
         <p class="text-end">
@@ -284,21 +286,39 @@
             </a>
         </p>
         <div class="d-flex justify-content-center">
-            <div class="shadow-lg ratio ratio-16x9 w-100 rounded-4" style="max-width: 800px; overflow: hidden;">
+            <div class="shadow-lg ratio ratio-16x9 w-100 rounded-4 map-container">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d192608.48322124098!2d106.76278553078265!3d-6.220944818130442!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1spuskesmas%20jabodetabek!5e0!3m2!1sen!2sid!4v1738695799224!5m2!1sen!2sid"
-                    class="rounded-3"
-                    allowfullscreen
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
+                id="map-iframe"
+                class="rounded-3"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen>
                 </iframe>
             </div>
         </div>
+
+            <p id="status" class="mt-3 text-muted">Mendeteksi lokasi Anda...</p>
+
     </div>
 </div>
+
+
 @endsection
 
 @push('script')
 <script src="/pages/chatbot.js"></script>
+<script src="/pages/map.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const carousel = document.querySelector("#specialistCarousel");
+        if (carousel) {
+            new bootstrap.Carousel(carousel, {
+                interval: 4000,
+                wrap: true
+            });
+        }
+    });
+</script>
 
 @endpush

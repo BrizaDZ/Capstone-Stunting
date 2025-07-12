@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Puskesmas Cibatu - Login</title>
+        <title>Daftar | StuntAIDS</title>
 
         <!-- Bootstrap CSS -->
         <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet">

@@ -178,7 +178,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('/profile')->group(function () {
         Route::get('/patient', [ProfilePatientController::class, 'index']);
-        // Route::get('/edit/{id}', [LokasiPuskesmasController::class, 'Edit']);
+        Route::get('/patient/edit/{id}', [ProfilePatientController::class, 'Edit']);
         Route::get('/patient/add', [ProfilePatientController::class, 'Add']);
         Route::post('/patient/store', [ProfilePatientController::class, 'store']);
         Route::post('/patient/storedetail', [ProfilePatientController::class, 'storedetail']);
