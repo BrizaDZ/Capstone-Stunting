@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Builder;
 use Yajra\DataTables\Services\DataTable;
 use App\Models\Article;
+use Illuminate\Support\Str;
 use DataTables;
 use DB;
 use Auth;
@@ -28,6 +29,17 @@ class ArticleController extends Controller
         return view('admin.data.article.addedit', ['data' => Article::findOrFail($id)]);
     }
 
+    public function Detail($slug)
+    {
+        $data = Article::where('slug', $slug)->firstOrFail();
+        $data->increment('counterview');
+        $populars = Article::where('ArticleID', '!=', $data->ArticleID)
+        ->orderBy('counterview', 'desc')
+        ->take(10)
+        ->get();
+        return view('web.article', compact('data', 'populars'));
+    }
+
     public function store(Request $v)
     {
         if ($v->ArticleID == 0) {
@@ -38,8 +50,9 @@ class ArticleController extends Controller
 
         $data->ArticleID = $v->ArticleID;
         $data->title = $v->title;
-        $data->description = $v->description;
+        $artikel->description = $request->input('description');
         $data->date = $v->date;
+         $data->slug = Str::slug($v->title);
 
 
         if ($file = $v->file('photo')) {
@@ -57,10 +70,9 @@ class ArticleController extends Controller
     public function Ajax(Request $request)
     {
         $data = Article::select([
-            'name',
-            'email',
-            'role_id',
-            'id',
+            'ArticleID',
+            'title',
+            'date',
         ]);
         $datatables = Datatables::of($data);
 

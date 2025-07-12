@@ -36,15 +36,66 @@
 
             <div class="col-xl-12">
                 <div class="form-group">
-                    <div class="form-floating">
-                        <label for="floatingTextarea2">Deskripsi</label>
-                        <textarea class="form-control" id="floatingTextarea2" style="height: 100px" name="description"></textarea>
-                    </div>
+                    <label for="customEditor">Deskripsi</label>
+                    <div class="border rounded p-2" id="customEditor" contenteditable="true" style="min-height: 150px;"></div>
+                    <input type="hidden" name="description" id="description">
+                </div>
+                <div class="btn-group mt-2">
+                    <button type="button" class="btn btn-sm btn-outline-primary toggle-btn" data-command="bold"><b>B</b></button>
+                    <button type="button" class="btn btn-sm btn-outline-primary toggle-btn" data-command="italic"><i>I</i></button>
+                    <button type="button" class="btn btn-sm btn-outline-primary toggle-btn" data-command="underline"><u>U</u></button>
+                    <button type="button" class="btn btn-sm btn-outline-primary toggle-btn" data-command="insertUnorderedList">• List</button>
                 </div>
             </div>
+
         </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
         <button type="submit" class="btn btn-success" id="btn-photo">Simpan</button>
     </div>
 </form>
+
+<script>
+    function execCmd(command) {
+        document.execCommand(command, false, null);
+        updateButtonStates();
+    }
+
+    document.getElementById('formartikel').addEventListener('submit', function () {
+        let editorContent = document.getElementById('customEditor').innerHTML;
+        document.getElementById('description').value = editorContent;
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const oldContent = `{!! $data->description !!}`;
+        document.getElementById('customEditor').innerHTML = oldContent;
+    });
+
+    document.querySelectorAll('.toggle-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            execCmd(this.dataset.command);
+        });
+    });
+
+    function updateButtonStates() {
+    document.querySelectorAll('.toggle-btn').forEach(button => {
+        const command = button.dataset.command;
+        try {
+            const isActive = document.queryCommandState(command);
+            if (isActive) {
+                button.classList.add('btn-primary');
+                button.classList.remove('btn-outline-primary');
+            } else {
+                button.classList.remove('btn-primary');
+                button.classList.add('btn-outline-primary');
+            }
+        } catch (e) {
+
+        }
+    });
+}
+
+
+    document.getElementById('customEditor').addEventListener('keyup', updateButtonStates);
+    document.getElementById('customEditor').addEventListener('mouseup', updateButtonStates);
+</script>

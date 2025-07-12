@@ -42,6 +42,8 @@ Route::post('/recommend-mpasi-by-age', [MpasiController::class, 'recommendByAge'
 Route::get('/predict-stunting', [PredictController::class, 'index']);
 Route::post('/api/predict-stunting', [PredictController::class, 'predict']);
 
+Route::get('/detail/article/{slug}', [ArticleController::class, 'Detail']);
+
 
 Route::get('/export-stunting', [StuntingExportController::class, 'export'])->name('export.stunting');
 

@@ -42,26 +42,26 @@ function loadTable() {
     $('#tblData').DataTable().clear().destroy();
     $('#tblData').DataTable({
         processing: false,
-        // serverSide: true,
-        // lengthMenu: [5, 10, 25, 50],
-        // stateSave: true,
-        // filter: true,
-        // orderMulti: false,
-        // ajax: {
-        //     url: "/master/artikel/table",
-        //     type: "post",
-        //     dataType: "json"
-        // },
-        // columns: [
-        //     { data: "RelationshipID", name: "RelationshipID", autoWidth: true },
-        //     { data: "name", name: "name", autoWidth: true },
+        serverSide: true,
+        lengthMenu: [5, 10, 25, 50],
+        stateSave: true,
+        filter: true,
+        orderMulti: false,
+        ajax: {
+            url: "/data/artikel/table",
+            type: "post",
+            dataType: "json"
+        },
+        columns: [
+            { data: "title", name: "title", autoWidth: true },
+            { data: "date", name: "date", autoWidth: true },
 
-        //     {
-        //         data: 'RelationshipID',
-        //         render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-primary mr-2 showMe' style='width:100%;' data-href='/master/relationship/edit/" + row.RelationshipID + "'> Edit</button>" }
-        //     }
-        // ],
-        // order: [[0, "desc"]]
+            {
+                data: 'ArticleID',
+                render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-primary mr-2 showMe' style='width:100%;' data-href='/data/article/edit/" + row.ArticleID + "'> Edit</button>" },
+            }
+        ],
+        order: [[0, "desc"]]
     })
 }
 

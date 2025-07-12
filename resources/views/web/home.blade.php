@@ -144,7 +144,8 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $p->title }}</h5>
                     <p class="card-text">{{ \Illuminate\Support\Str::limit($p->description, 80) }}</p>
-                    <p class="card-text"><small class="text-muted">{{ $p->date }}</small></p>
+                    <p class="card-text"><small class="text-muted">{{ \Carbon\Carbon::parse($p->date)->locale('id')->translatedFormat('l, d F Y') }}</small></p>
+                    <a href="/detail/article/{{ $p->slug }}" class="btn btn-primary">Baca Selengkapnya</a>
                 </div>
             </div>
             @endforeach
@@ -279,13 +280,13 @@
 <div id="puskesmas" class="container-fluid" style="background-color: #E8F1FF;">
     <div class="container py-5 text-center">
         <h3 class="fw-bold">Puskesmas Terdekat</h3>
-        <p class="text-end">
+        <p class="text-end me-5">
             <a href="https://www.google.com/maps/search/puskesmas+terdekat" target="_blank"
                 class="text-decoration-none fw-semibold text-muted link-hover">
                 Tampilkan di Peta &gt;&gt;
             </a>
         </p>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center px-5">
             <div class="shadow-lg ratio ratio-16x9 w-100 rounded-4 map-container">
                 <iframe
                 id="map-iframe"

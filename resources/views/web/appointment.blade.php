@@ -43,7 +43,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    {{-- <div class="row mb-3">
                         <div class="col-lg-2">
                             <label class="form-label fw-bold">Nama Dokter</label>
                         </div>
@@ -55,7 +55,7 @@
                                 @endif
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="row mb-3">
                         <div class="col-lg-2">
                             <label class="form-label fw-bold">Tanggal</label>

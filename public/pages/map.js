@@ -10,7 +10,6 @@ const iframe = document.getElementById("map-iframe");
 
     function showError(message) {
       status.textContent = message;
-      // Fallback: tampilkan puskesmas umum tanpa lokasi pengguna
       iframe.src = "https://www.google.com/maps?q=puskesmas&output=embed";
     }
 
