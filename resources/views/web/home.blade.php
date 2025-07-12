@@ -143,7 +143,7 @@
                 <img src="images/article/{{$p->photo}}" class="card-img-top" alt="..." style="height:200px;object-fit:cover;">
                 <div class="card-body">
                     <h5 class="card-title">{{ $p->title }}</h5>
-                    <p class="card-text">{{ \Illuminate\Support\Str::limit($p->description, 80) }}</p>
+                    <p class="card-text">{{ \Illuminate\Support\Str::limit(strip_tags($p->description), 80) }}</p>
                     <p class="card-text"><small class="text-muted">{{ \Carbon\Carbon::parse($p->date)->locale('id')->translatedFormat('l, d F Y') }}</small></p>
                     <a href="/detail/article/{{ $p->slug }}" class="btn btn-primary">Baca Selengkapnya</a>
                 </div>

@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'Tabel Lokasi Puskesmas')
+@section('title', 'Admin Dashboard')
 
 @push('style')
     <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />

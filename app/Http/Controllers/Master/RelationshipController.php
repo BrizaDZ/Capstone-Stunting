@@ -70,8 +70,24 @@ class RelationshipController extends Controller
 
     public function delete($id)
     {
-        PatientRelationship::find($id)->delete();
+        try {
+            $relationship = PatientRelationship::findOrFail($id); // pastikan data ada
+            $relationship->delete();
 
-        return response()->json(['success' => 'Product deleted successfully.']);
+            return response()->json([
+                'success' => true,
+                'message' => 'Data hubungan pasien berhasil dihapus.'
+            ]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data hubungan pasien tidak ditemukan.'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menghapus data.'
+            ], 500);
+        }
     }
 }

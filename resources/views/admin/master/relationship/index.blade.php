@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'Tabel Lokasi Relationship')
+@section('title', 'Tabel Relationship')
 
 @push('style')
     <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />
@@ -28,8 +28,7 @@
                         Tabel Relationship <span class="fw-300"></span>
                     </h2>
                     <div class="panel-toolbar">
-                        <button class="btn btn-primary showMe" data-href="/master/relationship/add">Tambah
-                            Relationship</button>
+                        <button class="btn btn-primary showMe" data-href="/master/relationship/add">Tambah Relationship</button>
                     </div>
                 </div>
 

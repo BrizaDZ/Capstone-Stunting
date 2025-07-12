@@ -95,8 +95,16 @@ class LokasiPuskesmasController extends Controller
 
     public function delete($id)
     {
-        Lokasi::find($id)->delete();
+        try {
+            $lokasi = Lokasi::findOrFail($id); // pastikan data ada
+            $lokasi->delete();
 
-        return response()->json(['success' => 'Product deleted successfully.']);
+            return response()->json(['success' => true, 'message' => 'Data lokasi Puskesmas berhasil dihapus.']);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['success' => false, 'message' => 'Data tidak ditemukan.'], 404);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan saat menghapus data.'], 500);
+        }
     }
+
 }
