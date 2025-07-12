@@ -1,7 +1,7 @@
 <head>
     <meta charset="utf-8">
     <title>
-        @yield('title') | E-Waste
+        @yield('title') | StuntAIDS
     </title>
     <meta name="description" content="Marketing Dashboard">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

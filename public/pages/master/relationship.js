@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {
@@ -9,6 +7,7 @@ $(document).ready(function () {
 
     loadTable();
 });
+
 function loadContent() {
     loadTable();
 }
@@ -38,7 +37,6 @@ function loadTable() {
         columns: [
             { data: "RelationshipID", name: "RelationshipID", autoWidth: true },
             { data: "name", name: "name", autoWidth: true },
-
             {
                 data: 'RelationshipID',
                 render: function (data, type, row) {
@@ -52,35 +50,52 @@ function loadTable() {
             }
         ],
         order: [[0, "desc"]]
-    })
+    });
 }
 
+// HANDLE DELETE BUTTON
 $(document).on('click', '.btnDelete', function () {
-    let id = $(this).data('id');
+    const id = $(this).data('id');
+
+    if (!id) {
+        return;
+    }
 
     Swal.fire({
         title: 'Yakin ingin menghapus data ini?',
         text: "Data yang dihapus tidak dapat dikembalikan!",
-        icon: 'warning',
+        type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#6c757d',
         confirmButtonText: 'Ya, hapus!'
     }).then((result) => {
-        if (result.isConfirmed) {
+        if (result.value) {
             $.ajax({
                 url: `/master/relationship/delete/${id}`,
                 type: 'POST',
                 success: function (res) {
                     if (res.success) {
-                        Swal.fire('Berhasil!', res.message, 'success');
-                        loadTable(); // reload table
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: res.message,
+                            type: 'success'
+                        });
+                        loadTable();
                     } else {
-                        Swal.fire('Gagal!', res.message, 'error');
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: res.message || 'Gagal menghapus.',
+                            type: 'error'
+                        });
                     }
                 },
                 error: function () {
-                    Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus data.', 'error');
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: 'Terjadi kesalahan saat menghapus data.',
+                        type: 'error'
+                    });
                 }
             });
         }
