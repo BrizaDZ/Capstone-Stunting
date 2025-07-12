@@ -42,15 +42,14 @@ class ArticleController extends Controller
 
     public function store(Request $v)
     {
-        if ($v->ArticleID == 0) {
+        if ($v->id == 0) {
             $data = new Article;
         } else {
-            $data = Article::findOrFail($v->ArticleID);
+            $data = Article::findOrFail($v->id);
         }
 
-        $data->ArticleID = $v->ArticleID;
         $data->title = $v->title;
-        $artikel->description = $request->input('description');
+        $data->description = $v->input('description');
         $data->date = $v->date;
          $data->slug = Str::slug($v->title);
 

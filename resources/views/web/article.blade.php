@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <h3 class="card-title">{{ $data->title }}</h3>
                     <p class="text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days me-2"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg> {{ \Carbon\Carbon::parse($data->date)->locale('id')->translatedFormat('l, d F Y') }} | <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye me-2"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg> {{ $data->counterview }} Views</p>
-                    <p class="card-text">{!! nl2br(e($data->description)) !!}</p>
+                    <p class="card-text">{!! $data->description !!}</p>
                 </div>
             </div>
             <div class="card mb-3 shadow border-0">
