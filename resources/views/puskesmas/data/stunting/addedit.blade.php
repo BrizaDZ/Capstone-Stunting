@@ -1,7 +1,7 @@
 <form action="/data/user/store" method="post">
     <div class="modal-header">
         <h4 class="modal-title">
-            Form Checkup
+            Data Stunting
         </h4>
         <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
     </div>

@@ -82,11 +82,17 @@ class DoctorOperationalTimeController extends Controller
     public function search(Request $v)
     {
         $query = DoctorOperationalTime::join('operationaltime', 'doctoroperationaltime.OperationalTimeID', '=', 'operationaltime.OperationalTimeID')
+            ->join('doctor', 'doctor.DoctorID', '=', 'doctoroperationaltime.DoctorID')
+            ->join('users', 'doctor.user_id', '=', 'users.id')
             ->select([
                 'doctoroperationaltime.DoctorOperationalTimeID',
                 'doctoroperationaltime.date',
                 'doctoroperationaltime.DoctorID',
-                'operationaltime.name'
+                'doctor.name as doctor_name',
+                'doctor.photo',
+                'doctor.user_id',
+                'users.name as puskesmas_name',
+                'operationaltime.name as shift_name',
             ])
             ->orderBy('doctoroperationaltime.date', 'asc');
 
@@ -102,6 +108,10 @@ class DoctorOperationalTimeController extends Controller
             $query->whereDate('doctoroperationaltime.date', '=', $v->appointment_date);
         }
 
+        if (!empty($v->puskesmas_id)) {
+            $query->where('doctor.user_id', $v->puskesmas_id);
+        }
+
         $data = $query->get();
 
         return response()->json($data);
@@ -109,13 +119,16 @@ class DoctorOperationalTimeController extends Controller
 
 
 
+
     public function delete($id)
-    {
-        if (Auth::user()->role === 'admin') {
+        {
             $data = DoctorOperationalTime::findOrFail($id);
             $data->delete();
-            return response()->json(['success' => 'Data deleted successfully.']);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil dihapus.'
+            ]);
+
         }
-        return response()->json(['error' => 'Unauthorized action.'], 403);
-    }
 }

@@ -269,12 +269,12 @@ function loadTableAppointment() {
             dataType: "json"
         },
         columns: [
-            { data: 'patient_name', name: 'patient_name' },
-            { data: 'puskesmas', name: 'puskesmas' },
-            { data: 'doctor_name', name: 'doctor_name' },
+            { data: 'patient_name', name: 'appointment.patient_name' },
+            { data: 'puskesmas_name', name: 'puskesmas_name' },
+            { data: 'doctor_name', name: 'appointment.doctor_name' },
 
-            { data: 'jadwal', name: 'jadwal' },
-            { data: 'status', name: 'status' },
+            { data: 'date', name: 'date' },
+            { data: 'status', name: 'appointment.status' },
 
 
             {

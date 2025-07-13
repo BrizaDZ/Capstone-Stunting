@@ -6,11 +6,9 @@
     <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />
     <link rel="stylesheet" href="/lib/select2/css/select2.min.css" />
     <link rel="stylesheet" href="/css/datagrid/datatables/datatables.bundle.css" />
-    {{-- <link rel="stylesheet" href="/css/addon.css" /> --}}
 @endpush
 
 @section('content')
-    <!--Modal Window-->
     <div id='myModal' class='modal fade' data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">

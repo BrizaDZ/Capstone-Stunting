@@ -55,6 +55,17 @@ class ProfilePatientController extends Controller
 
     public function store(Request $v)
     {
+        try {
+            $v->validate([
+                'nik' => 'required|string|size:16|unique:patient,nik,' . $v->PatientID . ',PatientID',
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->validator->errors()->first('nik')
+            ], 422);
+        }
+
         if ($v->PatientID == 0) {
             $data = new Patient;
             $data->user_id = auth()->id();
@@ -116,7 +127,7 @@ class ProfilePatientController extends Controller
 
     public function Ajax2(Request $request)
     {
-        $data = Stunting::join('patient', 'stunting.PatientID', '=', 'patient.PatientID')->where('user_id', auth()->id())
+        $data = Stunting::join('patient', 'stunting.PatientID', '=', 'patient.PatientID')->where('patient.user_id', auth()->id())
             ->select([
                 'patient.name',
                 'stunting.age',

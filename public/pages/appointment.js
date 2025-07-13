@@ -1,12 +1,14 @@
+let currentDoctorId = null;
+
 $(document).ready(function () {
     $.ajax({
         url: '/janji-temu',
         type: 'GET',
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
             if (response.success === false) {
                 Swal.fire({
-                    type: 'warning',
+                    icon: 'warning',
                     title: 'Data Pasien Belum Lengkap',
                     text: 'Harap isi data pasien terlebih dahulu di menu profil sebelum membuat janji temu.',
                     confirmButtonText: 'OK'
@@ -17,26 +19,26 @@ $(document).ready(function () {
         }
     });
 
-
-
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
+
     PopulatePatient();
     PopulatePuskesmas();
-    PopulateDoctor();
-    PopulateSchedule();
-});
-function loadContent() {
-}
+    fetchAvailableDoctors();
 
-$(document).on('shown.bs.modal', '#myModal', function () {
-    PopulatePatient();
-    PopulatePuskesmas()
-});
+    $('#appointment_date').on('change', function () {
+        currentDoctorId = null;
+        fetchAvailableDoctors();
+    });
 
+    $('.sPuskesmas').on('change', function () {
+        currentDoctorId = null;
+        fetchAvailableDoctors();
+    });
+});
 
 function PopulatePatient() {
     $('.sPatient').select2({
@@ -44,20 +46,15 @@ function PopulatePatient() {
         allowClear: true,
         ajax: {
             url: "/profile/search/",
-            contentType: "application/json; charset=utf-8",
             data: function (params) {
-                var query = {
-                    term: params.term,
-                };
-                return query;
+                return { term: params.term };
             },
             processResults: function (result) {
                 return {
                     results: $.map(result, function (item) {
                         return {
                             id: item.PatientID,
-                            text: item.name,
-
+                            text: item.name
                         };
                     })
                 };
@@ -66,7 +63,6 @@ function PopulatePatient() {
         }
     }).on('change', function () {
         var patientName = $('.sPatient option:selected').text();
-        console.log(patientName);
         $('#txtnamapatient').val(patientName);
     });
 }
@@ -77,147 +73,173 @@ function PopulatePuskesmas() {
         allowClear: true,
         ajax: {
             url: "/master/puskesmas/search/",
-            contentType: "application/json; charset=utf-8",
             data: function (params) {
-                return {
-                    term: params.term
-                };
+                return { term: params.term };
             },
             processResults: function (result) {
                 return {
                     results: $.map(result, function (item) {
                         return {
-                            id: item.LokasiPuskesmasID,
-                            text: item.nama,
-                            puskesmasid: item.PuskesmasID
+                            id: item.PuskesmasID,
+                            text: item.nama
                         };
                     })
                 };
             },
             cache: true
         }
-    }).on('select2:select', function (e) {
-        var selectedData = e.params.data;
-        var userId = selectedData.puskesmasid;
-
-        $('.sDoctor').val(null).trigger('change');
-        $('.sDoctor').select2('destroy');
-
-        PopulateDoctor(userId);
     });
 }
 
+function fetchAvailableDoctors() {
+    const puskesmasId = $('.sPuskesmas').val();
+    const date = $('#appointment_date').val();
 
-function PopulateDoctor(userId) {
-    $('.sDoctor').select2({
-        placeholder: 'Pilih Dokter...',
-        allowClear: true,
-        ajax: {
-            url: "/master/doctor/search/",
-            contentType: "application/json; charset=utf-8",
-            data: function (params) {
-                return {
-                    term: params.term,
-                    user_id: userId
-                };
-            },
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
-                        return {
-                            id: item.DoctorID,
-                            text: item.name
-                        };
-                    })
-                };
-            },
-            cache: true
-        }
-    }).on('select2:select', function (e) {
-        var doctorId = e.params.data.id;
-
-        $('.sSchedule').val(null).trigger('change');
-        $('.sSchedule').select2('destroy');
-
-        PopulateSchedule(doctorId);
-        $('#doctorScheduleTitle').text('Jadwal Dokter: ' + e.params.data.text);
-        renderDoctorCalendar(doctorId);
-    }).on('change', function () {
-        var doctorName = $('.sDoctor option:selected').text();
-        console.log(doctorName);
-        $('#txtnamadoctor').val(doctorName);
-    });
-}
-function renderDoctorCalendar(doctorId) {
-    $('#doctorScheduleCard').removeClass('d-none');
-
-    $('#doctorCalendar').html('');
-
-    fetch(`/master/doctoroperationaltime/search?DoctorID=${doctorId}`)
-        .then(response => response.json())
-        .then(data => {
-            const calendarEl = document.getElementById('doctorCalendar');
-
-            const events = data.map(item => ({
-                title: item.name,
-                start: item.date,
-                allDay: true
-            }));
-
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                locale: 'id',
-                initialView: 'dayGridMonth',
-                height: 500,
-                events: events
-            });
-
-            calendar.render();
-        });
-}
-
-$('#appointment_date').on('change', function () {
-    const doctorId = $('.sDoctor').val();
-    if (doctorId) {
-        $('.sSchedule').val(null).trigger('change');
-        $('.sSchedule').select2('destroy');
-        PopulateSchedule(doctorId);
+    if (!puskesmasId || !date) {
+        $('#doctorListCard').addClass('d-none');
+        return;
     }
-});
-function PopulateSchedule(doctorId) {
-    $('.sSchedule').select2({
-        placeholder: 'Pilih Jadwal...',
-        allowClear: true,
-        ajax: {
-            url: "/master/doctoroperationaltime/search/",
-            contentType: "application/json; charset=utf-8",
-            data: function (params) {
-                return {
-                    term: params.term,
-                    DoctorID: doctorId,
-                    appointment_date: $('#appointment_date').val()
-                };
-            },
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
-                        return {
-                            id: item.DoctorOperationalTimeID,
-                            text: item.date
-                        };
-                    })
-                };
-            },
-            cache: true
+
+    $.ajax({
+        url: '/master/doctoroperationaltime/search',
+        type: 'GET',
+        data: {
+            puskesmas_id: puskesmasId,
+            appointment_date: date
+        },
+        success: function (response) {
+            const container = $('#doctorListContent');
+            container.empty();
+
+            if (response.length > 0) {
+                response.forEach(item => {
+                    const card = `
+                        <div class="col-md-3">
+                            <div class="card h-100 shadow doctor-card" style="cursor: pointer;"
+                                data-doctor-id="${item.DoctorID}"
+                                data-doctor-name="${item.doctor_name}">
+                                <img src="/images/doctor/${item.photo}" class="card-img-top object-fit-cover" height="300" alt="${item.doctor_name}">
+                                <div class="card-body p-4">
+                                    <h5 class="card-title mb-1 text-primary fw-bold">${item.doctor_name}</h5>
+                                    <p class="card-text mb-0">${item.puskesmas_name}</p>
+                                </div>
+                                <div class="card-footer bg-white">
+                                    <small class="text-muted">Pilih Jam: </small>
+                                    <div class="sSchedule w-100 text-center">
+                                        <button class="btn btn-sm btn-primary w-100">Klik untuk pilih</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.append(card);
+                });
+
+                $('#doctorListCard').removeClass('d-none');
+            } else {
+                $('#doctorListCard').addClass('d-none');
+            }
+        },
+        error: function () {
+            $('#doctorListCard').addClass('d-none');
         }
     });
 }
 
+$(document).on('click', '.doctor-card', function () {
+    const doctorId = $(this).data('doctor-id');
+    const doctorName = $(this).data('doctor-name');
+
+    if (currentDoctorId === doctorId) return;
+    currentDoctorId = doctorId;
+
+    $('.doctor-card').removeClass('selected-doctor');
+    $(this).addClass('selected-doctor');
+
+    $('#txtnamadoctor').val(doctorName);
+    $('#inputDoctorID').val(doctorId);
+
+    $('html, body').animate({
+        scrollTop: $('#appointmentForm').offset().top + 500
+    }, 500);
+
+    const $container = $(this).find('.sSchedule');
+    $container.html(`<span class="text-muted small">Memuat...</span>`);
+
+    const appointmentDate = $('#appointment_date').val();
+    if (!appointmentDate) {
+        $container.html(`<span class="text-danger">Pilih tanggal terlebih dahulu</span>`);
+        return;
+    }
+
+    $.ajax({
+        url: "/master/doctoroperationaltime/search/",
+        type: "GET",
+        data: {
+            DoctorID: doctorId,
+            appointment_date: appointmentDate
+        },
+        success: function (result) {
+            if (result.length > 0) {
+                const selectedShiftId = $('#inputDoctorOperationalTimeID').val();
+                let buttons = '';
+                result.forEach(item => {
+                    const isActive = item.DoctorOperationalTimeID == selectedShiftId ? 'active' : '';
+                    buttons += `
+                        <button type="button" class="btn btn-outline-primary btn-sm mb-1 w-100 btn-shift ${isActive}"
+                            data-id="${item.DoctorOperationalTimeID}"
+                            data-text="${item.shift_name}">
+                            ${item.shift_name}
+                        </button>
+                    `;
+                });
+
+                $container.html(buttons);
+            } else {
+                $container.html('<span class="text-danger">Tidak ada jadwal</span>');
+            }
+        },
+        error: function () {
+            $container.html('<span class="text-danger">Gagal ambil jadwal</span>');
+        }
+    });
+});
+
+$(document).on('click', '.btn-shift', function () {
+    $('.btn-shift').removeClass('active');
+    $(this).addClass('active');
+
+    const shiftId = $(this).data('id');
+
+    $('#inputDoctorOperationalTimeID').val(shiftId);
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("appointmentForm");
 
     form.addEventListener("submit", function (e) {
         e.preventDefault();
+
+        const doctorId = document.getElementById('inputDoctorID').value;
+        const shiftId = document.getElementById('inputDoctorOperationalTimeID').value;
+
+        if (!doctorId) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Pilih Dokter',
+                text: 'Silakan pilih dokter terlebih dahulu dengan mengklik salah satu kartu dokter.',
+            });
+            return;
+        }
+
+        if (!shiftId) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Pilih Jam Praktik',
+                text: 'Silakan pilih jam praktik dari dokter yang telah dipilih.',
+            });
+            return;
+        }
 
         const formData = new FormData(form);
 
@@ -232,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             if (data.success) {
                 Swal.fire({
-                    type: 'success',
+                    icon: 'success',
                     title: 'Janji Temu Berhasil!',
                     html: `
                         Nomor Antrian Anda: <strong>${data.queue_number}</strong><br><br>
@@ -249,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 form.reset();
             } else {
                 Swal.fire({
-                    type: 'error',
+                    icon: 'error',
                     title: 'Gagal!',
                     text: data.message || 'Terjadi kesalahan saat menyimpan data.',
                 }).then(() => {
@@ -260,11 +282,11 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => {
             console.error(error);
             Swal.fire({
-                type: 'error',
+                icon: 'error',
                 title: 'Error',
                 text: 'Terjadi kesalahan pada server.',
             });
         });
     });
-});
 
+});

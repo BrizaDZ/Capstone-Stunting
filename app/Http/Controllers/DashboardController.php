@@ -25,12 +25,10 @@ class DashboardController extends Controller
 
         $stuntingPerMonth = DB::table('stunting')
             ->selectRaw('MONTH(stunting.created_at) as month, COUNT(*) as count')
-            ->join('patient', 'stunting.PatientID', '=', 'patient.PatientID')
-            ->join('appointment', 'patient.PatientID', '=', 'appointment.PatientID')
             ->when($puskesmasId, function ($query) use ($puskesmasId) {
-                return $query->where('appointment.PuskesmasID', $puskesmasId);
+                return $query->where('stunting.PuskesmasID', $puskesmasId);
             })
-            ->where('stunting.status', '!=', 'Stunting')
+            ->where('stunting.status', 'Stunting')
             ->groupByRaw('MONTH(stunting.created_at)')
             ->pluck('count', 'month');
 

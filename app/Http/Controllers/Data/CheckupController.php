@@ -413,33 +413,25 @@ class CheckupController extends Controller
         return $pdf->download('surat_rujukan_'.$data->StuntingID.'.pdf');
     }
 
-
     public function Ajax(Request $request)
     {
-        $puskesmasId = LokasiPuskesmas::where('PuskesmasID', auth()->id())->value('PuskesmasID');
-        $data = Appointment::with(['puskesmas', 'doctorOperationalTime'])
-            ->where('PuskesmasID', $puskesmasId)
-            ->where(function($query) {
-                $query->where('status', '!=', 'Selesai')
-                    ->orWhereNull('status');
-            })
+        $data = Appointment::join('lokasipuskesmas', 'appointment.PuskesmasID', '=', 'lokasipuskesmas.PuskesmasID')
+        ->join('doctoroperationaltime', 'appointment.DoctorOperationalTimeID', '=', 'doctoroperationaltime.DoctorOperationalTimeID')
+            ->where('appointment.status', '!=', 'Selesai')
+            ->where('lokasipuskesmas.PuskesmasID', auth()->id())
             ->select([
-                'patient_name',
-                'doctor_name',
-                'PatientID',
-                'PuskesmasID',
-                'DoctorOperationalTimeID',
-                'AppointmentID'
+                'appointment.patient_name',
+                'appointment.doctor_name',
+                'appointment.PatientID',
+                'appointment.PuskesmasID',
+                'appointment.DoctorOperationalTimeID',
+                'appointment.AppointmentID',
+                'lokasipuskesmas.nama as puskesmas_name',
+                'doctoroperationaltime.date',
             ]);
 
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('puskesmas', function ($row) {
-                return $row->puskesmas ? $row->puskesmas->nama : '-';
-            })
-            ->addColumn('jadwal', function ($row) {
-                return $row->doctorOperationalTime ? $row->doctorOperationalTime->day : '-';
-            })
             ->make(true);
     }
 

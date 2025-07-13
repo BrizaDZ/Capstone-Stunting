@@ -26,7 +26,7 @@ class PatientController extends Controller
 
     public function Edit($id)
     {
-        return view('puskesmas.data.pasient.addedit', ['data' => Patient::findOrFail($id)]);
+        return view('puskesmas.data.pasient.addedit', ['data' => Patient::join('patientrelationship', 'patient.RelationshipID', '=', 'patientrelationship.RelationshipID')->where('patient.PatientID',$id)->select('patient.*','patientrelationship.name as relationshipName')->first()]);
     }
 
     public function Ajax(Request $request)
@@ -50,7 +50,7 @@ class PatientController extends Controller
     {
         try {
             $v->validate([
-                'nik' => 'required|string|size:16|unique:patient,nik,' . $v->id . ',PatientID',
+                'nik' => 'required|string|size:16|unique:patient,nik,' . $v->PatientID . ',PatientID',
             ]);
         } catch (ValidationException $e) {
             return response()->json([
@@ -59,26 +59,42 @@ class PatientController extends Controller
             ], 422);
         }
 
-        if ($v->id == 0) {
+        if ($v->PatientID == 0) {
             $data = new Patient;
+            $data->PatientID = $v->PatientID;
+            $data->nik = $v->nik;
+
+            $data->name = $v->name;
+            $data->age = $v->age;
+
+            $data->gender = $v->gender;
+            $data->kabupaten = $v->kabupaten;
+
+            $data->kelurahan = $v->kelurahan;
+            $data->kecamatan = $v->kecamatan;
+
+            $data->rt = $v->rt;
+            $data->rw = $v->rw;
+
+            $data->alamat = $v->alamat;
+            $data->RelationshipID = $v->RelationshipID;
         } else {
-            $data = Patient::findOrFail($v->id);
+            $data = Patient::where('PatientID', $v->PatientID)->firstOrFail();
+            $data->PatientID = $v->PatientID;
+            $data->nik = $v->nik;
+
+            $data->name = $v->name;
+            $data->age = $v->age;
+
+            $data->gender = $v->gender;
+            $data->alamat = $v->alamat;
+            $data->RelationshipID = $v->RelationshipID;
         }
 
-        $data->nik = $v->nik;
-        $data->name = $v->name;
-        $data->age = $v->age;
-        $data->gender = $v->gender;
-        $data->kabupaten = $v->kabupaten;
-        $data->kelurahan = $v->kelurahan;
-        $data->kecamatan = $v->kecamatan;
-        $data->rt = $v->rt;
-        $data->rw = $v->rw;
-        $data->alamat = $v->alamat;
-        $data->RelationshipID = $v->RelationshipID;
         $data->save();
 
         return ['success' => true];
+
     }
 
 }

@@ -84,11 +84,14 @@ class OperationalTimeController extends Controller
     }
 
     public function delete($id)
-    {
-        // Ensure users can only delete their own records
-        $data = OperationalTime::where('user_id', auth()->id())->findOrFail($id);
-        $data->delete();
+        {
+            $data = OperationalTime::findOrFail($id);
+            $data->delete();
 
-        return response()->json(['success' => 'Product deleted successfully.']);
-    }
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil dihapus.'
+            ]);
+
+        }
 }

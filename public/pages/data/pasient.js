@@ -10,27 +10,12 @@ function loadContent() {
     loadTable();
 }
 
-$(document).on('shown.bs.modal', '#myModal', function () {
+$(document).on('shown.bs.modal',  function () {
     PopulateRelationship();
     PopulateProvince();
     PopulateRegency();
     PopulateDistrict();
     PopulateVillage();
-    $('#formPasien').off('submit').on('submit', function(e) {
-        e.preventDefault();
-        var form = $(this);
-        $.ajax({
-            url: form.attr('action'),
-            method: 'POST',
-            data: form.serialize(),
-            error: function(xhr) {
-                if(xhr.status === 422){
-                    let msg = 'NIK sudah terdaftar, silahkan gunakan yang lain';
-                    Swal.fire('Gagal', msg, 'error');
-                }
-            }
-        });
-    });
 });
 
 function PopulateRelationship() {

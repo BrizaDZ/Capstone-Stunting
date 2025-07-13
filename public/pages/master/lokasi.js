@@ -39,16 +39,12 @@ function loadTable() {
             dataType: "json"
         },
         columns: [
-            { data: "name", name: "users.name", autoWidth: true },
-            { data: "alamat", name: "lokasipuskesmas.alamat", autoWidth: true },
-            { data: "Kabupaten", name: "lokasipuskesmas.Kabupaten", autoWidth: true },
-            { data: "Kecamatan", name: "lokasipuskesmas.Kecamatan", autoWidth: true },
-            { data: "Kelurahan", name: "lokasipuskesmas.Kelurahan", autoWidth: true },
-            { data: "longitude", name: "lokasipuskesmas.longitude", autoWidth: true },
-            { data: "latitude", name: "lokasipuskesmas.latitude", autoWidth: true },
+            { data: "name", name: "name", autoWidth: true },
+            { data: "email", name: "email", autoWidth: true },
+            { data: "telp", name: "telp", autoWidth: true },
 
             {
-                data: 'PuskesmasID',
+                data:  null,
                 render: function (data, type, row) { return "<button type='button' class='btn btn-sm btn-primary mr-2 showMe' style='width:100%;' data-href='/data/puskesmas/edit/" + row.id + "'> Edit</button>" }
             }
         ],

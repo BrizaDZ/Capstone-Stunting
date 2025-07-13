@@ -36,7 +36,7 @@ class RelationshipController extends Controller
             $data = PatientRelationship::findOrFail($v->id);
         }
 
-        $data->name = $v->name; 
+        $data->name = $v->name;
         $data->save();
 
         return ['success' => true];
@@ -68,26 +68,15 @@ class RelationshipController extends Controller
         return response()->json($data);
     }
 
-    public function delete($id)
-    {
-        try {
-            $relationship = PatientRelationship::findOrFail($id); // pastikan data ada
+        public function delete($id)
+        {
+            $relationship = PatientRelationship::findOrFail($id);
             $relationship->delete();
 
             return response()->json([
                 'success' => true,
                 'message' => 'Data hubungan pasien berhasil dihapus.'
             ]);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Data hubungan pasien tidak ditemukan.'
-            ], 404);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan saat menghapus data.'
-            ], 500);
+
         }
-    }
 }

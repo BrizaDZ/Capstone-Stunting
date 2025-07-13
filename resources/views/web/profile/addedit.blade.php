@@ -37,7 +37,7 @@
                 </select>
             </div>
             <div class="col-lg-2">
-                <label class="form-label">Umur</label>
+                <label class="form-label">Umur (Bulan)</label>
                 <input type="number" class="form-control" name="age" value="{{ $data->age }}" required>
             </div>
             <div class="col-lg-6">

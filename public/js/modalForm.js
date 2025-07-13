@@ -19,7 +19,13 @@ function bindForm(dialog) {
                     loadPlugin();
 
                 }
+            },
+            error: function(xhr) {
+            if(xhr.status === 422){
+                let msg = 'NIK sudah terdaftar, silahkan gunakan yang lain';
+                Swal.fire('Gagal', msg, 'error');
             }
+        }
         });
         return false;
     });

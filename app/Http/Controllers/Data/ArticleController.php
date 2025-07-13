@@ -79,4 +79,16 @@ class ArticleController extends Controller
 
     }
 
+    public function delete($id)
+        {
+            $data = Article::findOrFail($id);
+            $data->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil dihapus.'
+            ]);
+
+        }
+
 }

@@ -5,18 +5,30 @@
     <script src="/lib/fullcalendar/packages/core/index.global.min.js"></script>
     <script src="/lib/fullcalendar/packages/core/locales/id.global.min.js"></script>
     <script src="/lib/fullcalendar/packages/daygrid/index.global.min.js"></script>
+<style>
+    .doctor-card.selected-doctor {
+    border: 3px solid #4db5ff;
+    box-shadow: 0 0 10px rgba(13, 110, 253, 0.5);
+    transition: 0.3s ease;
+}
 
+</style>
 @endpush
 @section('content')
-<section>
-    <div class="container">
-        <div class="card bg-white">
+<form action="/janji-temu/store" method="post" id="appointmentForm">
+    @csrf
+    <div class="container py-5">
+        <div class="card bg-white shadow border-0">
+            <div class="card-header bg-primary p-3">
+                <h3 class="text-white text-center fw-bold">Janji Temu Stunting</h3>
+            </div>
             <div class="card-body p-5">
-                <h1 class="text-primary text-center mb-5 fw-bold">Form Janji Temu (Stunting)</h1>
-                <form action="/janji-temu/store" method="post" id="appointmentForm">
-                    @csrf
+
                     <input type="hidden" name="doctor_name" id="txtnamadoctor">
                     <input type="hidden" name="patient_name" id="txtnamapatient">
+                    <input type="hidden" name="DoctorID" id="inputDoctorID">
+                    <input type="hidden" name="DoctorOperationalTimeID"  id="inputDoctorOperationalTimeID">
+
                     <div class="row mb-3">
                         <div class="col-lg-2">
                             <label class="form-label fw-bold">Nama Pasien</label>
@@ -43,19 +55,6 @@
                             </select>
                         </div>
                     </div>
-                    {{-- <div class="row mb-3">
-                        <div class="col-lg-2">
-                            <label class="form-label fw-bold">Nama Dokter</label>
-                        </div>
-                        <div class="col-lg-10">
-                            <select class="form-control select2 sDoctor" name="DoctorID" required>
-                                @if ($data->DoctorID != null)
-                                <option value="{{ $data->DoctorID }}" selected="selected">{{ $data->nama }}
-                                </option>
-                                @endif
-                            </select>
-                        </div>
-                    </div> --}}
                     <div class="row mb-3">
                         <div class="col-lg-2">
                             <label class="form-label fw-bold">Tanggal</label>
@@ -64,23 +63,23 @@
                             <input type="date" name="appointment_date" class="form-control" required id="appointment_date" required>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-lg-2">
-                            <label class="form-label fw-bold">Pilih Jadwal</label>
-                        </div>
-                        <div class="col-lg-10">
-                            <select class="form-control select2 sSchedule" name="DoctorOperationalTimeID" required>
-                                @if ($data->DoctorOperationalTimeID != null)
-                                <option value="{{ $data->DoctorOperationalTimeID }}" selected="selected">{{ $data->name }}
-                                </option>
-                                @endif
-                            </select>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
             </div>
         </div>
+        <div id="doctorListCard" class="card border-0 shadow mt-4 d-none">
+            <div class="card-header bg-primary py-3">
+                <h2 class="fw-bold text-white text-center mb-0">Dokter Tersedia</h2>
+                <p class="text-center text-white mb-0">( Klik untuk pilih dokter )</p>
+            </div>
+            <div class="card-body p-5">
+                <div id="doctorListContent" class="row g-3"></div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary w-75 mx-auto">Submit</button>
+
+                </div>
+
+            </div>
+        </div>
+
         <div id="doctorScheduleCard" class="card mt-4 d-none">
             <div class="card-body p-5">
                 <h5 id="doctorScheduleTitle" class="fw-bold mb-3 text-center">Jadwal Dokter:</h5>
@@ -89,7 +88,8 @@
         </div>
 
     </div>
-</section>
+</form>
+
 @endsection
 
 @push('script')

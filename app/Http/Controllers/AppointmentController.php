@@ -29,7 +29,7 @@ class AppointmentController extends Controller
     public function store(Request $v)
     {
 
-        $existingAppointment = Appointment::where('user_id', auth()->id())
+        $existingAppointment = Appointment::where('PatientID', $v->PatientID)
         ->where('DoctorOperationalTimeID', $v->DoctorOperationalTimeID)
         ->first();
         if ($existingAppointment) {
@@ -93,26 +93,23 @@ class AppointmentController extends Controller
 
     public function Ajax(Request $request)
     {
-        $data = Appointment::with(['puskesmas', 'doctorOperationalTime'])
-            ->where('user_id', auth()->id())
+        $data = Appointment::join('lokasipuskesmas', 'appointment.PuskesmasID', '=', 'lokasipuskesmas.PuskesmasID')
+        ->join('doctoroperationaltime', 'appointment.DoctorOperationalTimeID', '=', 'doctoroperationaltime.DoctorOperationalTimeID')
+            ->where('appointment.user_id', auth()->id())
             ->select([
-                'patient_name',
-                'doctor_name',
-                'PatientID',
-                'PuskesmasID',
-                'DoctorOperationalTimeID',
-                'status',
-                'AppointmentID',
+                'appointment.patient_name',
+                'appointment.doctor_name',
+                'appointment.PatientID',
+                'appointment.PuskesmasID',
+                'appointment.DoctorOperationalTimeID',
+                'appointment.status',
+                'appointment.AppointmentID',
+                'lokasipuskesmas.nama as puskesmas_name',
+                'doctoroperationaltime.date',
             ]);
 
         return Datatables::of($data)
             ->addIndexColumn()
-            ->addColumn('puskesmas', function ($row) {
-                return $row->puskesmas ? $row->puskesmas->nama : '-';
-            })
-            ->addColumn('jadwal', function ($row) {
-                return $row->doctorOperationalTime ? $row->doctorOperationalTime->date : '-';
-            })
             ->make(true);
     }
 

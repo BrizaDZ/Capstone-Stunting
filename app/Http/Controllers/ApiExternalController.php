@@ -13,41 +13,84 @@ class ApiExternalController extends Controller
 
     public function getProvinces(Request $request)
     {
+        $term = strtolower($request->input('term', ''));
+
         $response = Http::get('https://emsifa.github.io/api-wilayah-indonesia/api/provinces.json');
         if ($response->successful()) {
-            return response()->json($response->json());
+            $provinces = collect($response->json());
+
+            if (!empty($term)) {
+                $provinces = $provinces->filter(function ($province) use ($term) {
+                    return str_contains(strtolower($province['name']), $term);
+                });
+            }
+
+            return response()->json($provinces->values()); // Reset index
         } else {
             return response()->json([], 500);
         }
     }
 
-    public function getRegencies($id)
+    public function getRegencies(Request $request, $id)
     {
+        $term = strtolower($request->input('term', ''));
+
         $response = Http::get("https://emsifa.github.io/api-wilayah-indonesia/api/regencies/{$id}.json");
         if ($response->successful()) {
-            return response()->json($response->json());
+            $regencies = collect($response->json());
+
+            if (!empty($term)) {
+                $regencies = $regencies->filter(function ($regency) use ($term) {
+                    return str_contains(strtolower($regency['name']), $term);
+                });
+            }
+
+            return response()->json($regencies->values());
         } else {
             return response()->json([], 500);
         }
     }
 
-    public function getDistricts($id)
+
+    public function getDistricts(Request $request, $id)
     {
+        $term = strtolower($request->input('term', ''));
+
         $response = Http::get("https://emsifa.github.io/api-wilayah-indonesia/api/districts/{$id}.json");
         if ($response->successful()) {
-            return response()->json($response->json());
+            $districts = collect($response->json());
+
+            if (!empty($term)) {
+                $districts = $districts->filter(function ($district) use ($term) {
+                    return str_contains(strtolower($district['name']), $term);
+                });
+            }
+
+            return response()->json($districts->values());
         } else {
             return response()->json([], 500);
         }
     }
 
-    public function getVillage($id)
-    {
-        $response = Http::get("https://emsifa.github.io/api-wilayah-indonesia/api/villages/{$id}.json");
-        if ($response->successful()) {
-            return response()->json($response->json());
-        } else {
-            return response()->json([], 500);
+
+    public function getVillage(Request $request, $id)
+        {
+            $term = strtolower($request->input('term', ''));
+
+            $response = Http::get("https://emsifa.github.io/api-wilayah-indonesia/api/villages/{$id}.json");
+            if ($response->successful()) {
+                $villages = collect($response->json());
+
+                if (!empty($term)) {
+                    $villages = $villages->filter(function ($village) use ($term) {
+                        return str_contains(strtolower($village['name']), $term);
+                    });
+                }
+
+                return response()->json($villages->values());
+            } else {
+                return response()->json([], 500);
+            }
         }
-    }
+
 }

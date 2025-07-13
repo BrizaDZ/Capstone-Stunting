@@ -30,10 +30,10 @@ function loadTable() {
             dataType: "json"
         },
         columns: [
-            { data: 'patient_name', name: 'patient_name' },
-            { data: 'doctor_name', name: 'doctor_name' },
-            { data: 'puskesmas', name: 'puskesmas' },
-            { data: 'jadwal', name: 'jadwal' },
+            { data: 'patient_name', name: 'appointment.patient_name' },
+            { data: 'doctor_name', name: 'appointment.doctor_name' },
+            { data: 'puskesmas_name', name: 'puskesmas_name' },
+            { data: 'date', name: 'date' },
 
             {
                 data: 'AppointmentID',

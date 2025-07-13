@@ -76,7 +76,9 @@ Route::middleware(['isAdmin'])->group(function () {
             Route::get('/edit/{id}', [RelationshipController::class, 'Edit']);
             Route::get('/add', [RelationshipController::class, 'Add']);
             Route::post('/store', [RelationshipController::class, 'store']);
-            Route::post('/delete/{id}', [RelationshipController::class, 'delete']);
+            Route::delete('/delete/{id}', [RelationshipController::class, 'delete']);
+
+
             Route::post('/table', [RelationshipController::class, 'Ajax']);
         });
 
@@ -87,7 +89,6 @@ Route::middleware(['isAdmin'])->group(function () {
             Route::get('/edit/{id}', [LokasiPuskesmasController::class, 'Edit']);
             Route::get('/add', [LokasiPuskesmasController::class, 'Add']);
             Route::post('/store', [LokasiPuskesmasController::class, 'store']);
-            Route::post('/delete/{id}', [LokasiPuskesmasController::class, 'delete']);
             Route::post('/table', [LokasiPuskesmasController::class, 'Ajax']);
         });
         Route::prefix('/user')->group(function () {
@@ -95,7 +96,6 @@ Route::middleware(['isAdmin'])->group(function () {
             Route::get('/edit/{id}', [UserController::class, 'Edit']);
             Route::get('/add', [UserController::class, 'Add']);
             Route::post('/store', [UserController::class, 'store']);
-            Route::post('/delete/{id}', [UserController::class, 'delete']);
             Route::post('/table', [UserController::class, 'Ajax']);
         });
         Route::prefix('/artikel')->group(function () {
@@ -103,7 +103,7 @@ Route::middleware(['isAdmin'])->group(function () {
             Route::get('/edit/{id}', [ArticleController::class, 'Edit']);
             Route::get('/add', [ArticleController::class, 'Add']);
             Route::post('/store', [ArticleController::class, 'store']);
-            Route::post('/delete/{id}', [ArticleController::class, 'delete']);
+            Route::delete('/delete/{id}', [ArticleController::class, 'delete']);
             Route::post('/table', [ArticleController::class, 'Ajax']);
         });
     });
@@ -120,7 +120,7 @@ Route::middleware(['isPuskesmas'])->group(function () {
             Route::get('/edit/{id}', [OperationalTimeController::class, 'Edit']);
             Route::get('/add', [OperationalTimeController::class, 'Add']);
             Route::post('/store', [OperationalTimeController::class, 'store']);
-            Route::post('/delete/{id}', [OperationalTimeController::class, 'delete']);
+            Route::delete('/delete/{id}', [OperationalTimeController::class, 'delete']);
             Route::post('/table', [OperationalTimeController::class, 'Ajax']);
             Route::get('/search', [OperationalTimeController::class, 'search']);
         });
@@ -129,7 +129,7 @@ Route::middleware(['isPuskesmas'])->group(function () {
             Route::get('/edit/{id}', [DoctorController::class, 'Edit']);
             Route::get('/add', [DoctorController::class, 'Add']);
             Route::post('/store', [DoctorController::class, 'store']);
-            Route::post('/delete/{id}', [DoctorController::class, 'delete']);
+            Route::delete('/delete/{id}', [DoctorController::class, 'delete']);
             Route::post('/table', [DoctorController::class, 'Ajax']);
         });
         Route::prefix('/doctoroperationaltime')->group(function () {
@@ -137,7 +137,7 @@ Route::middleware(['isPuskesmas'])->group(function () {
             Route::get('/edit/{id}', [DoctorOperationalTimeController::class, 'Edit']);
             Route::get('/add', [DoctorOperationalTimeController::class, 'Add']);
             Route::post('/store', [DoctorOperationalTimeController::class, 'store']);
-            Route::post('/delete/{id}', [DoctorOperationalTimeController::class, 'delete']);
+            Route::delete('/delete/{id}', [DoctorOperationalTimeController::class, 'delete']);
             Route::post('/table', [DoctorOperationalTimeController::class, 'Ajax']);
         });
     });
@@ -154,7 +154,7 @@ Route::middleware(['isPuskesmas'])->group(function () {
             Route::get('/', [StuntingController::class, 'index']);
             Route::get('/add', [StuntingController::class, 'Edit']);
             Route::post('/store', [StuntingController::class, 'store']);
-            Route::post('/delete/{id}', [StuntingController::class, 'delete']);
+            Route::delete('/delete/{id}', [StuntingController::class, 'delete']);
             Route::post('/table', [StuntingController::class, 'Ajax']);
             Route::get('/detail/{id}', [StuntingController::class, 'Detail']);
         });

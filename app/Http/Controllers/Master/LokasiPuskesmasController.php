@@ -29,18 +29,36 @@ class LokasiPuskesmasController extends Controller
         $data = DB::table('lokasipuskesmas')
             ->join('users', 'lokasipuskesmas.PuskesmasID', '=', 'users.id')
             ->where('users.id', $id)
-            ->select('lokasipuskesmas.*', 'users.name as user_name')
+            ->select('lokasipuskesmas.*', 'users.name as user_name', 'users.id as user_id')
             ->first();
+
+        if (!$data) {
+            $user = DB::table('users')->where('id', $id)->first();
+
+            $data = (object)[
+                'LokasiPuskesmasID' => 0,
+                'nama' => '',
+                'alamat' => '',
+                'kabupaten' => '',
+                'kecamatan' => '',
+                'kelurahan' => '',
+                'longitude' => '',
+                'latitude' => '',
+                'PuskesmasID' => $user->id,
+                'user_name' => $user->name,
+                'user_id' => $user->id,
+            ];
+        }
 
         return view('admin.master.puskesmas.addedit', ['data' => $data]);
     }
 
     public function store(Request $v)
     {
-        if ($v->id == 0) {
+        if ($v->lokasiid == 0) {
             $data = new Lokasi;
         } else {
-            $data = Lokasi::findOrFail($v->id);
+        $data = Lokasi::findOrFail($v->lokasiid);
         }
 
         $data->nama = $v->nama;
@@ -61,15 +79,12 @@ class LokasiPuskesmasController extends Controller
 
     public function Ajax(Request $request)
     {
-        $data = User::join('lokasipuskesmas', 'users.id', '=', 'lokasipuskesmas.PuskesmasID')->select([
-            'users.name',
-            'users.id',
-            'lokasipuskesmas.alamat',
-            'lokasipuskesmas.Kabupaten',
-            'lokasipuskesmas.Kecamatan',
-            'lokasipuskesmas.Kelurahan',
-            'lokasipuskesmas.longitude',
-            'lokasipuskesmas.latitude',
+        $data = User::where('role_id', '3')
+        ->select([
+            'name',
+            'id',
+            'email',
+            'telp',
 
         ]);
         $datatables = Datatables::of($data);

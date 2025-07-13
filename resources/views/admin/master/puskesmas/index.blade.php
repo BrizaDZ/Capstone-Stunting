@@ -27,10 +27,7 @@
                     <h2>
                         Tabel Puskesmas <span class="fw-300"></span>
                     </h2>
-                    <div class="panel-toolbar">
-                        <button class="btn btn-primary showMe" data-href="/data/puskesmas/add">Tambah Lokasi
-                            Puskesmas</button>
-                    </div>
+
                 </div>
 
                 <div class="panel-container show">
@@ -40,12 +37,8 @@
                                 <thead class="text-white bg-primary-200">
                                     <tr>
                                         <th>Nama Puskesmas</th>
-                                        <th>Alamat</th>
-                                        <th>Kota/Kabupaten</th>
-                                        <th>Kecamatan</th>
-                                        <th>Kelurahan</th>
-                                        <th>Longitude</th>
-                                        <th>Latitude</th>
+                                        <th>Email</th>
+                                        <th>Telepon</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

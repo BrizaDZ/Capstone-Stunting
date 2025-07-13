@@ -55,6 +55,7 @@ class StuntingController extends Controller
                 'stunting.heightage',
                 'stunting.weightheight',
                 'stunting.status',
+                'stunting.StuntingID',
                 DB::raw('DATE(stunting.created_at) as created_date'),
             ]);
 
@@ -63,4 +64,15 @@ class StuntingController extends Controller
         return $datatables->addIndexColumn()->make(true);
     }
 
+    public function delete($id)
+        {
+            $data = Stunting::findOrFail($id);
+            $data->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil dihapus.'
+            ]);
+
+        }
 }
