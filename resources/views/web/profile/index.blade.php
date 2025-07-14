@@ -1,4 +1,5 @@
 @extends('layouts.web.layout')
+@section('title', 'Profile')
 
 @push('style')
 <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />

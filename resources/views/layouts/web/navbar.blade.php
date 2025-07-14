@@ -1,6 +1,6 @@
 <nav class="container-xl p-3 bg-transparent navbar sticky-top navbar-expand-lg fs-5 mt-3 rounded-3">
     <div class="container-fluid">
-        <a class="navbar-brand text-dark fw-bold" href="#">Stunt<span class="fw-bold text-primary">AIDS</span> </a>
+        <a class="navbar-brand text-dark fw-bold" href="#"><img src="/image/logo.png" alt="Logo" width="38" height="38" class="me-3">Stunt<span class="fw-bold text-primary">AIDS</span> </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,6 +32,32 @@
         </div>
     </div>
 </nav>
+
+<div class="mobile-nav border-0">
+    <a href="/" class="active">
+        <i class="bi bi-house-fill fs-4"></i>
+        <span>Beranda</span>
+    </a>
+    <a href="/#puskesmas">
+        <i class="bi bi-hospital fs-4"></i>
+        <span>Puskesmas</span>
+    </a>
+    <a href="/janji-temu">
+        <i class="bi bi-calendar-check fs-4"></i>
+        <span>Janji</span>
+    </a>
+    <a href="/profile/patient">
+        <i class="bi bi-person-circle fs-4"></i>
+        <span>Profile</span>
+    </a>
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <a href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+            <i class="bi bi-box-arrow-right fs-4"></i>
+            <span>Logout</span>
+        </a>
+    </form>
+</div>
 
 
 

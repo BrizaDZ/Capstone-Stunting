@@ -1,4 +1,6 @@
 @extends('layouts.web.layout')
+@section('title', 'Janji Temu')
+
 @push('style')
 <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />
     <link rel="stylesheet" href="/lib/select2/css/select2.min.css" />

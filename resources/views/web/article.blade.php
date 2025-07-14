@@ -1,4 +1,6 @@
 @extends('layouts.web.layout')
+@section('title', 'Detail Artikel')
+
 @push('style')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 

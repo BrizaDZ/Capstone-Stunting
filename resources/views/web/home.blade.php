@@ -1,4 +1,6 @@
 @extends('layouts.web.layout')
+@section('title', 'Beranda')
+
 @push('style')
 <style>
 .bg-primary-200 {
@@ -28,13 +30,30 @@
         width: 50px;
     }
 }
+
+@media (max-width: 576px) {
+  .ratio-16x9 {
+    height: 500px !important;
+  }
+}
 </style>
 
 @endpush
 
 @section('content')
-<!-- Chatbot Sidebar Messenger -->
-<div id="chatbot-widget" class="position-fixed end-0 bottom-0 m-4 z-3" style="width: 350px; max-width: 95vw;">
+<div class="modal modal-xl fade" id="myModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="/image/modal.png" class="img-fluid" />
+            </div>
+        </div>
+    </div>
+</div>
+<div id="chatbot-widget" class="position-fixed end-0 m-4 z-3" style="width: 350px; max-width: 95vw; bottom: 20px">
     <div class="card shadow-lg" id="chatbox" style="display: none; height: 500px; border-radius: 1rem 1rem 0 0;" data-user-id="{{ auth()->user()->id ?? '' }}">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" style="border-radius: 1rem 1rem 0 0;">
             <div class="d-flex gap-2 align-items-center">
@@ -90,8 +109,8 @@
                     Dukung Setiap Langkah Pertumbuhan dengan
                 </h4>
                 <h1 class="fw-bold">Stunt<span class="text-primary">AIDS</span></h1>
-                <p class="mt-4">Terhubung langsung dengan spesialis 24 jam atau pilih untuk konsultasi video dengan dokter tertentu.</p>
-                <a class="mt-4 border-0 btn btn-primary fw-bold" onclick="toggleChat()">Konsultasi Sekarang</a>
+                <p class="mt-4">Layanan chatbot tersedia 24 jam sehari untuk menjawab pertanyaan dan membantu kebutuhan kesehatan Anda kapan saja.</p>
+                <a class="mt-4 border-0 btn btn-primary fw-bold" onclick="toggleChat()">Chat Sekarang</a>
             </div>
             <div class="col-md-7"></div>
         </div>
@@ -153,40 +172,35 @@
     </div>
 </section>
 
-<div class="container-xl" style="background-color: #E8F1FF;">
+<section class="bg-white">
+<div class="container-xl">
     <div class="container py-5">
-        <!-- StuntAIDS Section -->
         <div class="row justify-content-center align-items-center" style="min-height: 400px;">
-            <!-- Left: Images -->
             <div class="col-md-5 d-flex justify-content-center">
                 <div class="position-relative">
-                    <!-- Main Image (Top Layer) -->
-                    <img src="https://i.pinimg.com/736x/79/59/a4/7959a41bd0ab57637b3f4f6a03f9825d.jpg"
+                    <img src="/image/stunt1.jpg"
                          class="border border-white rounded shadow-lg border-5 position-relative d-block img-fluid"
                          style="width: 60%; bottom: 90px; left: 200px; z-index: 1;"
                          alt="Dokter 1">
 
-                    <!-- Secondary Image (Bottom Layer, Shifted Left) -->
-                    <img src="https://i.pinimg.com/736x/b6/3e/66/b63e663bc277a3b62c4d7d576af65ec8.jpg"
+                    <img src="/image/stunt2.jpg"
                          class="border border-white rounded shadow-lg border-5 position-absolute d-block img-fluid"
                          style="width: 60%; top: 80px; left: 80px; z-index: 2;"
                          alt="Dokter 2">
 
-                    <!-- Consultation Badge (Bottom Left) -->
                     <a href="#link_nomor_WhatsApp">
                         <div class="bottom-0 gap-3 p-3 bg-white rounded shadow-sm position-absolute start-0 d-flex align-items-center"
                              style="z-index: 3; transform: translate(-30px, 70px);">
                             <i class="bi bi-chat-left-text text-primary fs-5"></i>
                             <div>
-                                <strong class="text-dark">Konsultasi Gratis</strong><br>
-                                <small class="text-muted">Konsultasi dengan yang terbaik</small>
+                                <strong class="text-dark">Janji Temu</strong><br>
+                                <small class="text-muted">Buat Janji Temu Secara Online</small>
                             </div>
                         </div>
                     </a>
                 </div>
             </div>
 
-            <!-- Right: Text Content -->
             <div class="px-5 text-center col-md-6 ms-md-5 text-md-start stuntpadding">
                 <p class="mb-3 text-uppercase text-primary fw-bold small">Membantu Pasien Stunting dari Seluruh Dunia!</p>
                 <h2 class="mb-4 fw-bold">Stunt<span class="text-primary">AIDS</span></h2>
@@ -211,9 +225,11 @@
         </div>
     </div>
 </div>
+</section>
 
 
-<div id="doctor" class="container-xl py-5 text-center">
+<section style="min-height: 70vh">
+<div id="doctor" class="container-xl py-5 text-center ">
     <h3 class="fw-bold">Spesialis Medis Kami</h3>
 
     @php
@@ -233,7 +249,6 @@
         </div>
         @endif
 
-        <!-- Carousel Wrapper -->
         <div class="carousel-inner">
             @foreach($chunks as $chunkIndex => $doctorChunk)
             <div class="carousel-item @if($chunkIndex == 0) active @endif">
@@ -263,7 +278,6 @@
             @endforeach
         </div>
 
-        <!-- Carousel Controls -->
         @if ($totalSlides > 1)
         <button class="carousel-control-prev" type="button" data-bs-target="#specialistCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon bg-dark rounded-circle"></span>
@@ -274,34 +288,38 @@
         @endif
     </div>
 </div>
+</section>
 
 
-<!-- Nearest Puskesmas Section -->
-<div id="puskesmas" class="container-fluid" style="background-color: #E8F1FF;">
-    <div class="container py-5 text-center">
-        <h3 class="fw-bold">Puskesmas Terdekat</h3>
-        <p class="text-end me-5">
-            <a href="https://www.google.com/maps/search/puskesmas+terdekat" target="_blank"
-                class="text-decoration-none fw-semibold text-muted link-hover">
-                Tampilkan di Peta &gt;&gt;
-            </a>
-        </p>
-        <div class="d-flex justify-content-center px-5">
-            <div class="shadow-lg ratio ratio-16x9 w-100 rounded-4 map-container">
-                <iframe
-                id="map-iframe"
-                class="rounded-3"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                allowfullscreen>
-                </iframe>
+<section class="bg-white">
+    <div id="puskesmas">
+        <div class="container py-5 text-center">
+            <h3 class="fw-bold mb-5">Puskesmas Terdekat</h3>
+            <p class="text-end me-5">
+                <a href="https://www.google.com/maps/search/puskesmas+terdekat" target="_blank"
+                    class="text-decoration-none fw-semibold text-muted link-hover">
+                    Tampilkan di Peta &gt;&gt;
+                </a>
+            </p>
+            <div class="d-flex justify-content-center px-5">
+                <div class="shadow-lg ratio ratio-16x9 w-100 rounded-4 map-container">
+                    <iframe
+                    id="map-iframe"
+                    class="rounded-3"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen>
+                    </iframe>
+                </div>
             </div>
+
+                <p id="status" class="mt-3 text-muted">Mendeteksi lokasi Anda...</p>
+
         </div>
-
-            <p id="status" class="mt-3 text-muted">Mendeteksi lokasi Anda...</p>
-
     </div>
-</div>
+</section>
+
+        @include('layouts.web.footer')
 
 
 @endsection
@@ -320,6 +338,12 @@
             });
         }
     });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+        myModal.show();
+    });
 </script>
 
 @endpush

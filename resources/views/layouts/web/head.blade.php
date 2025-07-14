@@ -1,8 +1,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="StuntAIDS - Sistem Informasi Stunting Berbasis Web">
 
-    <title>StuntAIDS</title>
+    <title>@yield('title') | StuntAIDS</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -10,30 +11,11 @@
     <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="/image/png" sizes="32x32" href="/image/logo.png">
 
-    <style>
-        section{
-            min-height: 100dvh;
-            align-content: center;
-        }
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-        .full-width{
-            width: -moz-available;
-            width: -webkit-fill-available;
-        }
-    </style>
-
-    <style>
-    .navbar {
-        transition: background-color 0.4s ease, box-shadow 0.4s ease;
-    }
-
-    .navbar-scrolled {
-        background-color: rgba(255, 255, 255, 0.95) !important; /* agak transparan untuk kesan modern */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px); /* efek blur belakang, lebih modern */
-    }
-</style>
 
     @stack('style')
 </head>

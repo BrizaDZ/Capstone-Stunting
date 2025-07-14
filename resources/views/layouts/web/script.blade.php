@@ -13,5 +13,36 @@
             navbar.classList.remove('navbar-scrolled');
         }
     });
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentPath = window.location.pathname;
+        const currentHash = window.location.hash;
+
+        const navLinks = document.querySelectorAll(".mobile-nav a");
+
+        navLinks.forEach(link => link.classList.remove("active"));
+
+        let foundActive = false;
+        navLinks.forEach(link => {
+            const url = new URL(link.href);
+            const linkPath = url.pathname;
+            const linkHash = url.hash;
+
+            if (currentHash && currentHash === linkHash && currentPath === linkPath) {
+                link.classList.add("active");
+                foundActive = true;
+            }
+        });
+
+        if (!foundActive) {
+            navLinks.forEach(link => {
+                const url = new URL(link.href);
+                if (!url.hash && url.pathname === currentPath) {
+                    link.classList.add("active");
+                }
+            });
+        }
+    });
+
 </script>
+
 @stack('script')
