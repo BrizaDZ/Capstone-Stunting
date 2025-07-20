@@ -79,7 +79,7 @@ class CheckupController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $data = [];
 
-        foreach ($sheet->getRowIterator(2) as $row) { // Mulai dari baris ke-2
+        foreach ($sheet->getRowIterator(2) as $row) {
             $cellIterator = $row->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(false);
 
@@ -88,11 +88,11 @@ class CheckupController extends Controller
                 $rowData[] = $cell->getValue();
             }
 
-            $tinggi = round((float) $rowData[0], 1); // Panjang Badan (cm)
+            $tinggi = round((float) $rowData[0], 1);
             $median = (float) $rowData[4];
             $plus1sd = (float) $rowData[5];
 
-            // Hitung SD secara kasar dari selisih antara +1SD dan Median
+
             $sd = $plus1sd - $median;
 
             $data[$tinggi] = [
@@ -123,7 +123,6 @@ class CheckupController extends Controller
         $data->weight = $v->weight;
         $data->height = $v->height;
         $data->age = $v->age;
-        $data->status = 'Selesai';
         $data->gender = $v->gender;
 
         if ($v->gender == 'Perempuan') {
@@ -385,7 +384,11 @@ class CheckupController extends Controller
             }
         }
 
-
+        if ($heightage = 'Sangat Pendek') {
+            $data->status = 'Stunting';
+        } else{
+            $data->status = 'Tidak Stunting';
+        }
 
         $data->save();
 
@@ -439,7 +442,7 @@ class CheckupController extends Controller
 
     public function search(Request $v)
     {
-        $userId = auth()->id(); // Get the authenticated user's ID
+        $userId = auth()->id();
 
         if (empty($v->q)) {
             $data = Patient::where('user_id', $userId)
@@ -457,21 +460,5 @@ class CheckupController extends Controller
     }
 
 
-    // public function searchjenis(Request $v)
-    // {
-    //     if (empty($v->q)) {
-    //         $data = JenisLokasi::select(['jenislokasiID', 'namalokasi'])->orderBy('namalokasi', 'asc')->get();
-    //     } else {
-    //         $data = JenisLokasi::where('namalokasi', 'like', '%' . $v->q . '%')->orderBy('namalokasi', 'asc')->get();
-    //     }
 
-    //     return response()->json($data);
-    // }
-
-    // public function delete($id)
-    // {
-    //     Lokasi::find($id)->delete();
-
-    //     return response()->json(['success' => 'Product deleted successfully.']);
-    // }
 }

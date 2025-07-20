@@ -34,7 +34,7 @@ class OperationalTimeController extends Controller
     {
         if ($v->id == 0) {
             $data = new OperationalTime;
-            $data->user_id = auth()->id(); // Ensure the logged-in user owns the data
+            $data->user_id = auth()->id();
         } else {
             $data = OperationalTime::where('user_id', auth()->id())->findOrFail($v->id);
         }

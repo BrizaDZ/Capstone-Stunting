@@ -82,6 +82,7 @@
             serverSide: true,
             lengthMenu: [5, 10, 25, 50],
             stateSave: true,
+            responsive: true,
             filter: true,
             orderMulti: false,
             ajax: {

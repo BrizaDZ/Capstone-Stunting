@@ -152,7 +152,7 @@ Route::middleware(['isPuskesmas'])->group(function () {
         });
         Route::prefix('/stunting')->group(function () {
             Route::get('/', [StuntingController::class, 'index']);
-            Route::get('/add', [StuntingController::class, 'Edit']);
+            Route::get('/edit/{id}', [StuntingController::class, 'Edit']);
             Route::post('/store', [StuntingController::class, 'store']);
             Route::delete('/delete/{id}', [StuntingController::class, 'delete']);
             Route::post('/table', [StuntingController::class, 'Ajax']);

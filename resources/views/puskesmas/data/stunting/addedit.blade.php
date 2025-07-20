@@ -1,4 +1,4 @@
-<form action="/data/user/store" method="post">
+<form action="/data/stunting/store" method="post">
     <div class="modal-header">
         <h4 class="modal-title">
             Data Stunting
@@ -7,7 +7,8 @@
     </div>
 
     <div class="modal-body ">
-        <input type="hidden" name="AppointmentID" value="{{ $data->AppointmentID }}" />
+        <input type="hidden" name="StuntingID" value="{{ $data->StuntingID }}" />
+        <input type="hidden" name="PatientID" value="{{ $data->PatientID }}" />
         <div class="form-group">
             <label>Berat</label>
             <input type="number" name="weight" class="form-control" required autocomplete="off"
@@ -31,23 +32,15 @@
         <div class="form-group">
             <label>Cara Mengukur</label>
             <select name="measuretype" id="" class="form-control">
-                <option value=""></option>
+                @if($data->measuretype == 'Berdiri')
+                    <option value="Berdiri" selected>Berdiri</option>
+                    <option value="Telentang">Telentang</option>
+
+                @else
+                    <option value="Berdiri">Berdiri</option>
+                    <option value="Telentang" selected>Telentang</option>
+                @endif
             </select>
-        </div>
-        <div class="form-group">
-            <label>BB/U</label>
-            <input type="number" name="weightage" class="form-control" required autocomplete="off"
-                value="{{ $data->weightage}}" />
-        </div>
-        <div class="form-group">
-            <label>TB/U</label>
-            <input type="number" name="heightage" class="form-control" required autocomplete="off"
-                value="{{ $data->heightage}}" />
-        </div>
-        <div class="form-group">
-            <label>BB/TB</label>
-            <input type="number" name="weightheight" class="form-control" required autocomplete="off"
-                value="{{ $data->weightheight}}" />
         </div>
     </div>
     <div class="modal-footer">

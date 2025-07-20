@@ -134,21 +134,4 @@ class AppointmentController extends Controller
     }
 
 
-    // public function searchjenis(Request $v)
-    // {
-    //     if (empty($v->q)) {
-    //         $data = JenisLokasi::select(['jenislokasiID', 'namalokasi'])->orderBy('namalokasi', 'asc')->get();
-    //     } else {
-    //         $data = JenisLokasi::where('namalokasi', 'like', '%' . $v->q . '%')->orderBy('namalokasi', 'asc')->get();
-    //     }
-
-    //     return response()->json($data);
-    // }
-
-    // public function delete($id)
-    // {
-    //     Lokasi::find($id)->delete();
-
-    //     return response()->json(['success' => 'Product deleted successfully.']);
-    // }
 }

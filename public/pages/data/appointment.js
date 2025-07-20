@@ -23,6 +23,7 @@ function loadTable() {
         lengthMenu: [5, 10, 25, 50],
         stateSave: true,
         filter: true,
+        responsive: true,
         orderMulti: false,
         ajax: {
             url: "/data/janji-temu/table",

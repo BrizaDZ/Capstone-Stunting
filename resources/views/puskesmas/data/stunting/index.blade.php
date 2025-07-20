@@ -41,17 +41,13 @@
                                     <tr>
                                         <th>Tanggal</th>
                                         <th>Nama Pasien</th>
-                                        <th>Umur</th>
-                                        <th>Jenis Kelamin</th>
-                                        <th>Berat</th>
-                                        <th>Tinggi Badan</th>
-                                        <th>Cara Mengukur</th>
+                                        {{-- <th>Umur</th>
+                                        <th>Jenis Kelamin</th> --}}
+                                        <th>BB</th>
+                                        <th>TB</th>
                                         <th>BB/U</th>
                                         <th>TB/U</th>
                                         <th>BB/TB</th>
-                                        <th>Z-Score BB/U</th>
-                                        <th>Z-Score TB/U</th>
-                                        <th>Z-Score BB/TB</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
