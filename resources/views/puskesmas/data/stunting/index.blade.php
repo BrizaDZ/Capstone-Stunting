@@ -45,7 +45,7 @@
                                         <th>Jenis Kelamin</th> --}}
                                         <th>BB</th>
                                         <th>TB</th>
-                                        <th>BB/U</th>
+                                         <th>BB/U</th>
                                         <th>TB/U</th>
                                         <th>BB/TB</th>
                                         <th>Status</th>

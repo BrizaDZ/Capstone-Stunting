@@ -1,3 +1,4 @@
+let currentStep = 0;
 let currentDoctorId = null;
 
 $(document).ready(function () {
@@ -31,14 +32,35 @@ $(document).ready(function () {
 
     $('#appointment_date').on('change', function () {
         currentDoctorId = null;
+        $('#inputDoctorID').val('');
+        $('#inputDoctorOperationalTimeID').val('');
         fetchAvailableDoctors();
+        updateProgress(3); // Step: Pilih Tanggal
     });
 
     $('.sPuskesmas').on('change', function () {
         currentDoctorId = null;
+        $('#inputDoctorID').val('');
+        $('#inputDoctorOperationalTimeID').val('');
         fetchAvailableDoctors();
+        updateProgress(2); // Step: Pilih Puskesmas
     });
 });
+
+function updateProgress(step) {
+    if (step < currentStep) return; // Cegah mundur langkah
+    currentStep = step;
+
+    const steps = document.querySelectorAll('.step-progress .step-item');
+    steps.forEach((item, index) => {
+        item.classList.remove('active', 'completed');
+        if (index < step) {
+            item.classList.add('completed');
+        } else if (index === step) {
+            item.classList.add('active');
+        }
+    });
+}
 
 function PopulatePatient() {
     $('.sPatient').select2({
@@ -62,8 +84,9 @@ function PopulatePatient() {
             cache: true
         }
     }).on('change', function () {
-        var patientName = $('.sPatient option:selected').text();
+        const patientName = $('.sPatient option:selected').text();
         $('#txtnamapatient').val(patientName);
+        updateProgress(1); // Step: Pilih Pasien selesai
     });
 }
 
@@ -115,7 +138,7 @@ function fetchAvailableDoctors() {
                 response.forEach(item => {
                     const card = `
                         <div class="col-md-3">
-                            <div class="card h-100 shadow doctor-card" style="cursor: pointer;"
+                            <div class="card h-100 shadow doctor-card border-0" style="cursor: pointer;"
                                 data-doctor-id="${item.DoctorID}"
                                 data-doctor-name="${item.doctor_name}">
                                 <img src="/images/doctor/${item.photo}" class="card-img-top object-fit-cover" height="300" alt="${item.doctor_name}">
@@ -123,7 +146,7 @@ function fetchAvailableDoctors() {
                                     <h5 class="card-title mb-1 text-primary fw-bold">${item.doctor_name}</h5>
                                     <p class="card-text mb-0">${item.puskesmas_name}</p>
                                 </div>
-                                <div class="card-footer bg-white">
+                                <div class="card-footer bg-white border-top">
                                     <small class="text-muted">Pilih Jam: </small>
                                     <div class="sSchedule w-100 text-center">
                                         <button class="btn btn-sm btn-primary w-100">Klik untuk pilih</button>
@@ -158,6 +181,8 @@ $(document).on('click', '.doctor-card', function () {
 
     $('#txtnamadoctor').val(doctorName);
     $('#inputDoctorID').val(doctorId);
+    $('#inputDoctorOperationalTimeID').val('');
+    updateProgress(4); // Step: Pilih Dokter
 
     $('html, body').animate({
         scrollTop: $('#appointmentForm').offset().top + 500
@@ -210,8 +235,9 @@ $(document).on('click', '.btn-shift', function () {
     $(this).addClass('active');
 
     const shiftId = $(this).data('id');
-
     $('#inputDoctorOperationalTimeID').val(shiftId);
+
+    updateProgress(5); // Step: Pilih Jadwal Dokter
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -241,6 +267,8 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        updateProgress(6); // Step: Submit
+
         const formData = new FormData(form);
 
         fetch(form.action, {
@@ -265,10 +293,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     showConfirmButton: true,
                     confirmButtonText: 'Tutup'
                 }).then(() => {
+                    form.reset();
+                    currentStep = 0;
+                    updateProgress(0);
                     window.location.reload();
                 });
-
-                form.reset();
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -288,5 +317,4 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     });
-
 });

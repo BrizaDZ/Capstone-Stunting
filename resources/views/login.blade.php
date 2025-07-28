@@ -6,7 +6,7 @@
     <title>Login | StuntAIDS</title>
 
     <!-- Bootstrap CSS -->
-    <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/login.css">

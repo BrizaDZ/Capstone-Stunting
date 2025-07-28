@@ -36,6 +36,64 @@
     height: 500px !important;
   }
 }
+
+
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #f1f1f1;
+    border-radius: 1rem;
+    padding: 8px 12px;
+    max-width: 90%;
+    font-size: 0.85em;
+    animation: pulse 1s infinite;
+}
+
+.typing-indicator span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 1px;
+    background-color: #999;
+    border-radius: 50%;
+    animation: bounce 1.3s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+#chatbox{
+    display: none; height: 480px; background: linear-gradient(180deg,rgba(199, 233, 255, 1) 50%, rgba(255, 255, 255, 1) 100%);
+}
+
+#card-header{
+     border-bottom-right-radius: 1.5em !important; border-bottom-left-radius: 1.5em !important;
+}
+
+.message{
+white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inherit; text-align: justify; font-size: 0.85em; line-height: 1.5em;
+}
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.4;
+    }
+    40% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 </style>
 
 @endpush
@@ -53,51 +111,55 @@
         </div>
     </div>
 </div>
-<div id="chatbot-widget" class="position-fixed end-0 m-4 z-3" style="width: 350px; max-width: 95vw; bottom: 20px">
-    <div class="card shadow-lg" id="chatbox" style="display: none; height: 500px; border-radius: 1rem 1rem 0 0;" data-user-id="{{ auth()->user()->id ?? '' }}">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" style="border-radius: 1rem 1rem 0 0;">
-            <div class="d-flex gap-2 align-items-center">
-                <img src="/image/icon/chat.png" width="32" height="32" class="rounded-circle bg-white p-1">
-                <span id="chat-title">Chatbot StuntAIDS</span>
+<div id="chatbot-widget" class="position-fixed end-0 m-4 z-3" style="width: 390px; max-width: 95vw; bottom: 20px">
+    <div class="card shadow-lg border-0" id="chatbox" data-user-id="{{ auth()->user()->id ?? '' }}">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center border-0" id="card-header">
+            <div class="d-flex gap-2 align-items-center ">
+                <img src="/image/stunty2.png" width="32" height="32" class="rounded-circle bg-white p-1">
+                <span id="chat-title" class="fw-bold">Stunty Chatbot</span>
             </div>
-            <button class="btn btn-sm btn-light" onclick="toggleChat()">×</button>
+            <p class="text-white m-0 p-0 fw-bold fs-3 me-3" style="cursor: pointer" onclick="toggleChat()">&times;</button>
         </div>
-        <div class="d-flex border-bottom">
-            <button class="flex-fill btn btn-light border-0 rounded-0" id="tab-chatbot" onclick="switchChat('chatbot')">
-                <i class="bi bi-robot"></i> Chatbot
-            </button>
-            <button class="flex-fill btn btn-light border-0 rounded-0" id="tab-admin" onclick="switchChat('admin')">
-                <i class="bi bi-person-circle"></i> Admin
-            </button>
-        </div>
-        <div class="card-body p-0" style="height: 340px; overflow-y: auto; background: #f8f9fa;">
+        <div class="card-body p-0 pt-3" style="height: 340px; overflow-y: auto;">
+            <div class="d-flex border-0 mx-2">
+                <button class="flex-fill btn btn-light border-0 rounded-pill fw-bold me-2" id="tab-chatbot" onclick="switchChat('chatbot')">
+                    Stunty
+                </button>
+                <button class="flex-fill btn btn-light border-0 rounded-pill fw-bold" id="tab-admin" onclick="switchChat('admin')">
+                    Admin
+                </button>
+            </div>
             <div id="chat-messages-chatbot" class="p-3" style="height: 100%; overflow-y: auto;">
-                <div class="text-muted text-center">Tanyakan apa saja tentang stunting!</div>
+                <div class="text-start">
+                <div class="badge bg-white my-1 text-wrap text-dark p-2 text-justify message">
+                    Hai! Saya Stunty, chatbot yang siap membantu Anda dengan pertanyaan seputar website StuntAIDS dan stunting. Silakan ajukan pertanyaan Anda!
+                </div>
+            </div>
             </div>
             <div id="chat-messages-admin" class="p-3" style="height: 100%; overflow-y: auto; display: none;">
                 <div class="text-muted text-center">Chat dengan admin akan tampil di sini.</div>
             </div>
         </div>
-        <div class="card-footer bg-white">
+        <div class="card-footer border-0 bg-white">
             <form onsubmit="sendMessage(event)" id="chatbot-form">
-                <div class="input-group">
-                    <input type="text" id="user-input" class="form-control" placeholder="Ketik pesan..." required>
-                    <button class="btn btn-primary" type="submit">Kirim</button>
+                <div class="input-group mt-3">
+                    <input type="text" id="user-input" class="form-control rounded-3" placeholder="Ketik pesan..." required>
+                    <button class="btn btn-primary rounded-3 ms-2" type="submit">Kirim</button>
                     <button class="btn btn-light" type="button" id="voice-btn" title="Voice Input">
                         <span id="mic-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic-icon lucide-mic"><path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/></svg></span>
                     </button>
                 </div>
             </form>
             <form onsubmit="sendAdminMessage(event)" id="admin-form" style="display: none;">
-                <div class="input-group">
+                <div class="input-group mt-3">
                     <input type="text" id="admin-input" class="form-control" placeholder="Ketik pesan ke admin..." required>
-                    <button class="btn btn-primary" type="submit">Kirim</button>
+                    <button class="btn btn-primary rounded-3" type="submit">Kirim</button>
                 </div>
             </form>
         </div>
     </div>
-    <button class="btn btn-primary rounded-circle p-3 shadow-lg position-fixed bottom-0 end-0 m-4" id="open-chat" onclick="toggleChat()">
-        💬
+    <span class="p-3 position-fixed bottom-0 end-0 m-4" id="open-chat" onclick="toggleChat()">
+        <img src="/image/stunty.png" width="180" height="180" >
     </button>
 </div>
 
@@ -254,22 +316,25 @@
             <div class="carousel-item @if($chunkIndex == 0) active @endif">
                 <div class="row justify-content-center">
                     @foreach($doctorChunk as $doctor)
-                    <div class="col-md-3">
+                    <div class="col-md-3 px-4">
                         <div class="text-center">
                             @if ($doctor->photo == null)
                             <img src="/image/doctor.png"
-                                class="p-2 border rounded-circle bg-light img-fluid"
-                                style="width: 250px; height: 325px; object-fit: cover;"
+                                class="border rounded-3 bg-light img-fluid"
+                                style="object-fit: cover; height: 375px"
                                 alt="{{ $doctor->name }}">
                             @else
                             <img src="/images/doctor/{{$doctor->photo}}"
-                                class="p-2 border rounded-circle bg-light img-fluid"
-                                style="width: 250px; height: 325px; object-fit: cover;"
+                                class="border rounded-3 bg-light img-fluid"
+                                style="object-fit: cover; height: 375px"
                                 alt="{{ $doctor->name }}">
                             @endif
 
+                            <div class="bg-white rounded-3 mt-3" style="padding: 0.1em">
                             <h5 class="mt-2">{{ $doctor->name }}</h5>
-                            <p class="text-primary">{{ $doctor->namapuskesmas }}</p>
+                            <p class="text-primary mb-3">{{ $doctor->namapuskesmas }}</p>
+                            </div>
+
                         </div>
                     </div>
                     @endforeach
@@ -280,10 +345,10 @@
 
         @if ($totalSlides > 1)
         <button class="carousel-control-prev" type="button" data-bs-target="#specialistCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bg-dark rounded-circle"></span>
+            <span class="carousel-control-prev-icon bg-dark rounded-3"></span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#specialistCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon bg-dark rounded-circle"></span>
+            <span class="carousel-control-next-icon bg-dark rounded-3"></span>
         </button>
         @endif
     </div>

@@ -23,7 +23,7 @@ const userId = document.getElementById('chatbox').dataset.userId;
         document.getElementById('tab-chatbot').classList.toggle('text-white', mode === 'chatbot');
         document.getElementById('tab-admin').classList.toggle('bg-primary', mode === 'admin');
         document.getElementById('tab-admin').classList.toggle('text-white', mode === 'admin');
-        document.getElementById('chat-title').textContent = mode === 'chatbot' ? 'Chatbot StuntAIDS' : 'Admin StuntAIDS';
+        document.getElementById('chat-title').textContent = mode === 'chatbot' ? 'Stunty' : 'Admin StuntAIDS';
         if (mode === 'admin') {
         loadAdminMessages();
     }
@@ -44,7 +44,7 @@ const userId = document.getElementById('chatbox').dataset.userId;
                 const bubble = document.createElement('div');
                 bubble.className = 'mb-2 ' + (chat.chatby === 'user' ? 'text-end' : 'text-start');
 
-                const color = chat.chatby === 'user' ? 'bg-primary' : 'bg-primary-200 text-dark';
+                const color = chat.chatby === 'user' ? 'bg-primary' : 'bg-white text-dark';
                 bubble.innerHTML = `<span class="badge p-3 ${color}">${chat.chat}</span>`;
                 container.appendChild(bubble);
             });
@@ -101,7 +101,7 @@ function sendAdminMessage(event) {
         const chatMessages = document.getElementById('chat-messages-chatbot');
         chatMessages.innerHTML += `
             <div class="text-end">
-                <div class="badge bg-primary my-1 text-wrap text-white p-2 text-justify" style="white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inherit; text-align: justify; font-size: 0.85em; line-height: 1.5em;">
+                <div class="badge bg-primary my-1 text-wrap text-white p-2 text-justify message">
                     ${message}
                 </div>
             </div>
@@ -109,12 +109,13 @@ function sendAdminMessage(event) {
         input.value = '';
 
         chatMessages.innerHTML += `
-            <div id="loading" class="text-start">
-                <div class="badge bg-light text-muted my-1 p-2 text-wrap" style="white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-size: 0.85em; line-height: 1.5em;">
-                    Typing...
+            <div id="loading" class="text-start d-flex mt-1">
+                <div class="typing-indicator">
+                    <span></span><span></span><span></span>
                 </div>
             </div>
         `;
+
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
         try {
@@ -128,24 +129,24 @@ function sendAdminMessage(event) {
             document.getElementById('loading').remove();
 
             const escapedAnswer = data.jawaban
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/\\n|\n/g, "<br>")
-    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/\\n|\n/g, "<br>")
+            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
             const plainAnswer = data.jawaban
-    .replace(/<[^>]+>/g, '')
-    .replace(/\*\*/g, '')
-    .replace(/\*/g, '')
-    .replace(/\\n/g, ' ')
-    .replace(/\n/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+            .replace(/<[^>]+>/g, '')
+            .replace(/\*\*/g, '')
+            .replace(/\*/g, '')
+            .replace(/\\n/g, ' ')
+            .replace(/\n/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
 
             chatMessages.innerHTML += `
                 <div class="text-start d-flex align-items-start gap-2">
-                    <div class="badge bg-primary-200 p-2 my-1 text-dark text-justify text-wrap" style="white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inherit; text-align: justify; font-size: 0.85em; line-height: 1.5em;">
+                    <div class="badge bg-white p-2 my-1 text-dark text-justify text-wrap message">
                         ${escapedAnswer}
                     </div>
                     <button class="btn btn-sm btn-light speak-btn" title="Bacakan jawaban" data-answer="${encodeURIComponent(plainAnswer)}">
@@ -159,7 +160,7 @@ function sendAdminMessage(event) {
                 const adminChat = document.getElementById('chat-messages-admin');
                 adminChat.innerHTML += `
                     <div class="text-end">
-                        <div class="badge bg-primary my-1 text-wrap text-white p-2 text-justify" style="white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inherit; text-align: justify; font-size: 0.85em; line-height: 1.5em;">
+                        <div class="badge bg-primary my-1 text-wrap text-white p-2 text-justify message">
                          Pertanyaan dari pengguna: ${message}
                          Chatbot belum dapat menjawab. Mohon ditindaklanjuti.
                         </div>
@@ -180,7 +181,7 @@ function sendAdminMessage(event) {
             document.getElementById('loading').remove();
             chatMessages.innerHTML += `
                 <div class="text-start">
-                    <div class="badge p-2 bg-danger text-white my-1 text-wrap" style="white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inherit; text-align: justify; font-size: 0.85em; line-height: 1.5em;">
+                    <div class="badge p-2 bg-danger text-white my-1 text-wrap message">
                         Error: Failed to get response.
                     </div>
                 </div>
@@ -225,9 +226,7 @@ function sendAdminMessage(event) {
             }
         });
     } else {
-        voiceBtn.disabled = true;
-        micIcon.textContent = "🚫";
-        voiceBtn.title = "Voice input tidak didukung di browser ini";
+        voiceBtn.style.display = "none";
     }
 
     function speakText(text) {
