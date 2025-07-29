@@ -15,71 +15,71 @@
     <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@500&display=swap" rel="stylesheet">
 
-    <style>
-        .container{
-            min-width: 1600px !important;
-        }
-    </style>
 </head>
 <body>
-    <section style="min-height: 100vh" class="bg-image">
-        <div class="container">
-            <div class="row align-items-center vh-100">
-                <div class="col-md-5">
-                    <div class="p-4 w-100 ms-3">
-                        <h2 class="mb-4 text-center fw-bold text-primary">Login</h2>
-                        @if (session('status'))
-                            <div class="alert alert-success mt-3">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-                        @if (session('error'))
-                            <div class="alert alert-danger mt-3">
-                                {{ session('error') }}
-                            </div>
-                        @endif
+    <section class="bg-image" style="min-height: 100vh;">
+    <div class="px-5">
+        <div class="row align-items-center vh-100">
+            <div class="col-12 col-md-6 order-2 order-md-1 d-flex justify-content-center align-items-center">
+                <div class="w-100" style="max-width: 500px;">
+                    <h2 class="mb-4 text-center fw-bold text-primary">Login</h2>
 
-                        @if ($errors->any())
-                            <div class="alert alert-danger mt-3">
-                                @foreach ($errors->all() as $error)
-                                    <p class="mb-0">{{ $error }}</p>
-                                @endforeach
-                            </div>
-                        @endif
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="input-container">
-                                <input type="email" id="email" placeholder=" " name="email" required>
-                                <label for="email">Email Address</label>
-                                <span :messages="$errors->get('email')" class="mt-2"></span>
-                            </div>
-                            <div class="input-container">
-                                <input type="password" id="password" placeholder=" " name="password" required>
-                                <label for="password">Password</label>
-                                <span :messages="$errors->get('password')" class="mt-2"> </span>
-                            </div>
-                            <button type="submit" class="py-3 border-0 btn btn-primary w-100 fs-6 rounded-3" href="../homepage/homepage.html">Sign In</button>
-                            <div class="text-center mt-3">
-                            <a class="text-center text-decoration-none mt-2" href="/forgot-password">Lupa Password?</a>
+                    @if (session('status'))
+                        <div class="alert alert-success mt-3">
+                            {{ session('status') }}
+                        </div>
+                    @endif
 
-                            </div>
-                        </form>
-                        <p class="mt-3 black">Don't have an account? <a href="/register" class="bs-primary text-decoration-none">Sign Up</a></p>
-                    </div>
-                </div>
-                <div class="col-md-1"></div>
+                    @if (session('error'))
+                        <div class="alert alert-danger mt-3">
+                            {{ session('error') }}
+                        </div>
+                    @endif
 
-                <!-- Icon and StuntAID Title on the Right -->
-                <div class="col-md-6 d-flex justify-content-end align-items-right">
-                    <div class="text-center">
-                        <h1 class="mt-5 mb-3 fs-1 fw-medium text-end me-4 custom-heading">Stunt<span class="text-primary">AID</span></h1>
-                        <p class="fs-3 lh-base text-end me-4 text-body-secondary">Welcome to StuntAID!<br>where we make a healthy future.</p>
-                        <img src="/image/icon/icon2.svg" alt="Medical Report" width="550" class="mx-auto mt-3 img-fluid w-90">
-                    </div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger mt-3">
+                            @foreach ($errors->all() as $error)
+                                <p class="mb-0">{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="input-container mb-3">
+                            <input type="email" id="email" placeholder=" " name="email" required class="form-control">
+                            <label for="email">Email Address</label>
+                        </div>
+                        <div class="input-container mb-3">
+                            <input type="password" id="password" placeholder=" " name="password" required class="form-control">
+                            <label for="password">Password</label>
+                        </div>
+                        <button type="submit" class="py-3 border-0 btn btn-primary w-100 fs-6 rounded-3">Sign In</button>
+
+                        <div class="text-center mt-3">
+                            <a class="text-decoration-none" href="/forgot-password">Lupa Password?</a>
+                        </div>
+                    </form>
+
+                    <p class="mt-3 text-center">Belum punya akun?
+                        <a href="/register" class="text-primary text-decoration-none">Sign Up</a>
+                    </p>
                 </div>
             </div>
+
+            <!-- Icon & Title -->
+            <div class="col-12 col-md-6 order-1 order-md-2 text-center text-md-end mb-0  mb-md-0">
+                <h1 class="mt-4 mb-3 fs-1 fw-medium me-md-4">Stunt<span class="text-primary">AID</span></h1>
+                <p class="fs-5 lh-base me-md-4 text-body-secondary">
+                    Welcome to StuntAID!<br>
+                    where we make a healthy future.
+                </p>
+                <img src="/image/icon/icon2.svg" alt="Medical Report" class="img-fluid w-75 mt-3">
+            </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
