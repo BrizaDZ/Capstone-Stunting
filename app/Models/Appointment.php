@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     use HasFactory;
-    protected $table = 'Appointment';
+    protected $table = 'appointment';
 
     protected $primaryKey = 'AppointmentID';
 

@@ -10,7 +10,7 @@ class Stunting extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $table = 'Stunting';
+    protected $table = 'stunting';
 
     protected $primaryKey = 'StuntingID';
 
