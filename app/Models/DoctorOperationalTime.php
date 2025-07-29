@@ -11,7 +11,7 @@ class DoctorOperationalTime extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $table = 'DoctorOperationalTime';
+    protected $table = 'doctoroperationaltime';
 
     protected $primaryKey = 'DoctorOperationalTimeID';
 }

@@ -164,7 +164,7 @@
 
     async function sendData() {
       try {
-        const response = await fetch("http://localhost:5001/stunting/predict", {
+        const response = await fetch("https://l2tsvbfz6w3mmb-8000.proxy.runpod.net/stunting/predict", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ data: answers })

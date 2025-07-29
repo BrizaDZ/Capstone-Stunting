@@ -21,7 +21,7 @@ class PredictController extends Controller
             'Olahraga', 'Merokok', 'TB'
         ]);
 
-        $response = Http::post('http://127.0.0.1:5001/stunting/predict', $data);
+        $response = Http::post('https://l2tsvbfz6w3mmb-8000.proxy.runpod.net/stunting/predict', $data);
         $prediction = null;
 
         if ($response->successful()) {

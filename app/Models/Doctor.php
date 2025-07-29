@@ -10,7 +10,7 @@ class Doctor extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $table = 'Doctor';
+    protected $table = 'doctor';
 
     protected $primaryKey = 'DoctorID';
 

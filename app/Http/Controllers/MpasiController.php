@@ -17,7 +17,7 @@ class MpasiController extends Controller
 
     public function predict(Request $request)
     {
-        $response = Http::post('http://127.0.0.1:5001/mpasi/predict/', [
+        $response = Http::post('https://l2tsvbfz6w3mmb-8000.proxy.runpod.net/mpasi/predict', [
             'kalori_kkal' => $request->kalori_kkal,
             'protein_gr' => $request->protein_gr,
             'lemak_gr' => $request->lemak_gr,
@@ -33,7 +33,7 @@ class MpasiController extends Controller
 
     public function recommendByAge(Request $request)
     {
-        $response = Http::post('http://127.0.0.1:5001/mpasi/recommend-by-age/', [
+        $response = Http::post('https://l2tsvbfz6w3mmb-8000.proxy.runpod.net/mpasi/recommend-by-age', [
             'kategori_umur' => $request->kategori_umur
         ]);
 

@@ -183,7 +183,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card bg-white shadow border-0">
                             <div class="card-header bg-primary border-0">
                                 <h3 class="text-white text-center fw-bold fs-4">Janji Temu Stunting</h3>
@@ -231,9 +231,6 @@
                                     </div>
                             </div>
                         </div>
-            </div>
-            <div class="col-md-6">
-                <div id="doctorCalendar"></div>S
             </div>
         </div>
 

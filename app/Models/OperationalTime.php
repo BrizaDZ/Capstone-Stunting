@@ -10,7 +10,7 @@ class OperationalTime extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $table = 'OperationalTime';
+    protected $table = 'operationaltime';
 
     protected $primaryKey = 'OperationalTimeID';
 

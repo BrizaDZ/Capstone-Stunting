@@ -15,16 +15,17 @@ class ChatbotController extends Controller
     {
         $question = $request->input('question');
 
-        $response = Http::post('http://127.0.0.1:5001/chatbot/ask', [
-            'question' => $question
+        $response = Http::post('https://l2tsvbfz6w3mmb-8000.proxy.runpod.net/chatbot/ask', [
+            'question' => $question,
+            'user_id' => auth()->id() ?? 1
         ]);
 
+        $jawaban = $response->json()['jawaban'];
 
-        $jawaban = $response->json()['jawaban'] ?? 'Jawaban tidak tersedia.';
-
-        return view('chat', [
+        return response()->json([
             'question' => $question,
             'jawaban' => $jawaban
         ]);
     }
+
 }
