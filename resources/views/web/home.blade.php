@@ -31,6 +31,12 @@
     }
 }
 
+@media (max-width: 390px){
+    .stunticon{
+        width: 40px;
+    }
+}
+
 @media (max-width: 576px) {
   .ratio-16x9 {
     height: 500px !important;
@@ -184,27 +190,27 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
             <div class="card-body">
                 <h4 class="mt-4 mb-3 text-center text-secondary fw-bold">Anda mungkin mencari</h4>
                 <div class="row justify-content-center mb-3">
-                    <div class="col-3">
-                        <a href="/#doctor" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center">
-                            <img class="img-fluid stunticon mb-3" src="/image/icon/Doctor.png" width="70" height="70">
+                    <div class="col-6 col-sm-3">
+                        <a href="/#doctor" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center h-100">
+                            <img class="img-fluid stunticon mb-3" src="/image/icon/Doctor.png">
                             <span class="card-title fs-5 text-muted">Dokter</span>
                         </a>
                     </div>
-                    <div class="col-3">
-                        <a onclick="toggleChat()" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center">
-                            <img class="img-fluid stunticon mb-3" src="/image/icon/chat.png" width="70" height="70">
+                    <div class="col-6 col-sm-3">
+                        <a onclick="toggleChat()" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center h-100">
+                            <img class="img-fluid stunticon mb-3" src="/image/icon/chat.png">
                             <span class="card-title fs-5 text-muted">Chatbot</span>
                         </a>
                     </div>
-                    <div class="col-3">
-                        <a href="/predict-stunting" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center">
-                            <img class="img-fluid stunticon mb-3" src="/image/icon/Hospital.png" width="70" height="70">
+                    <div class="col-6 col-sm-3">
+                        <a href="/predict-stunting" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center h-100">
+                            <img class="img-fluid stunticon mb-3" src="/image/icon/Hospital.png">
                             <span class="card-title fs-5 text-muted icontitle" style="word-break: normal">Deteksi Stunting</span>
                         </a>
                     </div>
-                    <div class="col-3">
-                        <a href="/mpasi" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center">
-                            <img class="img-fluid stunticon mb-3" src="/image/icon/Capsule.png" width="70" height="70">
+                    <div class="col-6 col-sm-3">
+                        <a href="/mpasi" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center h-100">
+                            <img class="img-fluid stunticon mb-3" src="/image/icon/Capsule.png">
                             <span class="card-title fs-5 text-muted icontitle" style="word-break: normal">MPASI Rekomendasi</span>
                         </a>
                     </div>
@@ -314,7 +320,7 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
         <div class="carousel-inner">
             @foreach($chunks as $chunkIndex => $doctorChunk)
             <div class="carousel-item @if($chunkIndex == 0) active @endif">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center g-3">
                     @foreach($doctorChunk as $doctor)
                     <div class="col-md-3 px-4">
                         <div class="text-center">
