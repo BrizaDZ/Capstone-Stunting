@@ -105,14 +105,14 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
 @endpush
 
 @section('content')
-<div class="modal modal-xl fade" id="myModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="myModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img src="/image/modal.png" class="img-fluid" />
+                    <img src="/image/modal.png" class="img-fluid" />
             </div>
         </div>
     </div>
@@ -189,7 +189,7 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
         <div class="border-0 shadow card rounded-3">
             <div class="card-body">
                 <h4 class="mt-4 mb-3 text-center text-secondary fw-bold">Anda mungkin mencari</h4>
-                <div class="row justify-content-center mb-3">
+                <div class="row justify-content-center mb-3 g-4">
                     <div class="col-6 col-sm-3">
                         <a href="/#doctor" class="btn btn-light w-100 py-4 shadow-sm border-0 rounded-4 d-flex flex-column align-items-center h-100">
                             <img class="img-fluid stunticon mb-3" src="/image/icon/Doctor.png">
