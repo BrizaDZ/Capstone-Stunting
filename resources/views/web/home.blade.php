@@ -164,7 +164,7 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
             </form>
         </div>
     </div>
-    <span class="p-3 position-fixed bottom-0 end-0 m-4" id="open-chat" onclick="toggleChat()">
+    <span class="p-0 position-fixed bottom-0 end-0 m-2" id="open-chat" onclick="toggleChat()">
         <img src="/image/stunty.png" width="180" height="180" >
     </button>
 </div>
