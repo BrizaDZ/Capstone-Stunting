@@ -117,7 +117,7 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
         </div>
     </div>
 </div>
-<div id="chatbot-widget" class="position-fixed end-0 m-2 z-3" style="width: 390px; max-width: 95vw; bottom: 20px">
+<div id="chatbot-widget" class="position-fixed end-0 m-2 z-3 p-0" style="width: 390px; max-width: 95vw; bottom: 20px">
     <div class="card shadow-lg border-0" id="chatbox" data-user-id="{{ auth()->user()->id ?? '' }}">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center border-0" id="card-header">
             <div class="d-flex gap-2 align-items-center ">
