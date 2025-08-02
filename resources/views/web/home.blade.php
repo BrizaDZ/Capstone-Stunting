@@ -38,9 +38,40 @@
 }
 
 @media (max-width: 576px) {
-  .ratio-16x9 {
-    height: 500px !important;
-  }
+    #chatbox {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        max-width: 100vw !important;
+        z-index: 9999 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        display: none;
+    }
+    #chatbot-widget {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        left: 0 !important;
+    }
+    #chatbox .card-body{
+        height: 85vh !important ;
+    }
+    #chatbox .card-footer {
+        position: fixed;
+        left: 0;
+        bottom: 10px;
+        width: 100vw;
+        background: #fff;
+        z-index: 10000;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+    #chatbox .card-body {
+        padding-bottom: 80px !important;
+    }
 }
 
 
@@ -84,6 +115,28 @@
 .message{
 white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inherit; text-align: justify; font-size: 0.85em; line-height: 1.5em;
 }
+
+#chatbot-widget {
+    width: 390px; max-width: 95vw; bottom: 20px; z-index: 998;
+}
+
+@keyframes chatboxFadeIn {
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+@keyframes chatboxFadeOut {
+    from { opacity: 1; transform: translateY(0);}
+    to { opacity: 0; transform: translateY(30px);}
+}
+#chatbox.animated-in {
+    animation: chatboxFadeIn 0.4s cubic-bezier(.4,0,.2,1);
+}
+#chatbox.animated-out {
+    animation: chatboxFadeOut 0.3s cubic-bezier(.4,0,.2,1);
+}
+.message-animated {
+    animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
+}
 @keyframes bounce {
     0%, 80%, 100% {
         transform: scale(0.8);
@@ -98,6 +151,11 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+#open-chat img{
+    width: 10em;
+  height: auto;
 }
 
 </style>
@@ -117,7 +175,7 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
         </div>
     </div>
 </div>
-<div id="chatbot-widget" class="position-fixed end-0 m-2 z-3 p-0" style="width: 390px; max-width: 95vw; bottom: 20px">
+<div id="chatbot-widget" class="position-fixed end-0 m-2 p-0" style="">
     <div class="card shadow-lg border-0" id="chatbox" data-user-id="{{ auth()->user()->id ?? '' }}">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center border-0" id="card-header">
             <div class="d-flex gap-2 align-items-center ">
@@ -126,8 +184,7 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
             </div>
             <p class="text-white m-0 p-0 fw-bold fs-3 me-3" style="cursor: pointer" onclick="toggleChat()">&times;</button>
         </div>
-        <div class="card-body p-0 pt-3" style="height: 340px; overflow-y: auto;">
-            <div class="d-flex border-0 mx-2">
+        <div class="d-flex border-0 mx-2 pt-3">
                 <button class="flex-fill btn btn-light border-0 rounded-pill fw-bold me-2" id="tab-chatbot" onclick="switchChat('chatbot')">
                     Stunty
                 </button>
@@ -135,6 +192,8 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
                     Admin
                 </button>
             </div>
+        <div class="card-body p-0" style="height: 340px; overflow-y: auto;">
+
             <div id="chat-messages-chatbot" class="p-3" style="height: 100%; overflow-y: auto;">
                 <div class="text-start">
                 <div class="badge bg-white my-1 text-wrap text-dark p-2 text-justify message">

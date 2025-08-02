@@ -51,15 +51,17 @@
                         <li class="list-group-item d-flex align-items-center" onclick="showForm('checkup', this)">
                             <img src="/image/icons8-order-history-48.png" class="me-2" width="24"> History Checkup
                         </li>
-                        <li class="list-group-item text-danger d-flex align-items-center">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <a class="text-decoration-none" href="route('logout')"
-                                        onclick="event.preventDefault();
-                                        this.closest('form').submit();"><img src="/image/icons8-logout-48.png" class="me-2" width="24"> Logout</a>
-                            </form>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <a href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="text-decoration-none">
+                                <li class="list-group-item text-danger d-flex align-items-center border-top-0">
 
-                        </li>
+                                        <img src="/image/icons8-logout-48.png" class="me-2" width="24"> Logout
+
+                                </li>
+                            </a>
+                        </form>
+
                     </ul>
                 </div>
             </div>

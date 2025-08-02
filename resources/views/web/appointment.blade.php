@@ -175,7 +175,7 @@
             </div>
             <div class="step-item" data-step="5">
                 <div class="step-marker"></div>
-                <div class="step-label">Pilih Jadwal Dokter</div>
+                <div class="step-label">Pilih Jadwal</div>
             </div>
             <div class="step-item" data-step="6">
                 <div class="step-marker"></div>
@@ -242,7 +242,7 @@
             <div class="card-body p-5">
                 <div id="doctorListContent" class="row g-3"></div>
                 <div class="text-center mt-5">
-                    <button type="submit" class="btn btn-primary w-25 mx-auto">Submit</button>
+                    <button type="submit" class="btn btn-primary w-100 mx-auto">Submit</button>
 
                 </div>
 

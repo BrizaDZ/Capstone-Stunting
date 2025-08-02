@@ -6,12 +6,18 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute
 const toggleChat = () => {
     const chatbox = document.getElementById('chatbox');
     const button = document.getElementById('open-chat');
-    if (chatbox.style.display === 'none') {
-        chatbox.style.display = 'block';
+    if (chatbox.style.display === 'none' || window.getComputedStyle(chatbox).display === 'none') {
+        chatbox.classList.remove('animated-out');
+        chatbox.classList.add('animated-in');
+        chatbox.style.setProperty('display', 'block', 'important');
         button.style.display = 'none';
     } else {
-        chatbox.style.display = 'none';
-        button.style.display = 'block';
+        chatbox.classList.remove('animated-in');
+        chatbox.classList.add('animated-out');
+        setTimeout(() => {
+            chatbox.style.setProperty('display', 'none', 'important');
+            button.style.display = 'block';
+        }, 300);
     }
 };
 
@@ -78,7 +84,7 @@ function sendAdminMessage(event) {
         const container = document.getElementById('chat-messages-admin');
         const bubble = document.createElement('div');
         bubble.className = 'mb-2 text-end';
-        bubble.innerHTML = `<span class="badge p-3 bg-primary text-white">${data.chat}</span>`;
+        bubble.innerHTML = `<span class="badge p-3 bg-primary text-white message message-animated">${data.chat}</span>`;
         container.appendChild(bubble);
         input.value = '';
         container.scrollTop = container.scrollHeight;
@@ -100,7 +106,7 @@ async function sendMessage(e) {
     const chatMessages = document.getElementById('chat-messages-chatbot');
     chatMessages.innerHTML += `
         <div class="text-end">
-            <div class="badge bg-primary my-1 text-wrap text-white p-2 text-justify message">${message}</div>
+            <div class="badge bg-primary my-1 text-wrap text-white p-2 text-justify message message-animated">${message}</div>
         </div>
     `;
     input.value = '';
@@ -144,7 +150,7 @@ async function sendMessage(e) {
 
         chatMessages.innerHTML += `
             <div class="text-start d-flex align-items-start gap-2">
-                <div class="badge bg-white p-2 my-1 text-dark text-justify text-wrap message">
+                <div class="badge bg-white p-2 my-1 text-dark text-justify text-wrap message message-animated">
                     ${escapedAnswer}
                 </div>
                 <button class="btn btn-sm btn-light speak-btn" title="Bacakan jawaban" data-answer="${encodeURIComponent(plainAnswer)}">
@@ -158,7 +164,7 @@ async function sendMessage(e) {
             const adminChat = document.getElementById('chat-messages-admin');
             adminChat.innerHTML += `
                 <div class="text-end">
-                    <div class="badge bg-primary my-1 text-wrap text-white p-2 text-justify message">
+                    <div class="badge bg-primary my-1 text-wrap text-white p-2 text-justify message message-animated">
                         Pertanyaan dari pengguna: ${message}
                         Chatbot belum dapat menjawab. Mohon ditindaklanjuti.
                     </div>
@@ -179,7 +185,7 @@ async function sendMessage(e) {
         document.getElementById('loading').remove();
         chatMessages.innerHTML += `
             <div class="text-start">
-                <div class="badge p-2 bg-danger text-white my-1 text-wrap message">
+                <div class="badge p-2 bg-danger text-white my-1 text-wrap message message-animated">
                     Error: Failed to get response.
                 </div>
             </div>
