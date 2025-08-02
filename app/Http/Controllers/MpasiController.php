@@ -17,7 +17,7 @@ class MpasiController extends Controller
 
     public function predict(Request $request)
     {
-        $response = Http::post('https://l2tsvbfz6w3mmb-8001.proxy.runpod.net/mpasi/predict', [
+        $response = Http::post('https://l2tsvbfz6w3mmb-8000.proxy.runpod.net/mpasi/predict', [
             'kalori_kkal' => $request->kalori_kkal,
             'protein_gr' => $request->protein_gr,
             'lemak_gr' => $request->lemak_gr,

@@ -38,7 +38,8 @@
                     <div class="col">
                         <label>Tekstur</label>
                         <select name="tekstur" class="form-select" required>
-                            <option value="halus_lunak">Halus & Lunak</option>
+                            <option value="halus">Halus</option>
+                            <option value="kasar">kasar</option>
                             <option value="lembut_pulen">Lembut & Pulen</option>
                             <option value="padat_kasar">Padat & Kasar</option>
                             <option value="kental_berkuah">Kental & Berkuah</option>
@@ -82,7 +83,7 @@
                 @elseif (isset($hasil['kategori_umur']))
                     <p><strong>Kategori Umur:</strong> {{ $hasil['kategori_umur'] }}</p>
                 @endif
-                
+
                 <h6>Rekomendasi Makanan:</h6>
                 <div class="accordion" id="accordionResep">
                     @foreach ($hasil['rekomendasi'] as $index => $makanan)
@@ -112,7 +113,7 @@
 
 @push('script')
     <script src="/css/bootstrap/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Set default form saat pertama kali load
