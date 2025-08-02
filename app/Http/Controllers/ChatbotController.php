@@ -15,7 +15,7 @@ class ChatbotController extends Controller
     {
         $question = $request->input('question');
 
-        $response = Http::post('https://l2tsvbfz6w3mmb-8000.proxy.runpod.net/chatbot/ask', [
+        $response = Http::post('https://l2tsvbfz6w3mmb-8001.proxy.runpod.net/chatbot/ask', [
             'question' => $question,
             'user_id' => auth()->id() ?? 1
         ]);
