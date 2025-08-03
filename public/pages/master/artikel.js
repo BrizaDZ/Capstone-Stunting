@@ -8,7 +8,7 @@
 
         loadTable();
 
-        $(document).on("shown.bs.modal", function () {
+        $(document).on("shown.bs.modal", '#myModal', function () {
             document.getElementById('customEditor').innerHTML = '';
 
             document.querySelectorAll('.toggle-btn').forEach(button => {
@@ -19,7 +19,6 @@
 
             document.getElementById('customEditor').addEventListener('keyup', updateButtonStates);
             document.getElementById('customEditor').addEventListener('mouseup', updateButtonStates);
-
             $("#btn-photo").off("click").on("click", function () {
                 var editorContent = $("#customEditor").html().trim();
                 if (editorContent === '' || editorContent === '<br>') {
@@ -41,7 +40,6 @@
                         if (result.success) {
                             $("#myModal").modal("hide");
                             showSuccessMessage();
-                            loadTable();
                         } else if (result.invalid) {
                             showInvalidMessage();
                         } else {
