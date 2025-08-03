@@ -41,7 +41,7 @@ function showSuccessMessage() {
             showConfirmButton: false,
             timer: 1000
         }).then(function () {
-            loadContent();
+            if (typeof loadTable === 'function') loadTable();
         });
 }
 
@@ -53,7 +53,7 @@ function showExitsMessage() {
             showConfirmButton: false,
             timer: 1000
         }).then(function () {
-            loadContent();
+            if (typeof loadTable === 'function') loadTable();
         });
 }
 

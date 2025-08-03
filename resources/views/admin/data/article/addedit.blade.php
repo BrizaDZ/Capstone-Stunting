@@ -1,7 +1,7 @@
 <form id="formartikel">
     <div class="modal-header">
         <h4 class="modal-title">
-            @if ($data->ArtikelID != 0)
+            @if ($data->ArticleID != 0)
                 Edit Artikel
             @else
                 Tambah Artikel Baru
@@ -12,7 +12,7 @@
     </div>
 
     <div class="modal-body ">
-        <input type="hidden" name="id" value="{{ $data->ArtikelID }}" />
+        <input type="hidden" name="id" value="{{ $data->ArticleID }}" />
         <div class="mb-3 row g-3">
             <div class="col-xl-12">
                 <div class="form-group">
