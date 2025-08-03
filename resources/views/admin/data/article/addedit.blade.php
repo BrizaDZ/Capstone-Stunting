@@ -1,4 +1,4 @@
-<form id="formartikel">
+<form id="formartikel" method="post">
     <div class="modal-header">
         <h4 class="modal-title">
             @if ($data->ArticleID != 0)
@@ -52,7 +52,7 @@
         </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-success" id="btn-photo">Simpan</button>
+        <button type="button" class="btn btn-success" id="btn-photo">Simpan</button>
     </div>
 </form>
 
