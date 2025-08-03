@@ -53,11 +53,11 @@ function loadTable() {
                 autoWidth: true,
                 render: function (data, type, row) {
                     if (data === "Stunting") {
-                        return `<span class="badge badge-danger">Stunting</span>`;
+                        return `<span class="badge bg-danger">Stunting</span>`;
                     } else if (data === "Tidak Stunting") {
-                        return `<span class="badge badge-success">Tidak Stunting</span>`;
+                        return `<span class="badge bg-success">Tidak Stunting</span>`;
                     } else {
-                        return `<span class="badge badge-secondary">${data}</span>`;
+                        return `<span class="badge bg-secondary">${data}</span>`;
                     }
                 }
             },
@@ -66,8 +66,8 @@ function loadTable() {
                     render: function (data, type, row) {
                         return `
                         <div class="d-flex justify-content-between">
-                        <a type='button' class='btn btn-sm btn-warning showMe mr-3' style='width: 48%;' data-href='/data/stunting/edit/${row.StuntingID}'><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg></a>
-                            <a type='button' class='btn btn-sm btn-primary mr-3' style='width: 48%;' href='/data/stunting/detail/${row.PatientID}'><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></a>
+                        <a type='button' class='btn btn-sm btn-warning showMe me-2' style='width: 48%;' data-href='/data/stunting/edit/${row.StuntingID}'><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen text-white"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg></a>
+                            <a type='button' class='btn btn-sm btn-primary me-2' style='width: 48%;' href='/data/stunting/detail/${row.PatientID}'><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></a>
                             <button type='button' class='btn btn-sm btn-danger btnDelete' style='width: 48%;' data-id='${row.StuntingID}'><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-icon lucide-trash"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                         </div>
                     `;;

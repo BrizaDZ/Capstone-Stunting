@@ -13,7 +13,7 @@
 
     <div class="modal-body ">
         <input type="hidden" name="id" value="{{ $data->OperationalTimeID }}" />
-        <div class="mb-3 row">
+        <div class="mb-3 row g-3">
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Nama (Sesi)</label>

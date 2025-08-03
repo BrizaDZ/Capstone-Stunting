@@ -39,10 +39,10 @@
                         <label>Tekstur</label>
                         <select name="tekstur" class="form-select" required>
                             <option value="halus">Halus</option>
-                            <option value="kasar">kasar</option>
-                            <option value="lembut_pulen">Lembut & Pulen</option>
-                            <option value="padat_kasar">Padat & Kasar</option>
-                            <option value="kental_berkuah">Kental & Berkuah</option>
+                            <option value="kasar">kasar
+
+                            </option>
+
                         </select>
                     </div>
                     <div class="col">

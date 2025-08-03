@@ -6,16 +6,18 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\Chat;
 use App\Models\User;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
         $puskesmasId = $request->get('puskesmas_id') ?? auth()->user()->id; // Default ke user yang login
-
+        $today = Carbon::today()->toDateString();
 
         $pendingAppointmentsCount = DB::table('appointment')
             ->where('status', '!=', 'Selesai')
+            ->whereDate('appointment_date', $today)
             ->when($puskesmasId, function ($query) use ($puskesmasId) {
                 return $query->where('PuskesmasID', $puskesmasId);
             })

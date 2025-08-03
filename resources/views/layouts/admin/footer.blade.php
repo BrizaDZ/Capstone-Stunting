@@ -6,11 +6,7 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                <a href="/" target="_blank" class="text-dark fw-semibold">Dinas Lingkungan Hidup Provinsi DKI Jakarta</a>
-            </div>
-            <div>
-                <a href="/help" target="_blank"
-                   class="footer-link me-4 text-decoration-underline">Bantuan</a>
+                <a href="/" target="_blank" class="text-dark fw-semibold">StuntAIDS</a>
             </div>
         </div>
     </div>

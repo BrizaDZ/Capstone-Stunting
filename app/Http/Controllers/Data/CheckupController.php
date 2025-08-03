@@ -15,6 +15,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use DataTables;
 use DB;
 use Auth;
+use Carbon\Carbon;
 
 class CheckupController extends Controller
 {
@@ -418,10 +419,13 @@ class CheckupController extends Controller
 
     public function Ajax(Request $request)
     {
+        $today = Carbon::today()->toDateString();
+
         $data = Appointment::join('lokasipuskesmas', 'appointment.PuskesmasID', '=', 'lokasipuskesmas.PuskesmasID')
-        ->join('doctoroperationaltime', 'appointment.DoctorOperationalTimeID', '=', 'doctoroperationaltime.DoctorOperationalTimeID')
+            ->join('doctoroperationaltime', 'appointment.DoctorOperationalTimeID', '=', 'doctoroperationaltime.DoctorOperationalTimeID')
             ->where('appointment.status', '!=', 'Selesai')
             ->where('lokasipuskesmas.PuskesmasID', auth()->id())
+            ->whereDate('doctoroperationaltime.date', $today)
             ->select([
                 'appointment.patient_name',
                 'appointment.doctor_name',

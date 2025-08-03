@@ -14,7 +14,7 @@
     <div class="modal-body ">
         <input type="hidden" name="id" value="{{ $data->DoctorOperationalTimeID }}" />
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Nama Dokter</label>
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Jam Operasional</label>

@@ -92,7 +92,7 @@
                 @if (Auth::user()->role_id == '3')
                     <li class='menu-item {{ Request::is('master/operationaltime') ? ' active' : '' }}'>
                         <a href='/master/operationaltime' class='menu-link'>
-                            <div data-i18n='Jadwal Kerja'>Jadwal Kerja</div>
+                            <div data-i18n='Jadwal Operasional'>Jadwal Operasional</div>
                         </a>
                     </li>
                     <li class='menu-item {{ Request::is('master/doctor') ? ' active' : '' }}'>

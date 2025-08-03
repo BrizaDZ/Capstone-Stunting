@@ -12,8 +12,8 @@
     <div class="card">
         <div class="card-body">
             <h4 class="text-center font-weight-bold mb-5">Detail Data Stunting</h4>
-                <p class="badge badge-primary">Nama: {{ $data->first()->name }}</p>
-                <h4 class="badge badge-primary">Jenis Kelamin: {{ $data->first()->gender }}</h4>
+                <p class="badge bg-primary">Nama: {{ $data->first()->name }}</p>
+                <h4 class="badge bg-primary">Jenis Kelamin: {{ $data->first()->gender }}</h4>
 
             <table class="table table-bordered">
                 <thead>
