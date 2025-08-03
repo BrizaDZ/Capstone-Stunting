@@ -28,7 +28,7 @@
                 <thead class="text-white bg-primary-200">
                     <tr>
                         <th>Judul</th>
-                        <th>Description</th>
+                        <th>Tanggal</th>
                         <th>Action</th>
                     </tr>
                 </thead>

@@ -1,4 +1,4 @@
-<nav class="container-xl p-3 bg-transparent navbar sticky-top navbar-expand-lg fs-5 mt-3 rounded-3">
+<nav class="container-xl p-3 bg-white navbar fixed-top navbar-expand-lg fs-5  rounded-3">
     <div class="container-fluid">
         <a class="navbar-brand text-dark fw-bold" href="#"><img src="/image/logo.png" alt="Logo" width="38" height="38" class="me-3">Stunt<span class="fw-bold text-primary">AIDS</span> </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
