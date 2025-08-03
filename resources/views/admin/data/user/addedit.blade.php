@@ -3,22 +3,23 @@
         <h4 class="modal-title">
                 Edit User
         </h4>
-        <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
     </div>
 
     <div class="modal-body ">
         <input type="hidden" name="id" value="{{ $data->id }}" />
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label>Nama</label>
             <input type="text" name="name" class="form-control" required autocomplete="off"
                 value="{{ $data->name }}" />
         </div>
-        <div class="form-group">
-            <label>email</label>
+        <div class="form-group mb-3">
+            <label>Email</label>
             <input type="text" name="email" class="form-control" required autocomplete="off"
                 value="{{ $data->email}}" />
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label>Role</label>
             <select name="role_id" class="form-control" id="">
                 <option value="1">Admin</option>

@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="/lib/select2/css/select2.min.css" />
     <link rel="stylesheet" href="/css/datagrid/datatables/datatables.bundle.css" />
     <link rel="stylesheet" href="/lib/leaflet/leaflet.css" />
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-pVTOe+5sYhM+2fVpr0vvdu1hN2eXRC+F2VjGQr1J3eRxoy0EQ9CGzPMrT5XYggrfqRQeWj3lp8AJHgAP1N4S9w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <script src="/lib/leaflet/leaflet.js"></script>
     <style>
@@ -39,7 +37,6 @@
     <div class="col-md-12 d-flex justify-content-end">
         <form method="GET" action="/puskesmas/dashboard" id="filterForm">
             <div class="input-group align-items-center">
-                {{-- filepath: d:\xampp\htdocs\stunting\resources\views\puskesmas\dashboard.blade.php --}}
                 <select name="puskesmas_id" class="form-select form-control select2 mr-3" onchange="document.getElementById('filterForm').submit()">
                     <option value="">Semua Puskesmas</option>
                     @foreach ($puskesmasList as $puskesmas)
@@ -55,14 +52,14 @@
 
 <div class="row mb-4">
     <div class="col-md-3">
-        <div class="card border-0 shadow bg-secondary text-secondary">
+        <div class="card border-0 shadow bg-white text-secondary">
             <div class="card-body d-flex justify-content-between align-items-start">
                 <div>
-                    <h6 class="text-secondary">Total Janji Temu</h6>
-                    <h1 class="fw-bold">{{ $pendingAppointmentsCount }}</h1>
+                    <h6 class="text-primary">Total Janji Temu</h6>
+                    <h1 class="fw-bold text-primary">{{ $pendingAppointmentsCount }}</h1>
                 </div>
                 <div class="bg-light rounded p-2">
-                    <i class="fal fa-hospital text-secondary fa-2x font-weight-bold"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-clock-icon lucide-clipboard-clock text-primary"><path d="M16 14v2.2l1.6 1"/><path d="M16 4h2a2 2 0 0 1 2 2v.832"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h2"/><circle cx="16" cy="16" r="6"/><rect x="8" y="2" width="8" height="4" rx="1"/></svg>
                 </div>
             </div>
         </div>
@@ -71,24 +68,24 @@
         <div class="card border-0 shadow bg-primary text-white">
             <div class="card-body d-flex justify-content-between align-items-start">
                 <div>
-                    <h6 class="text-muted">Total Pasien Keseluruhan</h6>
-                    <h1 class="fw-bold">{{ $patients->count() }}</h1>
+                    <h6 class="text-white">Total Pasien Keseluruhan</h6>
+                    <h1 class="fw-bold text-white">{{ $patients->count() }}</h1>
                 </div>
-                <div class="bg-light rounded p-2">
-                    <i class="fal fa-user text-primary fa-2x font-weight-bold"></i>
+                <div class="bg-white rounded p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-user-icon lucide-book-user text-primary"><path d="M15 13a3 3 0 1 0-6 0"/><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/><circle cx="12" cy="8" r="2"/></svg>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card border-0 shadow bg-secondary text-secondary">
+        <div class="card border-0 shadow bg-white text-secondary">
             <div class="card-body d-flex justify-content-between align-items-start">
                 <div>
-                    <h6 class="text-secondary">Pasien Stunting</h6>
-                    <h1 class="fw-bold">{{ $patients->where('status', 'Stunting')->count() }}</h1>
+                    <h class="text-primary">Pasien Stunting</h6>
+                    <h1 class="fw-bold text-primary">{{ $patients->where('status', 'Stunting')->count() }}</h1>
                 </div>
                 <div class="bg-light rounded p-2">
-                    <i class="fal fa-stethoscope text-seconadry fa-2x font-weight-bold"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-check-icon lucide-user-round-check text-primary"><path d="M2 21a8 8 0 0 1 13.292-6"/><circle cx="10" cy="8" r="5"/><path d="m16 19 2 2 4-4"/></svg>
                 </div>
             </div>
         </div>
@@ -97,25 +94,24 @@
         <div class="card border-0 shadow bg-primary text-white">
             <div class="card-body d-flex justify-content-between align-items-start">
                 <div>
-                    <h6 class="text-muted">Pasien Non-Stunting</h6>
-                    <h1 class="fw-bold">{{ $patients->where('status', '!=', 'Stunting')->count() }}</h1>
+                    <h6 class="text-white">Pasien Non-Stunting</h6>
+                    <h1 class="fw-bold text-white">{{ $patients->where('status', '!=', 'Stunting')->count() }}</h1>
                 </div>
-                <div class="bg-light rounded p-2">
-                    <i class="fal fa-child text-primary fa-2x font-weight-bold"></i>
+                <div class="bg-white rounded p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-x-icon lucide-user-round-x text-primary"><path d="M2 21a8 8 0 0 1 11.873-7"/><circle cx="10" cy="8" r="5"/><path d="m17 17 5 5"/><path d="m22 17-5 5"/></svg>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-{{-- filepath: d:\xampp\htdocs\stunting\resources\views\puskesmas\dashboard.blade.php --}}
 <div class="row">
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-6 d-flex">
                 <div class="card border-0 flex-fill">
-                    <div class="card-title">
-                        <h2 class="text-center text-secondary mt-3">Grafik Stunting Per Bulan</h2>
+                    <div class="card-header bg-primary m-0 p-0">
+                        <h5 class="text-center text-white mt-3">Grafik Stunting Per Bulan</h2>
                     </div>
                     <div class="card-body align-content-center">
                         <canvas id="stuntingChart" class="h-75"></canvas>
@@ -124,8 +120,10 @@
             </div>
             <div class="col-md-6 d-flex">
                 <div class="card border-0 flex-fill">
-                    <div class="card-body">
-                        <h2 class="text-center text-secondary mb-3">Peta Pasien Stunting</h2>
+                    <div class="card-header bg-primary m-0 p-0">
+                        <h5 class="text-center text-white mt-3">Peta Pasien Stunting</h2>
+                    </div>
+                    <div class="card-body p-0">
                         <div id="map" style="height: 600px;"></div>
                     </div>
                 </div>
@@ -178,7 +176,6 @@
         map.fitBounds(bounds);
     }
 
-    // Legend di kiri bawah
     var legend = L.control({ position: 'bottomleft' });
 
     legend.onAdd = function (map) {
@@ -208,7 +205,6 @@
             var ctx = document.getElementById('stuntingChart').getContext('2d');
             var stuntingData = @json($stuntingPerMonth);
 
-            // Format data for Chart.js
             var labels = [];
             var data = [];
             for (var month = 1; month <= 12; month++) {

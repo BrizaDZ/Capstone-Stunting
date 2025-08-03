@@ -7,12 +7,13 @@
                 Tambah Artikel Baru
             @endif
         </h4>
-        <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
     </div>
 
     <div class="modal-body ">
         <input type="hidden" name="id" value="{{ $data->ArtikelID }}" />
-        <div class="mb-3 row">
+        <div class="mb-3 row g-3">
             <div class="col-xl-12">
                 <div class="form-group">
                     <label>Judul Artikel</label>

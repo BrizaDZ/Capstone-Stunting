@@ -3,7 +3,8 @@
         <h4 class="modal-title">
             Data Puskesmas
         </h4>
-        <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
     </div>
 
     <div class="modal-body ">
@@ -12,7 +13,7 @@
         <input type="hidden" name="kabupaten" id="NamaKab" value="{{ $data->kabupaten }}">
         <input type="hidden" name="kecamatan" id="NamaKec" value="{{ $data->kecamatan }}">
         <input type="hidden" name="kelurahan" id="NamaKel" value="{{ $data->kelurahan }}">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Nama Puskesmas</label>
@@ -22,7 +23,7 @@
             </div>
             <div class="col-xl-6">
                 <div class="form-group">
-                    <label>alamat</label>
+                    <label>Alamat</label>
                     <input type="text" name="alamat" class="form-control" required autocomplete="off"
                         value="{{ $data->alamat }}" />
                 </div>
@@ -30,12 +31,12 @@
         </div>
         <div class="row mb-3">
             <div class="col-xl-6">
-                <label class="form-label">Provinsi</label>
+                <label">Provinsi</label>
                 <select type="text" class="form-control select2 sProvince">
                 </select>
             </div>
             <div class="col-xl-6">
-                <label class="form-label">Kabupaten</label>
+                <label">Kabupaten</label>
                 <select type="text" class="form-control select2 sRegency">
                     @if ($data->kabupaten != null)
                         <option value="{{ $data->kabupaten }}" selected="selected">{{ $data->kabupaten }}</option>
@@ -45,7 +46,7 @@
         </div>
         <div class="row mb-3">
             <div class="col-xl-6">
-                <label class="form-label">Kecamatan</label>
+                <label">Kecamatan</label>
                 <select type="text" class="form-control select2 sDistrict">
                     @if ($data->kecamatan != null)
                         <option value="{{ $data->kecamatan }}" selected="selected">{{ $data->kecamatan }}</option>
@@ -53,7 +54,7 @@
                 </select>
             </div>
             <div class="col-xl-6">
-                <label class="form-label">Kelurahan</label>
+                <label">Kelurahan</label>
                 <select type="text" class="form-control select2 sVillage">
                     @if ($data->kelurahan != null)
                         <option value="{{ $data->kelurahan }}" selected="selected">{{ $data->kelurahan }}</option>

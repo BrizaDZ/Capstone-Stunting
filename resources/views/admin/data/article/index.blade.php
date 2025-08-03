@@ -5,22 +5,39 @@
 @push('style')
     <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />
     <link rel="stylesheet" href="/lib/select2/css/select2.min.css" />
-    <link rel="stylesheet" href="/css/datagrid/datatables/datatables.bundle.css" />
+    <link rel="stylesheet" href="/panel/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+    <link rel="stylesheet" href="/panel/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
     {{-- <link rel="stylesheet" href="/css/addon.css" /> --}}
 @endpush
 
 @section('content')
-    <!--Modal Window-->
-    <div id='myModal' class='modal fade' data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div id='myModal' class='modal fade in' role="dialog" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div id='myModalContent'></div>
             </div>
         </div>
     </div>
+    <div class="card rounded-big">
+        <div class="card-header d-flex flex-column flex-md-row gap-3 flex-column flex-md-row align-content-center justify-content-between">
+            <h5 class="card-title mb-0">@yield('title')</h5>
+            <button class="btn btn-primary showMe" data-href="/data/artikel/add">Tambah Artikel</button>
+        </div>
+        <div class="card-datatable table-responsive pt-0">
+            <table id="tblData" class="datatables-basic table">
+                <thead class="text-white bg-primary-200">
+                    <tr>
+                        <th>Judul</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
 
-    <div class="row">
+
+    {{-- <div class="row">
         <div class="col-md-12">
             <div id="panel-8" class="panel">
                 <div class="panel-hdr">
@@ -49,13 +66,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @push('script')
     <script src="/lib/sweetalert/sweetalert2.all.min.js"></script>
     <script src="/lib/select2/js/select2.full.min.js"></script>
-    <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
+    <script src="/panel/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
     <script src="/js/modalForm.js"></script>
     <script src="/pages/master/artikel.js"></script>
 @endpush

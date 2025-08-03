@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+#text-content *{
+    font-family: 'Lora', serif;
+    font-size: 1.1rem!important;
+    line-height: 1.66;
+    color: #1e1e1e;
+}
+
+@media only screen and (max-width: 768px) {
+    #text-content *{
+        font-size: 1rem!important;
+    }
+  }

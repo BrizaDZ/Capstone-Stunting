@@ -1,5 +1,7 @@
 function bindForm(dialog) {
-    $('form', dialog).submit(function () {
+    $('form', dialog).submit(function (e) {
+        e.preventDefault();
+
         $.ajax({
             url: this.action,
             type: this.method,
@@ -7,40 +9,74 @@ function bindForm(dialog) {
             success: function (result) {
                 if (result.success) {
                     $('#myModal').modal('hide');
-                    showResultModal(result.data); // Tambahkan logika untuk menampilkan resultModal
-                } else if (result.invalid) {
+                    showResultModal(result.data);
+                }
+                else if (result.invalid) {
                     showInvalidMessage();
-                } else if (result.Exits) {
+                }
+                else if (result.exits) {
                     $('#myModal').modal('hide');
                     showExitsMessage();
-                } else {
+                }else {
                     $('#myModalContent').html(result);
                     bindForm();
-                    loadPlugin();
                 }
-            }
+            },
+            error: function(xhr) {
+            if(xhr.status === 422){
+                let msg = 'NIK sudah terdaftar, silahkan gunakan yang lain';
+                Swal.fire('Gagal', msg, 'error');
+            }}
         });
         return false;
     });
 }
 
+function showSuccessMessage() {
+    Swal.fire(
+        {
+            position: 'top-end',
+            type: 'success',
+            title: 'Data berhasil disimpan!',
+            showConfirmButton: false,
+            timer: 1000
+        }).then(function () {
+            loadContent();
+        });
+}
+
+function showExitsMessage() {
+    Swal.fire(
+        {
+            type: 'warning',
+            title: 'Data Bulan Ini sudah Ada!!',
+            showConfirmButton: false,
+            timer: 1000
+        }).then(function () {
+            loadContent();
+        });
+}
+
+function showInvalidMessage() {
+    $('.mod-warning').css("visibility", "visible");
+}
+
+$(document).on('shown.bs.modal', function () {
+    $(this).find('[autofocus]').focus();
+});
+
 $(document).on('click', '.showMe', function () {
     $('#myModalContent').load($(this).attr('data-href'), function () {
 
-        $('#myModal').modal();
+        $('#myModal').modal('show');
 
         bindForm(this);
     });
 
-
-
-
     return false;
 });
 
-
 function showResultModal(data) {
-    // Isi konten modal dengan hasil
     let content = `
         <p><strong>Nama Pasien:</strong> ${data.name}</p>
         <p><strong>Jenis Kelamin:</strong> ${data.gender}</p>
@@ -55,6 +91,6 @@ function showResultModal(data) {
 
     $('#resultModal .btn-primary').attr('href', `/surat-rujukan/download/${data.StuntingID}`);
 
-    // Tampilkan modal
-    $('#resultModal').modal('show');
+    var modal = new bootstrap.Modal(document.getElementById('resultModal'));
+    modal.show();
 }

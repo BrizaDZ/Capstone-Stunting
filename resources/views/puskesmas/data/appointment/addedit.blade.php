@@ -3,7 +3,8 @@
         <h4 class="modal-title">
             Form Checkup
         </h4>
-        <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
     </div>
 
     <div class="modal-body ">
@@ -12,13 +13,13 @@
 
 
         @if ($data->AppointmentID != null)
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label>ID Pasien</label>
             <input type="text" name="PatientID" class="form-control" readonly
                 value="{{ $data2->PatientID }}" />
         </div>
         @else
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label>ID Pasien</label>
             <div class="row">
                 <div class="col-10">
@@ -31,32 +32,32 @@
             </div>
         </div>
         @endif
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label>Nama</label>
             <input type="text" name="name" id="PatientName" class="form-control" readonly
                 value="{{ $data2->name }}" />
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label>Jenis Kelamin</label>
             <input type="text" name="gender" id="PatientGender" class="form-control"
                 value="{{ $data2->gender }}" readonly/>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label>Berat</label>
             <input type="number" name="weight" step="any" class="form-control" required autocomplete="off"
                 value="{{ $data->weight }}" />
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label>Tinggi Badan</label>
             <input type="number" name="height" step="any" class="form-control" required autocomplete="off"
                 value="{{ $data->height}}" />
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label>Umur</label>
             <input type="number" name="age" class="form-control" required autocomplete="off"
                 value="{{ $data->age}}" />
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label>Cara Mengukur</label>
             <select name="measuretype" id="" class="form-control" required>
                 <option value=""></option>

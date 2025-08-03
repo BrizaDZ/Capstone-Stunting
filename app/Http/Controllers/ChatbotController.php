@@ -21,10 +21,12 @@ class ChatbotController extends Controller
         ]);
 
         $jawaban = $response->json()['jawaban'];
+        $status = $response->json()['status'];
 
         return response()->json([
             'question' => $question,
-            'jawaban' => $jawaban
+            'jawaban' => $jawaban,
+            'status' => $status,
         ]);
     }
 

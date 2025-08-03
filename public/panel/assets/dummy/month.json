@@ -1,0 +1,14 @@
+[
+  { "x": "Januari", "y": 1300 },
+  { "x": "Februari", "y": 1250 },
+  { "x": "Maret", "y": 1400 },
+  { "x": "April", "y": 1350 },
+  { "x": "Mei", "y": 1200 },
+  { "x": "Juni", "y": 1100 },
+  { "x": "Juli", "y": 1000 },
+  { "x": "Agustus", "y": 950 },
+  { "x": "September", "y": 980 },
+  { "x": "Oktober", "y": 1050 },
+  { "x": "November", "y": 1150 },
+  { "x": "Desember", "y": 2405 }
+]

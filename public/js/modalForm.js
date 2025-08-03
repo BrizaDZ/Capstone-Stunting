@@ -1,5 +1,7 @@
 function bindForm(dialog) {
-    $('form', dialog).submit(function () {
+    $('form', dialog).submit(function (e) {
+        e.preventDefault();
+
         $.ajax({
             url: this.action,
             type: this.method,
@@ -8,74 +10,72 @@ function bindForm(dialog) {
                 if (result.success) {
                     $('#myModal').modal('hide');
                     showSuccessMessage();
-                } else if (result.invalid) {
+                }
+                else if (result.invalid) {
                     showInvalidMessage();
-                } else if (result.Exits) {
+                }
+                else if (result.exits) {
                     $('#myModal').modal('hide');
                     showExitsMessage();
-                } else {
+                }else {
                     $('#myModalContent').html(result);
                     bindForm();
-                    loadPlugin();
-
                 }
             },
             error: function(xhr) {
             if(xhr.status === 422){
                 let msg = 'NIK sudah terdaftar, silahkan gunakan yang lain';
                 Swal.fire('Gagal', msg, 'error');
-            }
-        }
+            }}
         });
         return false;
     });
 }
 
 function showSuccessMessage() {
-    swal({
-        position: 'top-end',
-        type: 'success',
-        title: 'Data berhasil disimpan!',
-        showConfirmButton: false,
-        timer: 1000
-    }).then(function () {
-        loadContent();
-    });
+    Swal.fire(
+        {
+            position: 'top-end',
+            type: 'success',
+            title: 'Data berhasil disimpan!',
+            showConfirmButton: false,
+            timer: 1000
+        }).then(function () {
+            loadContent();
+        });
+}
+
+function showExitsMessage() {
+    Swal.fire(
+        {
+            type: 'warning',
+            title: 'Data Bulan Ini sudah Ada!!',
+            showConfirmButton: false,
+            timer: 1000
+        }).then(function () {
+            loadContent();
+        });
 }
 
 function showInvalidMessage() {
     $('.mod-warning').css("visibility", "visible");
 }
 
-
-
-
+$(document).on('shown.bs.modal', function () {
+    $(this).find('[autofocus]').focus();
+});
 
 $(document).on('click', '.showMe', function () {
     $('#myModalContent').load($(this).attr('data-href'), function () {
 
-        $('#myModal').modal();
+        $('#myModal').modal('show');
 
         bindForm(this);
     });
 
-
-
-
     return false;
 });
 
-function showExitsMessage() {
-    swal({
-        position: 'top-end',
-        type: 'danger',
-        title: 'Data Sudah Ada!',
-        showConfirmButton: false,
-        timer: 1000
-    }).then(function () {
-        loadContent();
-    });
-}
 
 function PopulateDoctor() {
     $('.sDoctor').select2({
@@ -105,4 +105,3 @@ function PopulateDoctor() {
         }
     });
 }
-

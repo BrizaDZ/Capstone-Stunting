@@ -7,7 +7,8 @@
                 Tambah Jam Operasional Baru
             @endif
         </h4>
-        <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
     </div>
 
     <div class="modal-body ">

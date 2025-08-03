@@ -1,56 +1,55 @@
 <!DOCTYPE html>
-<!--
-Template Name:  SmartAdmin Responsive WebApp - Template build with Twitter Bootstrap 4
-Version: 4.0.0
-Author: Sunnyat Ahmmed
-Website: http://gootbootstrap.com
-Purchase: https://wrapbootstrap.com/theme/smartadmin-responsive-webapp-WB0573SK0
-License: You must have a valid license purchased only from wrapbootstrap.com (link above) in order to legally use this theme for your project.
--->
-<html lang="en">
-@include('layouts.head')
 
-<body class="mod-bg-1 ">
-    <!-- DOC: script to save and load page settings -->
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/panel/assets/" data-template="vertical-menu-template-no-customizer-starter">
 
-    <!-- BEGIN Page Wrapper -->
-    <div class="page-wrapper">
-        <div class="page-inner">
-            <!-- BEGIN Left Aside -->
-            @include('layouts.sidebar')
-            <!-- END Left Aside -->
-            <div class="page-content-wrapper">
-                <!-- BEGIN Page Header -->
-                @include('layouts.header')
-                <!-- END Page Header -->
-                <!-- BEGIN Page Content -->
-                <main id="js-page-content" role="main" class="page-content">
+<head>
+    @include('layouts.admin.head')
+    @stack('style')
 
-                    @yield('content')
+</head>
 
-                </main>
-                <!-- this overlay is activated only when mobile menu is triggered -->
-                <div class="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+            @include('layouts.admin.sidebar')
+            <!-- / Menu -->
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                @include('layouts.admin.navbar')
+                <!-- / Navbar -->
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
 
-                @include('layouts.footer')
+                    <div class="flex-grow-1 container-p-y container-fluid">
+                        @yield('content')
+                    </div>
+                    <!-- / Content -->
+                    <!-- Footer -->
+                    @include('layouts.admin.footer')
+                    <!-- / Footer -->
 
-                @include('layouts.shortcuts')
-
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
             </div>
+            <!-- / Layout page -->
         </div>
-    </div>
-    <!-- END Page Wrapper -->
-    <!-- BEGIN Quick Menu -->
-    <!-- to add more items, please make sure to change the variable '$menu-items: number;' in your _page-components-shortcut.scss -->
 
-    <!-- END Quick Menu -->
-    <!-- BEGIN Messenger -->
-    @include('layouts.messenger')
-    <!-- END Messenger -->
-    <!-- BEGIN Page Settings -->
-    @include('layouts.modal')
-    <!-- END Page Settings -->
-    @include('layouts.scriptsrc')
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+
+        <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+        <div class="drag-target"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    @include('layouts.admin.script')
+    @stack('script')
+    <!-- Page JS -->
 </body>
 
 </html>
