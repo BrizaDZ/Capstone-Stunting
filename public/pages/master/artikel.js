@@ -19,8 +19,8 @@
 
             document.getElementById('customEditor').addEventListener('keyup', updateButtonStates);
             document.getElementById('customEditor').addEventListener('mouseup', updateButtonStates);
-            $("#btn-photo").click(function () {
-                e.preventDefault();
+
+            $("#btn-photo").off("click").on("click", function () {
                 var editorContent = $("#customEditor").html().trim();
                 if (editorContent === '' || editorContent === '<br>') {
                     alert("Deskripsi tidak boleh kosong!");
