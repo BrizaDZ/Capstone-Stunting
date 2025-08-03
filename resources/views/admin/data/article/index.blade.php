@@ -3,7 +3,8 @@
 @section('title', 'Tabel Artikel')
 
 @push('style')
-    <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />
+    <link href="/panel/assets/vendor/libs/sweetalert2/sweetalert2.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="/lib/select2/css/select2.min.css" />
     <link rel="stylesheet" href="/panel/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
     <link rel="stylesheet" href="/panel/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
@@ -70,7 +71,8 @@
 @endsection
 
 @push('script')
-    <script src="/lib/sweetalert/sweetalert2.all.min.js"></script>
+    <script src="/panel/assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+
     <script src="/lib/select2/js/select2.full.min.js"></script>
     <script src="/panel/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
     <script src="/js/modalForm.js"></script>
