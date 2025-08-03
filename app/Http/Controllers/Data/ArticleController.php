@@ -61,7 +61,7 @@ class ArticleController extends Controller
         }
         $data->save();
 
-        return ['success' => true];
+        return response()->json(['success' => true]);
 
     }
 
