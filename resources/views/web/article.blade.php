@@ -8,7 +8,7 @@
 @endpush
 
 @section('content')
-<div class="container mt-4">
+<div class="container my-5" style="padding-top: 5em">
     <div class="row">
         <!-- Detail Artikel (Kiri) -->
         <div class="col-md-8">

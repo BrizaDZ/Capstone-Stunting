@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div class="container-xl container-fluid">
+    <div class="container-xl container-fluid mt-5">
         <div class="row g-4">
             <!-- Sidebar Menu -->
             <div class="col-12 col-md-4">

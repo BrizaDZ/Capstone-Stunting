@@ -1,3 +1,46 @@
+function renderDoctorCalendarByPuskesmas(puskesmasId) {
+    $('#doctorCalendar').html('');
+
+    const url = `/master/doctoroperationaltime/search?puskesmas_id=${puskesmasId}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const calendarEl = document.getElementById('doctorCalendar');
+
+            const events = data.map(item => ({
+                title: `${item.doctor_name} - ${item.shift_name}`,
+                start: item.date,
+                allDay: true
+            }));
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'id',
+                initialView: 'dayGridMonth',
+                height: 232,
+                events: events
+            });
+
+            calendar.render();
+        });
+}
+
+function initEmptyCalendar() {
+    $('#doctorScheduleCard').removeClass('d-none');
+    $('#doctorCalendar').html('');
+
+    const calendarEl = document.getElementById('doctorCalendar');
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'id',
+        initialView: 'dayGridMonth',
+        height: 232,
+        events: [] // kosong
+    });
+
+    calendar.render();
+}
+
 let currentStep = 0;
 let currentDoctorId = null;
 
@@ -29,13 +72,15 @@ $(document).ready(function () {
     PopulatePatient();
     PopulatePuskesmas();
     fetchAvailableDoctors();
+    initEmptyCalendar();
 
     $('#appointment_date').on('change', function () {
         currentDoctorId = null;
         $('#inputDoctorID').val('');
         $('#inputDoctorOperationalTimeID').val('');
         fetchAvailableDoctors();
-        updateProgress(3); // Step: Pilih Tanggal
+        updateProgress(3);
+
     });
 
     $('.sPuskesmas').on('change', function () {
@@ -43,22 +88,24 @@ $(document).ready(function () {
         $('#inputDoctorID').val('');
         $('#inputDoctorOperationalTimeID').val('');
         fetchAvailableDoctors();
-        updateProgress(2); // Step: Pilih Puskesmas
+        updateProgress(2);
+
+        const puskesmasId = $(this).val();
+        if (puskesmasId) {
+            renderDoctorCalendarByPuskesmas(puskesmasId);
+        }
     });
 });
 
 function updateProgress(step) {
-    if (step < currentStep) return; // Cegah mundur langkah
+    if (step < currentStep) return;
     currentStep = step;
 
     const steps = document.querySelectorAll('.step-progress .step-item');
     steps.forEach((item, index) => {
         item.classList.remove('active', 'completed');
-        if (index < step) {
-            item.classList.add('completed');
-        } else if (index === step) {
-            item.classList.add('active');
-        }
+        if (index < step) item.classList.add('completed');
+        else if (index === step) item.classList.add('active');
     });
 }
 
@@ -68,25 +115,19 @@ function PopulatePatient() {
         allowClear: true,
         ajax: {
             url: "/profile/search/",
-            data: function (params) {
-                return { term: params.term };
-            },
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
-                        return {
-                            id: item.PatientID,
-                            text: item.name
-                        };
-                    })
-                };
-            },
+            data: params => ({ term: params.term }),
+            processResults: result => ({
+                results: $.map(result, item => ({
+                    id: item.PatientID,
+                    text: item.name
+                }))
+            }),
             cache: true
         }
     }).on('change', function () {
         const patientName = $('.sPatient option:selected').text();
         $('#txtnamapatient').val(patientName);
-        updateProgress(1); // Step: Pilih Pasien selesai
+        updateProgress(1);
     });
 }
 
@@ -96,19 +137,13 @@ function PopulatePuskesmas() {
         allowClear: true,
         ajax: {
             url: "/master/puskesmas/search/",
-            data: function (params) {
-                return { term: params.term };
-            },
-            processResults: function (result) {
-                return {
-                    results: $.map(result, function (item) {
-                        return {
-                            id: item.PuskesmasID,
-                            text: item.nama
-                        };
-                    })
-                };
-            },
+            data: params => ({ term: params.term }),
+            processResults: result => ({
+                results: $.map(result, item => ({
+                    id: item.PuskesmasID,
+                    text: item.nama
+                }))
+            }),
             cache: true
         }
     });
@@ -182,7 +217,7 @@ $(document).on('click', '.doctor-card', function () {
     $('#txtnamadoctor').val(doctorName);
     $('#inputDoctorID').val(doctorId);
     $('#inputDoctorOperationalTimeID').val('');
-    updateProgress(4); // Step: Pilih Dokter
+    updateProgress(4);
 
     $('html, body').animate({
         scrollTop: $('#appointmentForm').offset().top + 500
@@ -237,7 +272,7 @@ $(document).on('click', '.btn-shift', function () {
     const shiftId = $(this).data('id');
     $('#inputDoctorOperationalTimeID').val(shiftId);
 
-    updateProgress(5); // Step: Pilih Jadwal Dokter
+    updateProgress(5);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -267,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        updateProgress(6); // Step: Submit
+        updateProgress(6);
 
         const formData = new FormData(form);
 

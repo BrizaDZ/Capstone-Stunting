@@ -2,163 +2,7 @@
 @section('title', 'Beranda')
 
 @push('style')
-<style>
-.bg-primary-200 {
-    background-color: #eaf2ff !important;
-}
-@media (max-width: 791px) {
-    .card-group{
-        display: block;
-    }
-}
-@media (max-width: 768px) {
-    .stuntpadding{
-        padding-top: 9em;
-    }
-    .fs-5{
-        font-size: 0.9em !important;
-    }
-    .icontitle{
-        display: inline-block;
-    }
-}
-@media (max-width: 595px){
-    .fs-5{
-        font-size: 0.8em !important;
-    }
-    .stunticon{
-        width: 50px;
-    }
-}
-
-@media (max-width: 390px){
-    .stunticon{
-        width: 40px;
-    }
-}
-
-@media (max-width: 576px) {
-    #chatbox {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        max-width: 100vw !important;
-        z-index: 9999 !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        display: none;
-    }
-    #chatbot-widget {
-        width: 100vw !important;
-        max-width: 100vw !important;
-        bottom: 0 !important;
-        right: 0 !important;
-        left: 0 !important;
-    }
-    #chatbox .card-body{
-        height: 85vh !important ;
-    }
-    #chatbox .card-footer {
-        position: fixed;
-        left: 0;
-        bottom: 10px;
-        width: 100vw;
-        background: #fff;
-        z-index: 10000;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-    }
-    #chatbox .card-body {
-        padding-bottom: 80px !important;
-    }
-}
-
-
-.typing-indicator {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: #f1f1f1;
-    border-radius: 1rem;
-    padding: 8px 12px;
-    max-width: 90%;
-    font-size: 0.85em;
-    animation: pulse 1s infinite;
-}
-
-.typing-indicator span {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    margin: 0 1px;
-    background-color: #999;
-    border-radius: 50%;
-    animation: bounce 1.3s infinite;
-}
-
-.typing-indicator span:nth-child(2) {
-    animation-delay: 0.2s;
-}
-.typing-indicator span:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-#chatbox{
-    display: none; height: 480px; background: linear-gradient(180deg,rgba(199, 233, 255, 1) 50%, rgba(255, 255, 255, 1) 100%);
-}
-
-#card-header{
-     border-bottom-right-radius: 1.5em !important; border-bottom-left-radius: 1.5em !important;
-}
-
-.message{
-white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inherit; text-align: justify; font-size: 0.85em; line-height: 1.5em;
-}
-
-#chatbot-widget {
-    width: 390px; max-width: 95vw; bottom: 20px; z-index: 998;
-}
-
-@keyframes chatboxFadeIn {
-    from { opacity: 0; transform: translateY(30px);}
-    to { opacity: 1; transform: translateY(0);}
-}
-@keyframes chatboxFadeOut {
-    from { opacity: 1; transform: translateY(0);}
-    to { opacity: 0; transform: translateY(30px);}
-}
-#chatbox.animated-in {
-    animation: chatboxFadeIn 0.4s cubic-bezier(.4,0,.2,1);
-}
-#chatbox.animated-out {
-    animation: chatboxFadeOut 0.3s cubic-bezier(.4,0,.2,1);
-}
-.message-animated {
-    animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1);
-}
-@keyframes bounce {
-    0%, 80%, 100% {
-        transform: scale(0.8);
-        opacity: 0.4;
-    }
-    40% {
-        transform: scale(1.2);
-        opacity: 1;
-    }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-#open-chat img{
-    width: 10em;
-  height: auto;
-}
-
-</style>
+<link rel="stylesheet" href="/css/home.css">
 
 @endpush
 
@@ -175,7 +19,7 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
         </div>
     </div>
 </div>
-<div id="chatbot-widget" class="position-fixed end-0 m-2 p-0" style="">
+<div id="chatbot-widget" class="position-fixed end-0 m-2 p-0">
     <div class="card shadow-lg border-0" id="chatbox" data-user-id="{{ auth()->user()->id ?? '' }}">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center border-0" id="card-header">
             <div class="d-flex gap-2 align-items-center ">
@@ -385,13 +229,11 @@ white-space: pre-wrap; word-wrap: break-word; max-width: 90%; font-weight: inher
                         <div class="text-center">
                             @if ($doctor->photo == null)
                             <img src="/image/doctor.png"
-                                class="border rounded-3 bg-light img-fluid"
-                                style="object-fit: cover; height: 375px"
+                                class="border rounded-3 bg-light img-fluid img-doc"
                                 alt="{{ $doctor->name }}">
                             @else
                             <img src="/images/doctor/{{$doctor->photo}}"
-                                class="border rounded-3 bg-light img-fluid"
-                                style="object-fit: cover; height: 375px"
+                                class="border rounded-3 bg-light img-fluid img-doc"
                                 alt="{{ $doctor->name }}">
                             @endif
 
