@@ -35,7 +35,7 @@ class DoctorController extends Controller
     {
         if ($v->id == 0) {
             $data = new Doctor;
-            $data->user_id = auth()->id(); // Ensure the logged-in user owns the data
+            $data->user_id = auth()->id();
         } else {
             $data = Doctor::where('user_id', auth()->id())->findOrFail($v->id);
         }

@@ -5,7 +5,7 @@
 @endpush
 @section('content')
 <div class="container mt-5" style="padding:5em 0">
-    <div class="card shadow rounded bg-light">
+    <div class="card shadow border-0 rounded bg-white">
         <div class="card-header bg-primary text-white">
             <h4 class="text-center">Rekomendasi MPASI</h4>
         </div>
@@ -73,7 +73,7 @@
         </div>
     </div>
     @if (isset($hasil))
-    <div class="card bg-light mt-4 shadow rounded">
+    <div class="card bg-white border-0 mt-4 shadow rounded">
         <div class="card-header bg-primary text-white">
             <h4 class="text-center">Hasil Rekomendasi</h4>
         </div>

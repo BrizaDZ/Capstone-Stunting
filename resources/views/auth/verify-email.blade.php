@@ -7,6 +7,7 @@
 
     <link href="/css/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/login.css">
+    <link rel="icon" type="/image/png" sizes="32x32" href="/image/logo.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@500&display=swap" rel="stylesheet">
@@ -31,21 +32,22 @@
                         </div>
                     @endif
 
-                    <div class="d-flex justify-content-between mt-5 mb-4">
-                        <form method="POST" action="{{ route('verification.send') }}" id="resend-form">
+                    <div class="d-flex flex-column flex-md-row justify-content-between mt-5 mb-4 gap-2">
+                        <form method="POST" action="{{ route('verification.send') }}" id="resend-form" class="w-100 w-md-auto">
                             @csrf
-                            <button type="submit" class="btn btn-primary" id="resend-btn">
+                            <button type="submit" class="btn btn-primary w-100" id="resend-btn">
                                 Kirim Ulang Email Verifikasi
                             </button>
                         </form>
 
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('logout') }}" class="w-100 w-md-auto">
                             @csrf
-                            <button type="submit" class="btn btn-outline-danger">
+                            <button type="submit" class="btn btn-outline-danger w-100">
                                 Keluar
                             </button>
                         </form>
                     </div>
+
 
                     <div class="text-center mt-3 mb-3">
                         <small class="text-muted mb-0">Pastikan email kamu benar dan aktif.</small>

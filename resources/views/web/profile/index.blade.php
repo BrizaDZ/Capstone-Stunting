@@ -210,7 +210,7 @@
 
 <script src="/lib/select2/js/select2.full.min.js"></script>
 <script src="/js/datagrid/datatables/datatables.bundle.js"></script>
-<script src="/js/modalForm.js"></script>
+<script src="/js/modalForm2.js"></script>
 <script src="/pages/profil.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

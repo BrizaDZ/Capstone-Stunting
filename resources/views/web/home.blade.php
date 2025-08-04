@@ -67,7 +67,7 @@
             </form>
         </div>
     </div>
-    <span class="p-0 position-fixed bottom-0 end-0 m-2" id="open-chat" onclick="toggleChat()">
+    <span class="p-0 position-fixed bottom-0 end-0 m-2" id="open-chat" onclick="toggleChat()" style="cursor: pointer">
         <img src="/image/stunty.png" width="180" height="180" >
     </button>
 </div>
