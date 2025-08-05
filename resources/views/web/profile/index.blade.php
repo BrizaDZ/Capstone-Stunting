@@ -23,7 +23,7 @@
 @endpush
 
 @section('content')
-<section class="pt-5 p-3 vh-100 d-flex align-items-start my-5 justify-content-center bg-primary-200">
+<section class="py-5 p-3 d-flex align-items-start my-5 justify-content-center bg-primary-200">
     <div class="modal fade" id="myModal" data-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">

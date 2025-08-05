@@ -33,6 +33,9 @@
 }
 
 @media (max-width: 576px) {
+    .ratio-16x9 {
+        height: 500px !important;
+    }
     #chatbox {
         position: fixed !important;
         top: 0 !important;
@@ -58,7 +61,7 @@
     #chatbox .card-footer {
         position: fixed;
         left: 0;
-        bottom: 10px;
+        bottom: 0;
         width: 100vw;
         background: #fff;
         z-index: 10000;

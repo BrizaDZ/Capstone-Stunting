@@ -2,7 +2,7 @@
 @section('title', 'Beranda')
 
 @push('style')
-<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/home1.css">
 
 @endpush
 
@@ -285,7 +285,7 @@
                 </div>
             </div>
 
-                <p id="status" class="mt-3 text-muted">Mendeteksi lokasi Anda...</p>
+                <p id="status" class="mt-3 text-muted text-center">Mendeteksi lokasi Anda...</p>
 
         </div>
     </div>
@@ -317,5 +317,24 @@
         myModal.show();
     });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const chatbox = document.getElementById('chatbox');
+    const footer = chatbox.querySelector('.card-footer');
+
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", function () {
+            const keyboardHeight = window.innerHeight - window.visualViewport.height;
+
+            if (keyboardHeight > 150) { // anggap keyboard muncul
+                footer.style.transform = `translateY(-${keyboardHeight}px)`;
+            } else {
+                footer.style.transform = 'translateY(0)';
+            }
+        });
+    }
+});
+</script>
+
 
 @endpush
