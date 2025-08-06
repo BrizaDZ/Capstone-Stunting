@@ -70,7 +70,7 @@
 
             <!-- Icon & Title -->
             <div class="col-12 col-md-6 order-1 order-md-2 text-center text-md-end mb-0  mb-md-0">
-                <h1 class="mt-4 mb-3 fs-1 fw-medium me-md-4">Stunt<span class="text-primary">AID</span></h1>
+                <h1 class="mt-4 mb-3 fs-1 fw-medium me-md-4">Stunt<span class="text-primary">AIDS</span></h1>
                 <p class="fs-5 lh-base me-md-4 text-body-secondary">
                     Welcome to StuntAIDS!<br>
                     where we make a healthy future.
