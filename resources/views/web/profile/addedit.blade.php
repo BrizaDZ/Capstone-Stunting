@@ -19,7 +19,7 @@
         <div class="row mb-3">
             <div class="col-lg-6">
                 <label class="form-label">NIK</label>
-                <input type="text" class="form-control" name="nik" maxlength="16" required value="{{ $data->nik }}">
+                <input type="text" class="form-control" name="nik" maxlength="16" value="{{ $data->nik }}">
             </div>
             <div class="col-lg-6">
                 <label class="form-label">Nama</label>

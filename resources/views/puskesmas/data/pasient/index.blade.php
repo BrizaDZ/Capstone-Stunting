@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'Tabel Users')
+@section('title', 'Tabel Pasien')
 
 @push('style')
     <link rel="stylesheet" href="/lib/sweetalert/sweetalert2.min.css" />

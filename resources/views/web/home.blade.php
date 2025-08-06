@@ -2,7 +2,7 @@
 @section('title', 'Beranda')
 
 @push('style')
-<link rel="stylesheet" href="/css/home1.css">
+<link rel="stylesheet" href="/css/home2.css">
 
 @endpush
 
