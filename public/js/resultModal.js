@@ -82,7 +82,7 @@ function showResultModal(data) {
         <p><strong>Jenis Kelamin:</strong> ${data.gender}</p>
         <p><strong>Berat Badan:</strong> ${data.weight} kg</p>
         <p><strong>Tinggi Badan:</strong> ${data.height} cm</p>
-        <p><strong>Umur:</strong> ${data.age} tahun</p>
+        <p><strong>Umur:</strong> ${data.age} bulan</p>
         <p><strong>Status Gizi:</strong> ${data.weightage}</p>
         <p><strong>Status Tinggi Badan:</strong> ${data.heightage}</p>
         <p><strong>Status BB/TB:</strong> ${data.weightheight}</p>

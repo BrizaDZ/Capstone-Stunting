@@ -23,8 +23,8 @@
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <div class="text-center text-md-end">
-                        <h1 class="mt-5 mb-3 fs-1 fw-medium me-4 custom-heading">Stunt<span class="text-primary">AID</span></h1>
-                        <p class="fs-3 lh-base me-4 text-body-secondary">Welcome to StuntAID!<br>where we make a healthy future.</p>
+                        <h1 class="mt-5 mb-3 fs-1 fw-medium custom-heading">Stunt<span class="text-primary">AIDS</span></h1>
+                        <p class="fs-3 lh-base text-body-secondary">Welcome to StuntAID!<br>where we make a healthy future.</p>
                         <img src="/image/icon/icon1.svg" alt="Medical Report" width="550" class="img-fluid img-icon">
                     </div>
                 </div>

@@ -43,17 +43,17 @@
                 value="{{ $data2->gender }}" readonly/>
         </div>
         <div class="form-group mb-3">
-            <label>Berat</label>
+            <label>Berat (kg)</label>
             <input type="number" name="weight" step="any" class="form-control" required autocomplete="off"
                 value="{{ $data->weight }}" />
         </div>
         <div class="form-group mb-3">
-            <label>Tinggi Badan</label>
+            <label>Tinggi Badan (cm)</label>
             <input type="number" name="height" step="any" class="form-control" required autocomplete="off"
                 value="{{ $data->height}}" />
         </div>
         <div class="form-group mb-3">
-            <label>Umur</label>
+            <label>Umur (bulan)</label>
             <input type="number" name="age" class="form-control" required autocomplete="off"
                 value="{{ $data->age}}" />
         </div>

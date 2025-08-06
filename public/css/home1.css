@@ -34,7 +34,12 @@
 
 @media (max-width: 576px) {
     .ratio-16x9 {
-        height: 500px !important;
+        height: 320px !important;
+    }
+
+    #aboutimg{
+        bottom: 32px;
+        left: 125px;
     }
     #chatbox {
         position: fixed !important;

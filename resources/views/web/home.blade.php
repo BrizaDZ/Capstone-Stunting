@@ -149,7 +149,7 @@
         <div class="row justify-content-center align-items-center" style="min-height: 400px;">
             <div class="col-md-5 d-flex justify-content-center">
                 <div class="position-relative">
-                    <img src="/image/stunt1.jpg"
+                    <img id="aboutimg" src="/image/stunt1.jpg"
                          class="border border-white rounded shadow-lg border-5 position-relative d-block img-fluid"
                          style="width: 60%; bottom: 90px; left: 200px; z-index: 1;"
                          alt="Dokter 1">

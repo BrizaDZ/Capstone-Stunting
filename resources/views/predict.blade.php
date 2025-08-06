@@ -4,7 +4,7 @@
 
 @endpush
 @section('content')
-<section class="align-content-center" style="min-height: 70vh">
+<section class="align-content-center">
 <div class="container">
     <div id="question-card" class="card shadow border-0 text-center mx-auto pt-5 mt-3" style="max-width:600px;">
         <div class="card-header bg-primary text-white">
