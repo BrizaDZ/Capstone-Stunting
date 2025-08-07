@@ -297,7 +297,7 @@
 @endsection
 
 @push('script')
-<script src="/pages/chatbot.js"></script>
+<script src="/pages/chatbot1.js"></script>
 <script src="/pages/map.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -309,31 +309,22 @@
                 wrap: true
             });
         }
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var myModal = new bootstrap.Modal(document.getElementById('myModal'));
-        myModal.show();
+
+        const chatbox = document.getElementById('chatbox');
+        const footer = chatbox.querySelector('.card-footer');
+
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener("resize", function () {
+                const keyboardHeight = window.innerHeight - window.visualViewport.height;
+
+                if (keyboardHeight > 150) {
+                    footer.style.transform = `translateY(-${keyboardHeight}px)`;
+                } else {
+                    footer.style.transform = 'translateY(0)';
+                }
+            });
+        }
     });
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const chatbox = document.getElementById('chatbox');
-    const footer = chatbox.querySelector('.card-footer');
-
-    if (window.visualViewport) {
-        window.visualViewport.addEventListener("resize", function () {
-            const keyboardHeight = window.innerHeight - window.visualViewport.height;
-
-            if (keyboardHeight > 150) { // anggap keyboard muncul
-                footer.style.transform = `translateY(-${keyboardHeight}px)`;
-            } else {
-                footer.style.transform = 'translateY(0)';
-            }
-        });
-    }
-});
 </script>
 
 

@@ -162,14 +162,6 @@ async function sendMessage(e) {
         if (data.status === "belum terjawab") {
             switchChat('admin');
             const adminChat = document.getElementById('chat-messages-admin');
-            adminChat.innerHTML += `
-                <div class="text-end">
-                    <div class="badge bg-primary my-1 text-wrap text-white p-2 text-justify message message-animated">
-                        Pertanyaan dari pengguna: ${message}
-                        Chatbot belum dapat menjawab. Mohon ditindaklanjuti.
-                    </div>
-                </div>
-            `;
             adminChat.scrollTop = adminChat.scrollHeight;
         }
 
