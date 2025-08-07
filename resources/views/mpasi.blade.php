@@ -39,10 +39,9 @@
                         <label>Tekstur</label>
                         <select name="tekstur" class="form-select" required>
                             <option value="halus">Halus</option>
-                            <option value="kasar">kasar
-
-                            </option>
-
+                            <option value="kasar">Kasar</option>
+                            <option value="lembut">Lembut</option>
+                            <option value="lunak">Lunak</option>
                         </select>
                     </div>
                     <div class="col">
@@ -116,10 +115,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Set default form saat pertama kali load
             toggleMode(document.querySelector('input[name="mode"]:checked').value);
 
-            // Event listener untuk tombol switch mode
             document.querySelectorAll('input[name="mode"]').forEach(el => {
                 el.addEventListener('change', function () {
                     toggleMode(this.value);
